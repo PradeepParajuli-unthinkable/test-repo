@@ -1448,7 +1448,6 @@
                     background-color: #FAF9F9 !important;
                     border: 2px solid #F5F5F5 !important;
                     box-sizing: content-box;
-                    display: block !important;
                     float: none !important;
                     line-height: 0px;
                     margin: 10px auto !important;
