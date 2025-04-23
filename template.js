@@ -14,7 +14,38 @@
         static disableCssSizing = false;
         static hideAfterMaxFails = false;
         static categoryAndUserTargeting = false;
-        static imageAds = [];
+        static imageAds = [
+            {
+                name: 'img_overlay_ad_1',
+                target: '#image1',     
+                content: '/22794149020/example/inimage_ad_1',
+                mythValue: 0.01,
+                type: 2,                      
+                refresh: true,
+                refreshIndividually: true,
+                refreshTime: 30000,          
+            },
+            {
+                name: 'img_overlay_ad_2',
+                target: '#image2',
+                content: '/22794149020/example/inimage_ad_2',
+                mythValue: 0.02,
+                type: 2,
+                refresh: true,
+                refreshIndividually: false,
+                refreshTime: 45000,
+            },
+            {
+                name: 'img_overlay_ad_3',
+                target: '#image3',
+                content: '/22794149020/example/inimage_ad_3',
+                mythValue: 0.015,
+                type: 2,
+                refresh: false,               
+                refreshIndividually: false,
+            }
+        ]; // Have to update later.
+
         static refreshTime = 30000;
         static enableTruvidScript = true;
         static truvidTarget = '.wp-post-image';
@@ -34,10 +65,11 @@
         static latestNewsDivColor = '#4CAF50' || '#4CAF50';
         static latestNewsDivSwapColors = ('false' == 'true') ?? false;
         static sentTracing = [];
-        enableIndividualSlotRefresh = true; // Individual Slot Refresh
+        static enableIndividualSlotRefresh = true; // Individual Slot Refresh
+        static isArticleExpanded = !enableLatestNews; // If `enableLatestNews` is `false`, the component is already expanded.
 
         constructor() {
-            this.MAX_RETRIES = 3; // Maximum number of retries for the original content
+            this.MAX_RETRIES = 300; // Maximum number of retries for the original content
             this.TOTAL_WORDS_LENGTH = 50;
             this.slotsRefreshCount = {}; // Stores the refresh count for each slot
             this.fallbackAttemptedSlots = new Set(); // Keeps track of throttled slots
@@ -771,49 +803,51 @@
             this.slotsFallbackCount[elementId] = this.slotsFallbackCount[elementId] || 0;
 
             if (event.isEmpty) {
-                if (this.slotsRefreshCount[elementId] < this.MAX_RETRIES) {
-                    this.slotsRefreshCount[elementId]++;
-                    if (window.location.search.indexOf('mythdebug') !== -1) console.log(`${elementId} slot is empty, retrying (${this.slotsRefreshCount[elementId]}/${this.MAX_RETRIES})`);
-                    try {
-                        googletag.pubads().refresh([slot]);
-                    } catch (error) {
-                        if (window.location.search.indexOf('mythdebug') !== -1) console.error(`Failed to reload ad slot ${elementId}:`, error);
-                    }
-                } else if (this.slotsFallbackCount[elementId] < this.MAX_FALLBACKS) {
-                    // Exclude Stick and Interstitial slots from fallback mechanism
-                    if (elementId.includes("Stick") || elementId.includes("Interstitial")
-						|| elementId.includes("stick") || elementId.includes("interstitial")) 
-					{
-                        if (window.location.search.indexOf('mythdebug') !== -1) console.log(`No fallback for ${elementId} as it's a Stick or Interstitial slot.`);
-                    } else {
-                        if (window.location.search.indexOf('mythdebug') !== -1) console.log(`${elementId} slot is still empty after ${this.MAX_RETRIES} retries, attempting fallback.`);
-                        this.slotsFallbackCount[elementId]++;
-                        this.loadFallbackContent(slot, elementId);
-                    }
-                } else {
-                    if (window.location.search.indexOf('mythdebug') !== -1) console.log(`No more fallbacks available for ${elementId}.`);
-
-                    if (GPTLoader.hideAfterMaxFails) {
-                        let parent = element.parentElement;
-                        if (parent) {
-                            parent.style.display = 'none';
+                setTimeout(() => { 
+                    if (this.slotsRefreshCount[elementId] < this.MAX_RETRIES) {
+                        this.slotsRefreshCount[elementId]++;
+                        if (window.location.search.indexOf('mythdebug') !== -1) console.log(`${elementId} slot is empty, retrying (${this.slotsRefreshCount[elementId]}/${this.MAX_RETRIES})`);
+                        try {
+                            googletag.pubads().refresh([slot]);
+                        } catch (error) {
+                            if (window.location.search.indexOf('mythdebug') !== -1) console.error(`Failed to reload ad slot ${elementId}:`, error);
                         }
+                    } else if (this.slotsFallbackCount[elementId] < this.MAX_FALLBACKS) {
+                        // Exclude Stick and Interstitial slots from fallback mechanism
+                        if (elementId.includes("Stick") || elementId.includes("Interstitial")
+						    || elementId.includes("stick") || elementId.includes("interstitial")) 
+					    {
+                            if (window.location.search.indexOf('mythdebug') !== -1) console.log(`No fallback for ${elementId} as it's a Stick or Interstitial slot.`);
+                        } else {
+                            if (window.location.search.indexOf('mythdebug') !== -1) console.log(`${elementId} slot is still empty after ${this.MAX_RETRIES} retries, attempting fallback.`);
+                            this.slotsFallbackCount[elementId]++;
+                            this.loadFallbackContent(slot, elementId);
+                        }
+                    } else {
+                        if (window.location.search.indexOf('mythdebug') !== -1) console.log(`No more fallbacks available for ${elementId}.`);
+
+                        if (GPTLoader.hideAfterMaxFails) {
+                            let parent = element.parentElement;
+                            if (parent) {
+                                parent.style.display = 'none';
+                            }
+                        }
+
+                        let slotType = this.getSlotDetails(slot);
+                        let mythValue = this.getSlotMythValue(slot);
+
+                        this.sendTracingData({
+                            SlotId: slotType,
+                            State: 'Empty',
+                            FallbackCallsCount: this.slotsFallbackCount[elementId],
+                            MythValue: mythValue,
+                        });
                     }
 
-                    let slotType = this.getSlotDetails(slot);
-                    let mythValue = this.getSlotMythValue(slot);
-
-                    this.sendTracingData({
-                        SlotId: slotType,
-                        State: 'Empty',
-                        FallbackCallsCount: this.slotsFallbackCount[elementId],
-                        MythValue: mythValue,
-                    });
-                }
-
-                if (!GPTLoader.hideAfterMaxFails) {
-                    element.style.display = '';
-                }
+                    if (!GPTLoader.hideAfterMaxFails) {
+                        element.style.display = '';
+                    }
+                }, 3000);
             } else {
                 if (window.location.search.indexOf('mythdebug') !== -1) console.log(`Ad slot ${elementId} loaded successfully.`);
                 
