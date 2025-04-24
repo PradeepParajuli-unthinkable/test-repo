@@ -17,7 +17,7 @@
         static imageAds = [
             {
                 name: 'img_overlay_ad_1',
-                target: '#image1',     
+                target: '#auto-image-0',     
                 content: '/22794149020/example/inimage_ad_1',
                 mythValue: 0.01,
                 type: 2,                      
@@ -27,17 +27,17 @@
             },
             {
                 name: 'img_overlay_ad_2',
-                target: '#image2',
+                target: '#auto-image-2',
                 content: '/22794149020/example/inimage_ad_2',
                 mythValue: 0.02,
                 type: 2,
                 refresh: true,
-                refreshIndividually: false,
-                refreshTime: 45000,
+                refreshIndividually: true,
+                refreshTime: 30000,
             },
             {
                 name: 'img_overlay_ad_3',
-                target: '#image3',
+                target: 'auto-image-3',
                 content: '/22794149020/example/inimage_ad_3',
                 mythValue: 0.015,
                 type: 2,
