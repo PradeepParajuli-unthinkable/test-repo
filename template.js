@@ -66,7 +66,7 @@
         static latestNewsDivSwapColors = ('false' == 'true') ?? false;
         static sentTracing = [];
         static enableIndividualSlotRefresh = true; // Individual Slot Refresh
-        static isArticleExpanded = !enableLatestNews; // If `enableLatestNews` is `false`, the component is already expanded.
+        static isArticleExpanded = !this.enableLatestNews; // If `enableLatestNews` is `false`, the component is already expanded.
 
         constructor() {
             this.MAX_RETRIES = 300; // Maximum number of retries for the original content
