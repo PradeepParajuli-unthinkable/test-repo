@@ -46,7 +46,7 @@
             }
         ]; // Have to update later.
 
-        static refreshTime = 30000;
+        static refreshTime = 20000;
         static enableTruvidScript = true;
         static truvidTarget = '.wp-post-image';
         static truvidCode = `<div class="truvidPos"><script async type="text/javascript" src="https://cnt.trvdp.com/js/1646/11775.js"></script></div>`;
@@ -57,7 +57,7 @@
         static enableIngest = 0 == 1;
         static pageInitTime = Date.now();
 
-        static enableLatestNews = ('false' !== 'true') ?? false;
+        static enableLatestNews = ('false' == 'true') ?? false;
         static latestNewsParagraphId = parseInt('1') || 0;
         static latestNewsSpacementStyle = 'pixel' || 'pixel';
         static latestNewsSpacementValue = parseInt('50') || 0;
