@@ -1459,7 +1459,7 @@
 
             const adDiv = document.createElement('div');
             adDiv.id = adId;
-            adDiv.style.position = 'relative';
+            adDiv.style.position = 'absolute';
             adDiv.style.bottom = '4px';
             adDiv.style.right = '4px';
             adDiv.style.zIndex = '10';
