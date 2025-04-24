@@ -1398,7 +1398,7 @@
                             imageAd.target = `#${image.id}`;
                             imageAd.type = 1;
                         
-                            this.insertInImageAd(image, div.id);
+                            // this.insertInImageAd(image, div.id);
                         }
                     }
                 }
