@@ -86,7 +86,7 @@
         static enableIngest = 0 == 1;
         static pageInitTime = Date.now();
 
-        static enableLatestNews = ('false' !== 'true') ?? false;
+        static enableLatestNews = ('false' != 'true') ?? false;
         static latestNewsParagraphId = parseInt('1') || 0;
         static latestNewsSpacementStyle = 'pixel' || 'pixel';
         static latestNewsSpacementValue = parseInt('50') || 0;
@@ -1459,9 +1459,9 @@
 
             const adDiv = document.createElement('div');
             adDiv.id = adId;
-            adDiv.style.position = 'absolute';
-            adDiv.style.bottom = '10px';
-            adDiv.style.left = '10px';
+            adDiv.style.position = 'relative';
+            adDiv.style.bottom = '4px';
+            adDiv.style.left = '4px';
             adDiv.style.zIndex = '10';
             adDiv.style.background = 'rgba(255,255,255,0.8)';
 
