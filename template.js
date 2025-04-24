@@ -610,7 +610,13 @@
 
             for (let slot of GPTLoader.imageAds) {
                 if (!document.querySelector(slot.target)) continue;
-                if (slot.div) this.executeDisplaySlot(slot.div.id);
+
+                if (slot.div && googletag.pubads().getSlots().some(s => s.getSlotElementId() === slot.div.id)) {
+                    this.executeDisplaySlot(slot.div.id);
+                } else {
+                    if (window.location.search.includes("mythdebug"))
+                        console.warn(`[GPT] Skipping display for image ad ${slot.div?.id} — slot not defined yet.`);
+                }
             }
 
             for (let i = 0; i < GPTLoader.customSlots.length; i++) {
@@ -1398,7 +1404,7 @@
                             imageAd.target = `#${image.id}`;
                             imageAd.type = 1;
                         
-                            // this.insertInImageAd(image, div.id);
+                            this.insertInImageAd(image, div.id);
                         }
                     }
                 }
@@ -1434,7 +1440,7 @@
             wrapper.appendChild(img);
             wrapper.appendChild(adDiv);
 
-            googletag.display(adId);
+            //googletag.display(adId);
         }
 
         // Function to check if an element is within a specified parent tagName
