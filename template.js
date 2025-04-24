@@ -1460,8 +1460,8 @@
             const adDiv = document.createElement('div');
             adDiv.id = adId;
             adDiv.style.position = 'absolute';
-            adDiv.style.bottom = '4px';
-            adDiv.style.right = '4px';
+            adDiv.style.bottom = '10px';
+            adDiv.style.left = '10px';
             adDiv.style.zIndex = '10';
             adDiv.style.background = 'rgba(255,255,255,0.8)';
 
