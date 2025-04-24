@@ -1426,7 +1426,7 @@
                             image.id = id;
                         }
 
-                        if (!this.isLargeFigureImage(image)) {
+                        if (this.isLargeFigureImage(image)) {
 
                             let div = this.createOverlayDiv(`#${id}`);
                             imageAd.div = div;
@@ -1459,7 +1459,7 @@
 
             const adDiv = document.createElement('div');
             adDiv.id = adId;
-            adDiv.style.position = 'absolute';
+            adDiv.style.position = 'relative';
             adDiv.style.bottom = '4px';
             adDiv.style.right = '4px';
             adDiv.style.zIndex = '10';
