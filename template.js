@@ -66,7 +66,7 @@
         static latestNewsDivSwapColors = ('false' == 'true') ?? false;
         static sentTracing = [];
         static enableIndividualSlotRefresh = true; // Individual Slot Refresh
-        static isArticleExpanded = !this.enableLatestNews; // If `enableLatestNews` is `false`, the component is already expanded.
+        static isArticleExpanded = !enableLatestNews; // If `enableLatestNews` is `false`, the component is already expanded.
 
         constructor() {
             this.MAX_RETRIES = 300; // Maximum number of retries for the original content
@@ -254,13 +254,13 @@
                     googletag.pubads().enableLazyLoad({fetchMarginPercent: -1});
                     // Enable lazy loading with specific configuration (method-1)
                     googletag.pubads().enableLazyLoad({
-                        fetchMarginPercent: 150,  // Fetch ads when n viewport heights away.
-                        renderMarginPercent: 100, // Render ads when n viewport heights away.
-                        mobileScaling: 2       // Adjust scaling for mobile devices.
+                        fetchMarginPercent: 500,  // Fetch ads when n viewport heights away.
+                        renderMarginPercent: 200, // Render ads when n viewport heights away.
+                        mobileScaling: 2.0,       // Adjust scaling for mobile devices.
                     });
 
                     googletag.enableServices();
-                    // googletag.pubads().enableSingleRequest();
+                    googletag.pubads().enableSingleRequest();
 
                     if (window.googletag && window.googletag.apiReady) {
                         googletag.pubads().addEventListener('slotRenderEnded', event => {
@@ -1159,7 +1159,7 @@
                 // if there are no paragraphs after the current paragraph, return
                 if (filteredParagraphs.length == 0) return console.warn('No paragraphs found after the current paragraph');
 
-                // count words in the paragraphs, after it reaches GPTLoader.latestNewsSpacementValue, insert the div
+                // count words in the paragraphs, after it reaches GPTLoader.latestNewsSpacementValue, insert the div.
                 let totalWords = 0;
                 let insertAfter = null;
 
