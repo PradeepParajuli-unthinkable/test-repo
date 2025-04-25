@@ -8,39 +8,15 @@
         static fallbackPaths = [
             {
                 slot: 'ad_paragraph_1',
-                path: '/22794149020/jornaldia/fallback_content1'
+                path: '/22794149020/jornaldia/jornaldia_content9'
             },
             {
                 slot: 'ad_paragraph_2',
-                path: '/22794149020/jornaldia/fallback_content2'
+                path: '/22794149020/jornaldia/jornaldia_content8'
             },
             {
                 slot: 'ad_paragraph_3',
-                path: '/22794149020/jornaldia/fallback_content3'
-            },
-            {
-                slot: 'ad_paragraph_4',
-                path: '/22794149020/jornaldia/fallback_content4'
-            },
-            {
-                slot: 'ad_paragraph_5',
-                path: '/22794149020/jornaldia/fallback_content5'
-            },
-            {
-                slot: 'ad_paragraph_6',
-                path: '/22794149020/jornaldia/fallback_content6'
-            },
-            {
-                slot: 'ad_paragraph_7',
-                path: '/22794149020/jornaldia/fallback_content7'
-            },
-            {
-                slot: 'ad_paragraph_8',
-                path: '/22794149020/jornaldia/fallback_content8'
-            },
-            {
-                slot: 'ad_paragraph_9',
-                path: '/22794149020/jornaldia/fallback_content9'
+                path: '/22794149020/jornaldia/jornaldia_content7'
             }
         ];
 
@@ -52,11 +28,12 @@
         static disableCssSizing = false;
         static hideAfterMaxFails = false;
         static categoryAndUserTargeting = false;
+        static imageAds = [{ "name": "in-image", "content": "/22794149020/uainoticias/uainoticias_inimage", "target": ".thumbnail-container img", "type": 1, "refreshIndividually": false, "refresh": true, "refreshTime": 0, "mythValue": 0.01 }];
         static imageAds = [
             {
                 name: 'img_overlay_ad_1',
                 target: '#auto-image-0',     
-                content: '/22794149020/example/inimage_ad_1',
+                content: '/22794149020/uainoticias/uainoticias_inimage',
                 mythValue: 0.01,
                 type: 2,                      
                 refresh: true,
@@ -66,7 +43,7 @@
             {
                 name: 'img_overlay_ad_2',
                 target: '#auto-image-2',
-                content: '/22794149020/example/inimage_ad_2',
+                content: '/22794149020/uainoticias/uainoticias_inimage',
                 mythValue: 0.02,
                 type: 2,
                 refresh: true,
@@ -187,10 +164,10 @@
         async init() {
             try {
                 // load custom styling.
-                this.addCustomStyling();
+                //this.addCustomStyling();
 
                 // Initialize GPT library
-                await this.loadGPTScript();
+                //await this.loadGPTScript();
                 let exceptions = [];
 
                 window.googletag = window.googletag || { cmd: [] };
@@ -1577,9 +1554,23 @@
 
     window.gptLoader = new GPTLoader();
     // Start the GPTLoader after the DOM has fully loaded
-    document.addEventListener("DOMContentLoaded", function() {
+    document.addEventListener("DOMContentLoaded", function async () {
+
+        // Load custom styling.
+        window.gptLoader.addCustomStyling();
+
+        // Initialize GPT library
+        await window.gptLoader.loadGPTScript();
+
         setTimeout(function() {
             window.gptLoader.start();
         }, GPTLoader.startTimeout); // Wait for 1 second before calling the start() function
     });
 })();
+
+
+//==========================================
+
+
+
+
