@@ -28,31 +28,7 @@
         static disableCssSizing = false;
         static hideAfterMaxFails = false;
         static categoryAndUserTargeting = false;
-        static imageAds = [{ "name": "in-image", "content": "/22794149020/uainoticias/uainoticias_inimage", "target": ".thumbnail-container img", "type": 1, "refreshIndividually": false, "refresh": true, "refreshTime": 0, "mythValue": 0.01 }];
-        static imageAds = [
-            {
-                name: 'img_overlay_ad_1',
-                target: '#auto-image-0',     
-                content: '/22794149020/uainoticias/uainoticias_inimage',
-                mythValue: 0.01,
-                type: 2,                      
-                refresh: true,
-                refreshIndividually: true,
-                refreshTime: 30000,          
-            },
-            {
-                name: 'img_overlay_ad_2',
-                target: '#auto-image-2',
-                content: '/22794149020/uainoticias/uainoticias_inimage',
-                mythValue: 0.02,
-                type: 2,
-                refresh: true,
-                refreshIndividually: true,
-                refreshTime: 30000,
-            }
-        ]; // Have to update later.
-
-        static refreshTime = 20000;
+        static imageAds = [{ "name": "in-image", "content": "/22794149020/uainoticias/uainoticias_inimage", "target": ".thumbnail-container img", "type": 1, "refreshIndividually": false, "refresh": true, "refreshTime": 0, "mythValue": 0.01 }];        static refreshTime = 20000;
         static enableTruvidScript = true;
         static truvidTarget = '.wp-post-image';
         static truvidCode = `<div class="truvidPos"><script async type="text/javascript" src="https://cnt.trvdp.com/js/1646/11775.js"></script></div>`;
@@ -181,8 +157,8 @@
 
                 googletag.cmd.push(() => {
                     
-                    this.autoDiv();
-                    this.loadLatestNewsDiv();
+                    //this.autoDiv();
+                    //this.loadLatestNewsDiv();
 
                     for (let target of GPTLoader.targetting) {
                         let allowed = true;
@@ -1555,9 +1531,12 @@
 
             // Load custom styling.
             window.gptLoader.addCustomStyling();
+            window.gptLoader.autoDiv();
+            window.gptLoader.loadLatestNewsDiv();
 
             // Initialize GPT library
             await window.gptLoader.loadGPTScript();
+            
         }
     }
 
@@ -1573,10 +1552,3 @@
         }, GPTLoader.startTimeout); // Wait for 1 second before calling the start() function
     });
 })();
-
-
-//==========================================
-
-
-
-
