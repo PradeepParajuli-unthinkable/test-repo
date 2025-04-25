@@ -1550,19 +1550,25 @@
                 if (window.location.search.indexOf('mythdebug') !== -1) console.error('[GPTLoader] Failed to load GPT script:', error);
             }
         }
+
+        async preLoadScripts() {
+
+            // Load custom styling.
+            window.gptLoader.addCustomStyling();
+
+            // Initialize GPT library
+            await window.gptLoader.loadGPTScript();
+        }
     }
 
     window.gptLoader = new GPTLoader();
+    window.gptLoader.preLoadScripts();
+
     // Start the GPTLoader after the DOM has fully loaded
     document.addEventListener("DOMContentLoaded", function async () {
 
-        // Load custom styling.
-        window.gptLoader.addCustomStyling();
-
-        // Initialize GPT library
-        await window.gptLoader.loadGPTScript();
-
-        setTimeout(function() {
+        setTimeout(function () {
+            
             window.gptLoader.start();
         }, GPTLoader.startTimeout); // Wait for 1 second before calling the start() function
     });
