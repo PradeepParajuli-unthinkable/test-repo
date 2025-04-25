@@ -1539,7 +1539,7 @@
     }
 
     window.gptLoader = new GPTLoader();
-    window.gptLoader.preLoadScripts();
+    //window.gptLoader.preLoadScripts();
 
     // Start the GPTLoader after the DOM has fully loaded
     document.addEventListener("DOMContentLoaded", function async () {
