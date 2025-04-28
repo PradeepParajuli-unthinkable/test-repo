@@ -3,154 +3,7 @@
 
     class GPTLoader {
         static domain = 'jornaldia.com.br';
-        static contentSlots = [{"id":1003,"mobile":true,"tablet":true,"desktop":true,"slot":"ad_paragraph_1","display":"/22794149020/jornaldia/jornaldia_content1","sizesMobile":["fluid","336x280","300x250","320x100"],"sizesTablet":["fluid","336x280","300x250","320x100"],"sizes":["fluid","336x280","300x250","250x250"],"autoTargeting":false,"refreshIndividually":true,"refresh":true,"refreshTime":30000,"mythValue":0.01},{"id":1004,"mobile":true,"tablet":true,"desktop":true,"slot":"ad_paragraph_2","display":"/22794149020/jornaldia/jornaldia_content2","sizesMobile":["fluid","336x280","300x250","320x100"],"sizesTablet":["fluid","336x280","300x250","320x100"],"sizes":["fluid","336x280","300x250","250x250"],"autoTargeting":false,"refreshIndividually":true,"refresh":true,"refreshTime":30000,"mythValue":0.01},{"id":1005,"mobile":true,"tablet":true,"desktop":true,"slot":"ad_paragraph_3","display":"/22794149020/jornaldia/jornaldia_content3","sizesMobile":["fluid","336x280","300x250","320x100"],"sizesTablet":["fluid","336x280","300x250","320x100"],"sizes":["fluid","336x280","300x250","250x250"],"autoTargeting":false,"refreshIndividually":true,"refresh":true,"refreshTime":30000,"mythValue":0.01},{"id":1006,"mobile":true,"tablet":true,"desktop":true,"slot":"ad_paragraph_4","display":"/22794149020/jornaldia/jornaldia_content4","sizesMobile":["fluid","336x280","300x250","320x100"],"sizesTablet":["fluid","336x280","300x250","320x100"],"sizes":["fluid","336x280","300x250","250x250"],"autoTargeting":false,"refreshIndividually":true,"refresh":true,"refreshTime":30000,"mythValue":0.01},{"id":1007,"mobile":true,"tablet":true,"desktop":true,"slot":"ad_paragraph_5","display":"/22794149020/jornaldia/jornaldia_content5","sizesMobile":["fluid","336x280","300x250","320x100"],"sizesTablet":["fluid","336x280","300x250","320x100"],"sizes":["fluid","336x280","300x250","250x250"],"autoTargeting":false,"refreshIndividually":true,"refresh":true,"refreshTime":30000,"mythValue":0.01},{"id":1008,"mobile":true,"tablet":true,"desktop":true,"slot":"ad_paragraph_6","display":"/22794149020/jornaldia/jornaldia_content6","sizesMobile":["fluid","336x280","300x250","320x100"],"sizesTablet":["fluid","336x280","300x250","320x100"],"sizes":["fluid","336x280","300x250","250x250"],"autoTargeting":false,"refreshIndividually":true,"refresh":true,"refreshTime":30000,"mythValue":0.01},{"id":1009,"mobile":true,"tablet":true,"desktop":true,"slot":"ad_paragraph_7","display":"/22794149020/jornaldia/jornaldia_content7","sizesMobile":["fluid","336x280","300x250","320x100"],"sizesTablet":["fluid","336x280","300x250","320x100"],"sizes":["fluid","336x280","300x250","250x250"],"autoTargeting":false,"refreshIndividually":true,"refresh":true,"refreshTime":30000,"mythValue":0.01},{"id":1010,"mobile":true,"tablet":true,"desktop":true,"slot":"ad_paragraph_8","display":"/22794149020/jornaldia/jornaldia_content8","sizesMobile":["fluid","336x280","300x250","320x100"],"sizesTablet":["fluid","336x280","300x250","320x100"],"sizes":["fluid","336x280","300x250","250x250"],"autoTargeting":false,"refreshIndividually":true,"refresh":true,"refreshTime":30000,"mythValue":0.01},{"id":1011,"mobile":true,"tablet":true,"desktop":true,"slot":"ad_paragraph_9","display":"/22794149020/jornaldia/jornaldia_content9","sizesMobile":["fluid","300x250","336x280","320x100"],"sizesTablet":["fluid","300x250","336x280","320x100"],"sizes":["fluid","250x250","300x250","336x280"],"autoTargeting":false,"refreshIndividually":true,"refresh":true,"refreshTime":30000,"mythValue":0.01}];
-        /*static contentSlots = [
-            {
-                id: 1003,
-                mobile: true,
-                tablet: true,
-                desktop: true,
-                slot: "ad_paragraph_1",
-                display: "/22794149020/jornaldia/jornaldia_content1",
-                sizesMobile: ["fluid", [336, 280], [300, 250], [320, 100]],
-                sizesTablet: ["fluid", [336, 280], [300, 250], [320, 100]],
-                sizes: ["fluid", [336, 280], [300, 250], [250, 250]],
-                autoTargeting: false,
-                refreshIndividually: true,
-                refresh: true,
-                refreshTime: 30000,
-                mythValue: 0.01
-            },
-            {
-                id: 1004,
-                mobile: true,
-                tablet: true,
-                desktop: true,
-                slot: "ad_paragraph_2",
-                display: "/22794149020/jornaldia/jornaldia_content2",
-                sizesMobile: ["fluid", [336, 280], [300, 250], [320, 100]],
-                sizesTablet: ["fluid", [336, 280], [300, 250], [320, 100]],
-                sizes: ["fluid", [336, 280], [300, 250], [250, 250]],
-                autoTargeting: false,
-                refreshIndividually: true,
-                refresh: true,
-                refreshTime: 30000,
-                mythValue: 0.01
-            },
-            {
-                id: 1005,
-                mobile: true,
-                tablet: true,
-                desktop: true,
-                slot: "ad_paragraph_3",
-                display: "/22794149020/jornaldia/jornaldia_content3",
-                sizesMobile: ["fluid", [336, 280], [300, 250], [320, 100]],
-                sizesTablet: ["fluid", [336, 280], [300, 250], [320, 100]],
-                sizes: ["fluid", [336, 280], [300, 250], [250, 250]],
-                autoTargeting: false,
-                refreshIndividually: true,
-                refresh: true,
-                refreshTime: 30000,
-                mythValue: 0.01
-            },
-            {
-                id: 1006,
-                mobile: true,
-                tablet: true,
-                desktop: true,
-                slot: "ad_paragraph_4",
-                display: "/22794149020/jornaldia/jornaldia_content4",
-                sizesMobile: ["fluid", [336, 280], [300, 250], [320, 100]],
-                sizesTablet: ["fluid", [336, 280], [300, 250], [320, 100]],
-                sizes: ["fluid", [336, 280], [300, 250], [250, 250]],
-                autoTargeting: false,
-                refreshIndividually: true,
-                refresh: true,
-                refreshTime: 30000,
-                mythValue: 0.01
-            },
-            {
-                id: 1007,
-                mobile: true,
-                tablet: true,
-                desktop: true,
-                slot: "ad_paragraph_5",
-                display: "/22794149020/jornaldia/jornaldia_content5",
-                sizesMobile: ["fluid", [336, 280], [300, 250], [320, 100]],
-                sizesTablet: ["fluid", [336, 280], [300, 250], [320, 100]],
-                sizes: ["fluid", [336, 280], [300, 250], [250, 250]],
-                autoTargeting: false,
-                refreshIndividually: true,
-                refresh: true,
-                refreshTime: 30000,
-                mythValue: 0.01
-            },
-            {
-                id: 1008,
-                mobile: true,
-                tablet: true,
-                desktop: true,
-                slot: "ad_paragraph_6",
-                display: "/22794149020/jornaldia/jornaldia_content6",
-                sizesMobile: ["fluid", [336, 280], [300, 250], [320, 100]],
-                sizesTablet: ["fluid", [336, 280], [300, 250], [320, 100]],
-                sizes: ["fluid", [336, 280], [300, 250], [250, 250]],
-                autoTargeting: false,
-                refreshIndividually: true,
-                refresh: true,
-                refreshTime: 30000,
-                mythValue: 0.01
-            },
-            {
-                id: 1009,
-                mobile: true,
-                tablet: true,
-                desktop: true,
-                slot: "ad_paragraph_7",
-                display: "/22794149020/jornaldia/jornaldia_content7",
-                sizesMobile: ["fluid", [336, 280], [300, 250], [320, 100]],
-                sizesTablet: ["fluid", [336, 280], [300, 250], [320, 100]],
-                sizes: ["fluid", [336, 280], [300, 250], [250, 250]],
-                autoTargeting: false,
-                refreshIndividually: true,
-                refresh: true,
-                refreshTime: 30000,
-                mythValue: 0.01
-            },
-            {
-                id: 1010,
-                mobile: true,
-                tablet: true,
-                desktop: true,
-                slot: "ad_paragraph_8",
-                display: "/22794149020/jornaldia/jornaldia_content8",
-                sizesMobile: ["fluid", [336, 280], [300, 250], [320, 100]],
-                sizesTablet: ["fluid", [336, 280], [300, 250], [320, 100]],
-                sizes: ["fluid", [336, 280], [300, 250], [250, 250]],
-                autoTargeting: false,
-                refreshIndividually: true,
-                refresh: true,
-                refreshTime: 30000,
-                mythValue: 0.01
-            },
-            {
-                id: 1011,
-                mobile: true,
-                tablet: true,
-                desktop: true,
-                slot: "ad_paragraph_9",
-                display: "/22794149020/jornaldia/jornaldia_content9",
-                sizesMobile: ["fluid", [300, 250], [336, 280], [320, 100]],
-                sizesTablet: ["fluid", [300, 250], [336, 280], [320, 100]],
-                sizes: ["fluid", [250, 250], [300, 250], [336, 280]],
-                autoTargeting: false,
-                refreshIndividually: true,
-                refresh: true,
-                refreshTime: 30000,
-                mythValue: 0.01
-            }
-        ];
-        */
+        static contentSlots = [{ "id": 1003, "mobile": true, "tablet": true, "desktop": true, "slot": "ad_paragraph_1", "display": "/22794149020/jornaldia/jornaldia_content1", "sizesMobile": ["fluid", "336x280", "300x250", "320x100"], "sizesTablet": ["fluid", "336x280", "300x250", "320x100"], "sizes": ["fluid", "336x280", "300x250", "250x250"], "autoTargeting": false, "refreshIndividually": true, "refresh": true, "refreshTime": 30000, "mythValue": 0.01 }, { "id": 1004, "mobile": true, "tablet": true, "desktop": true, "slot": "ad_paragraph_2", "display": "/22794149020/jornaldia/jornaldia_content2", "sizesMobile": ["fluid", "336x280", "300x250", "320x100"], "sizesTablet": ["fluid", "336x280", "300x250", "320x100"], "sizes": ["fluid", "336x280", "300x250", "250x250"], "autoTargeting": false, "refreshIndividually": true, "refresh": true, "refreshTime": 30000, "mythValue": 0.01 }, { "id": 1005, "mobile": true, "tablet": true, "desktop": true, "slot": "ad_paragraph_3", "display": "/22794149020/jornaldia/jornaldia_content3", "sizesMobile": ["fluid", "336x280", "300x250", "320x100"], "sizesTablet": ["fluid", "336x280", "300x250", "320x100"], "sizes": ["fluid", "336x280", "300x250", "250x250"], "autoTargeting": false, "refreshIndividually": true, "refresh": true, "refreshTime": 30000, "mythValue": 0.01 }, { "id": 1006, "mobile": true, "tablet": true, "desktop": true, "slot": "ad_paragraph_4", "display": "/22794149020/jornaldia/jornaldia_content4", "sizesMobile": ["fluid", "336x280", "300x250", "320x100"], "sizesTablet": ["fluid", "336x280", "300x250", "320x100"], "sizes": ["fluid", "336x280", "300x250", "250x250"], "autoTargeting": false, "refreshIndividually": true, "refresh": true, "refreshTime": 30000, "mythValue": 0.01 }, { "id": 1007, "mobile": true, "tablet": true, "desktop": true, "slot": "ad_paragraph_5", "display": "/22794149020/jornaldia/jornaldia_content5", "sizesMobile": ["fluid", "336x280", "300x250", "320x100"], "sizesTablet": ["fluid", "336x280", "300x250", "320x100"], "sizes": ["fluid", "336x280", "300x250", "250x250"], "autoTargeting": false, "refreshIndividually": true, "refresh": true, "refreshTime": 30000, "mythValue": 0.01 }, { "id": 1008, "mobile": true, "tablet": true, "desktop": true, "slot": "ad_paragraph_6", "display": "/22794149020/jornaldia/jornaldia_content6", "sizesMobile": ["fluid", "336x280", "300x250", "320x100"], "sizesTablet": ["fluid", "336x280", "300x250", "320x100"], "sizes": ["fluid", "336x280", "300x250", "250x250"], "autoTargeting": false, "refreshIndividually": true, "refresh": true, "refreshTime": 30000, "mythValue": 0.01 }, { "id": 1009, "mobile": true, "tablet": true, "desktop": true, "slot": "ad_paragraph_7", "display": "/22794149020/jornaldia/jornaldia_content7", "sizesMobile": ["fluid", "336x280", "300x250", "320x100"], "sizesTablet": ["fluid", "336x280", "300x250", "320x100"], "sizes": ["fluid", "336x280", "300x250", "250x250"], "autoTargeting": false, "refreshIndividually": true, "refresh": true, "refreshTime": 30000, "mythValue": 0.01 }, { "id": 1010, "mobile": true, "tablet": true, "desktop": true, "slot": "ad_paragraph_8", "display": "/22794149020/jornaldia/jornaldia_content8", "sizesMobile": ["fluid", "336x280", "300x250", "320x100"], "sizesTablet": ["fluid", "336x280", "300x250", "320x100"], "sizes": ["fluid", "336x280", "300x250", "250x250"], "autoTargeting": false, "refreshIndividually": true, "refresh": true, "refreshTime": 30000, "mythValue": 0.01 }, { "id": 1011, "mobile": true, "tablet": true, "desktop": true, "slot": "ad_paragraph_9", "display": "/22794149020/jornaldia/jornaldia_content9", "sizesMobile": ["fluid", "300x250", "336x280", "320x100"], "sizesTablet": ["fluid", "300x250", "336x280", "320x100"], "sizes": ["fluid", "250x250", "300x250", "336x280"], "autoTargeting": false, "refreshIndividually": true, "refresh": true, "refreshTime": 30000, "mythValue": 0.01 }];
         static customSlots = [];
         static fallbackPaths = [
             {
@@ -169,29 +22,13 @@
 
         static avoids = [];
         static targetting = [];
-        static interstitial = {"display":"/22794149020/jornaldia/jornaldia_interstitial","mythValue":0.01};
-        static stick = {"display":"/22794149020/jornaldia/jornaldia_stick","mythValue":0.01};
+        static interstitial = { "display": "/22794149020/jornaldia/jornaldia_interstitial", "mythValue": 0.01 };
+        static stick = { "display": "/22794149020/jornaldia/jornaldia_stick", "mythValue": 0.01 };
         static usedAdSlots = {};
         static disableCssSizing = false;
         static hideAfterMaxFails = false;
         static categoryAndUserTargeting = false;
-        static imageAds = [{ "name": "in-image", "content": "/22794149020/uainoticias/uainoticias_inimage", "target": ".size-large img", "type": 2, "refreshIndividually": true, "refresh": true, "refreshTime": 20000, "mythValue": 0.01 }];
-       /*static imageAds = [
-            {
-                name: "in-image",
-                content: "/22794149020/uainoticias/uainoticias_inimage",
-                target: ".size-large img",
-                type: 2, // 2 = in-image ad type
-                sizesMobile: ["fluid", [300, 250], [320, 100]],
-                sizesTablet: ["fluid", [336, 280], [300, 250], [320, 100]],
-                sizesDesktop: ["fluid", [336, 280], [300, 250], [320, 100], [728, 90]],
-                refreshIndividually: true,
-                refresh: true,
-                refreshTime: 20000, // 20 seconds refresh
-                mythValue: 0.01
-            }
-        ];*/
-
+        static imageAds = [{ "name": "in-image", "content": "/22794149020/uainoticias/uainoticias_inimage", "target": ".size-large img", "type": 1, "refreshIndividually": true, "refresh": true, "refreshTime": 20000, "mythValue": 0.01 }];
         static refreshTime = 20000;
         static enableTruvidScript = true;
         static truvidTarget = '.wp-post-image';
@@ -212,7 +49,8 @@
         static latestNewsDivSwapColors = ('false' == 'true') ?? false;
         static sentTracing = [];
         static enableIndividualSlotRefresh = true; // Individual Slot Refresh
-        static isArticleExpanded = !this.enableLatestNews; // If `enableLatestNews` is `false`, the component is already expanded.
+        static TIMEOUT_FOR_SLOT_REFRESH = 6000;
+        static IN_IMAGE_AD_QUERY = 'figure.aligncenter.size-large img';
 
         constructor() {
             this.MAX_RETRIES = 300; // Maximum number of retries for the original content
@@ -221,6 +59,11 @@
             this.fallbackAttemptedSlots = new Set(); // Keeps track of throttled slots
             this.MAX_FALLBACKS = GPTLoader.fallbackPaths.length; // Maximum number of fallbacks based on the number of defined paths
             this.slotsFallbackCount = {}; // Stores the fallback count for each slot
+            
+
+            if (this.enableIndividualSlotRefresh) {
+                this.contentSlots.forEach(slot => { slot.refreshIndividually = true; });
+            }
         }
 
         static location() {
@@ -320,7 +163,7 @@
                 }
 
                 googletag.cmd.push(() => {
-                    
+
                     //this.autoDiv();
                     //this.loadLatestNewsDiv();
 
@@ -372,7 +215,7 @@
 
                             if (GPTLoader.enableIngest)
                                 interstitialSlot.setTargeting('myth_value', GPTLoader.interstitial.mythValue);
-                            
+
                             GPTLoader.interstitial.div = interstitialSlot.getSlotElementId();
                         }
                     }
@@ -397,7 +240,7 @@
                     this.configureImageSlots();
 
                     googletag.pubads().enableLazyLoad();
-                    googletag.pubads().enableLazyLoad({fetchMarginPercent: -1});
+                    googletag.pubads().enableLazyLoad({ fetchMarginPercent: -1 });
                     // Enable lazy loading with specific configuration (method-1)
                     googletag.pubads().enableLazyLoad({
                         fetchMarginPercent: 500,  // Fetch ads when n viewport heights away.
@@ -433,11 +276,11 @@
                         this.executeDisplaySlot(interstitialSlot);
                     }
 
-                    if(GPTLoader.enableTruvidScript) {
+                    if (GPTLoader.enableTruvidScript) {
                         this.initTruvidScript();
-                    } 
+                    }
 
-                    if(GPTLoader.enableTaboolaScript) {
+                    if (GPTLoader.enableTaboolaScript) {
                         window.addEventListener('load', () => {
                             this.initTaboolaScript();
                         });
@@ -448,29 +291,29 @@
                     // Auto-refresh ad slots
                     googletag.pubads().addEventListener('impressionViewable', (event) => {
                         let slot = event.slot;
-                        if (window.location.search.indexOf('mythdebug') !== -1) console.log(slot.getSlotElementId() +" is viewable");
+                        if (window.location.search.indexOf('mythdebug') !== -1) console.log(slot.getSlotElementId() + " is viewable");
                         let isContent = GPTLoader.contentSlots.find(e => e.slot === slot.getSlotElementId());
                         let refreshTime = GPTLoader.refreshTime;
 
                         let contentSlot = GPTLoader.contentSlots.find(e => e.slot === slot.getSlotElementId());
-                        if (this.enableIndividualSlotRefresh && contentSlot && contentSlot.refreshIndividually) {
+                        if (contentSlot && contentSlot.refreshIndividually) {
                             if (contentSlot.refresh == false) return;
                             refreshTime = contentSlot.refreshTime;
                         }
 
                         let imageSlot = GPTLoader.imageAds.find(e => e.div?.id === slot.getSlotElementId());
-                        if (this.enableIndividualSlotRefresh && imageSlot && imageSlot.refreshIndividually) {
+                        if (imageSlot && imageSlot.refreshIndividually) {
                             if (imageSlot.refresh == false) return;
                             refreshTime = imageSlot.refreshTime;
                         }
 
                         let customSlot = GPTLoader.customSlots.find(e => e.target === slot.getSlotElementId());
-                        if (this.enableIndividualSlotRefresh && customSlot && customSlot.refreshIndividually) {
+                        if (customSlot && customSlot.refreshIndividually) {
                             if (customSlot.refresh == false) return;
                             refreshTime = customSlot.refreshTime;
                         }
 
-                        setTimeout(function() {
+                        setTimeout(function () {
                             googletag.pubads().refresh([slot]);
                             slot.refreshCount++;
 
@@ -586,7 +429,7 @@
         // Check if the ad slot is currently visible in the viewport
         isElementInView(elementId) {
             let element = document.getElementById(elementId);
-            if( ! element ) {
+            if (!element) {
                 return false;
             }
             let rect = element.getBoundingClientRect();
@@ -657,7 +500,7 @@
                 if (!active) {
                     continue;
                 }
-                
+
                 let id = GPTLoader.customSlots[i].id;
                 let slotConfig = GPTLoader.customSlots[i];
                 let elName = slotConfig.target;
@@ -680,7 +523,7 @@
                 slotConfig.originalTarget = elName;
 
                 if (elName && display) {
-                    switch(slotType) {
+                    switch (slotType) {
                         case "insideContent":
                             slotConfig.target = this.configureAdSlots(elName, display, sizes, '', type, true, false, customCSS, mythValue);
                             slotConfig.targetElement = document.getElementById(elName);
@@ -778,7 +621,7 @@
                     this.executeDisplaySlot(divElement.id);
                 }
             }
-            
+
             let device = this.getDevice();
             for (let i = 0; i < GPTLoader.contentSlots.length; i++) {
                 let active = GPTLoader.contentSlots[i]?.[device] || true;
@@ -812,7 +655,7 @@
                             if (slotWidth >= 200) sizes.push([200, 50]);
                             if (slotWidth >= 160) sizes.push([160, 50]);
                             if (slotWidth >= 120) sizes.push([120, 50]);
-                            
+
                             slotElement = googletag.defineSlot(slot.content, sizes, slot.div.id);
                         } else {
                             let slotHeight = Math.floor(slot.div.parentElement.getBoundingClientRect().height / 10) * 10;
@@ -821,17 +664,17 @@
                         }
 
                         let mapping = googletag.sizeMapping().addSize([0, 0], sizes).build();
-                        
+
                         if (slotElement && mapping !== null) {
                             slotElement = slotElement.defineSizeMapping(mapping);
                         }
-                
+
                         if (slotElement) {
                             slotElement
                                 .setCollapseEmptyDiv(true)
                                 .addService(googletag.pubads())
                                 .setTargeting('page_unique_id', this.stringToNumber(GPTLoader.location()));
-                                
+
                             if (GPTLoader.enableIngest)
                                 slotElement.setTargeting('myth_value', slot.mythValue);
                         }
@@ -872,10 +715,10 @@
                 googletag.cmd.push(() => {
                     let mapping = googletag.sizeMapping().addSize([0, 0], sizes).build();
 
-                    if (isCustomSlot) {                            
+                    if (isCustomSlot) {
                         let element = document.getElementById(customId);
                         if (!element) return;
- 
+
                         this.configureCustomSlot(element);
                     }
 
@@ -895,18 +738,18 @@
                     if (slot && mapping !== null && googletag !== null) {
                         slot = slot.defineSizeMapping(mapping);
                     }
-            
+
                     if (slot) {
                         slot
                             .setCollapseEmptyDiv(true)
                             .addService(googletag.pubads())
                             .setTargeting('page_unique_id', this.stringToNumber(GPTLoader.location()));
-                            
+
                         if (GPTLoader.enableIngest)
                             slot.setTargeting('myth_value', mythValue);
                         // slot.addService(googletag.pubads());
                     }
-            
+
                     // Set custom CSS class if provided
                     if (customCSS) {
                         let slotElement = document.getElementById(customId);
@@ -931,7 +774,7 @@
 
         configureCustomSlot(element) {
             if (!element) return;
-            
+
             element.style.textAlign = 'center';
             if (!GPTLoader.disableCssSizing) element.style.height = '280px';
         }
@@ -942,7 +785,7 @@
             let elementId = slot.getSlotElementId();
             let element = document.getElementById(elementId);
             if (!element) return;
-            
+
             // if (element && element.style && element.style.display === 'none' && element.getAttribute('auto-height')) {
             //     let parent = element.parentElement;
             //     if (parent) {
@@ -955,7 +798,7 @@
             this.slotsFallbackCount[elementId] = this.slotsFallbackCount[elementId] || 0;
 
             if (event.isEmpty) {
-                setTimeout(() => { 
+                setTimeout(() => {
                     if (this.slotsRefreshCount[elementId] < this.MAX_RETRIES) {
                         this.slotsRefreshCount[elementId]++;
                         if (window.location.search.indexOf('mythdebug') !== -1) console.log(`${elementId} slot is empty, retrying (${this.slotsRefreshCount[elementId]}/${this.MAX_RETRIES})`);
@@ -967,8 +810,7 @@
                     } else if (this.slotsFallbackCount[elementId] < this.MAX_FALLBACKS) {
                         // Exclude Stick and Interstitial slots from fallback mechanism
                         if (elementId.includes("Stick") || elementId.includes("Interstitial")
-						    || elementId.includes("stick") || elementId.includes("interstitial")) 
-					    {
+                            || elementId.includes("stick") || elementId.includes("interstitial")) {
                             if (window.location.search.indexOf('mythdebug') !== -1) console.log(`No fallback for ${elementId} as it's a Stick or Interstitial slot.`);
                         } else {
                             if (window.location.search.indexOf('mythdebug') !== -1) console.log(`${elementId} slot is still empty after ${this.MAX_RETRIES} retries, attempting fallback.`);
@@ -999,10 +841,10 @@
                     if (!GPTLoader.hideAfterMaxFails) {
                         element.style.display = '';
                     }
-                }, 7000);
+                }, this.TIMEOUT_FOR_SLOT_REFRESH);
             } else {
                 if (window.location.search.indexOf('mythdebug') !== -1) console.log(`Ad slot ${elementId} loaded successfully.`);
-                
+
                 let imageAd = GPTLoader.imageAds.find(ad => (ad.div ? ad.div.id : '') === elementId);
                 if (imageAd) {
                     imageAd.div.style.display = 'flex';
@@ -1057,15 +899,15 @@
                             return size;
                         }
                     });
-                    
+
                     googletag
                         .defineSlot(fallbackPath.content, sizes.filter(e => e != 'fluid'), elementId)
                         .addService(googletag.pubads())
                         .setTargeting('page_unique_id', this.stringToNumber(GPTLoader.location()));
-                        
+
                     if (GPTLoader.enableIngest)
                         googleTag.setTargeting('myth_value', fallbackPath.mythValue)
-                    
+
                     googletag.display(elementId);
                     // googletag.pubads().refresh([newSlot]);
                 } catch (error) {
@@ -1084,10 +926,10 @@
         applyHeight(elementId) {
             let element = document.getElementById(elementId);
             if (!element) return;
-            
+
             let parent = element.parentElement;
             if (!parent) return;
-            
+
             let isAutoHeight = parent.getAttribute('auto-height');
             if (isAutoHeight) {
                 let currentHeight = parent.style.height;
@@ -1132,7 +974,7 @@
 
         async handleSlotLoadEnded(event) {
             let slot = event.slot;
-            window.globalxd=slot;
+            window.globalxd = slot;
             let elementId = slot.getSlotElementId();
             if (window.location.search.indexOf('mythdebug') !== -1) console.log(`${elementId} slot loaded successfully.`);
             this.applyHeight(elementId);
@@ -1191,7 +1033,7 @@
 
             iframeDom = iframe.getBoundingClientRect();
             parentDom = parentElement.getBoundingClientRect();
-            
+
             if (iframeDom.width - parentDom.width > 7) {
                 let computedStyle = window.getComputedStyle(iframe);
                 let currentScale = parseFloat(computedStyle.scale);
@@ -1403,10 +1245,9 @@
                         el.style.display = '';
                     }
                     insertedElement.style.display = 'none';
-                    
                 });
             }
-        }        
+        }
 
         autoDiv() {
             let paragraphs = document.getElementsByTagName('p');
@@ -1427,9 +1268,9 @@
                 if (totalWords < this.TOTAL_WORDS_LENGTH) {
                     continue;
                 }
-                
+
                 totalWords = 0;
-                
+
                 // Check if the paragraph is within footer or sidebar
                 let isInFooter = this.isDescendantOf(paragraph, 'footer');
                 let isInSidebar = this.isDescendantWithClass(paragraph, 'sidebar');
@@ -1453,7 +1294,7 @@
                 if (isInsideAvoid) {
                     continue;
                 }
-                
+
                 // if (isInFooter || isInSidebar) {
                 //     continue; // Skip paragraphs in footer or sidebar
                 // }
@@ -1493,10 +1334,10 @@
                 wrapperDiv.appendChild(div);
 
                 // Insert the wrapper div after the current paragraph
-				let isActive = GPTLoader.contentSlots[currentId - 1]?.[device] || true;
-				if (isActive) {
-					paragraph.insertAdjacentElement('afterend', wrapperDiv);
-				}
+                let isActive = GPTLoader.contentSlots[currentId - 1]?.[device] || true;
+                if (isActive) {
+                    paragraph.insertAdjacentElement('afterend', wrapperDiv);
+                }
 
                 currentId++;
 
@@ -1509,15 +1350,15 @@
                             observer.unobserve(adDiv);
                         }
                     });
-                }, {threshold: 0.1});
+                }, { threshold: 0.1 });
 
                 // observer.observe(div);
-            }           
+            }
         }
 
-        adsInImage() {
+        placeInImageAds() {
             // auto content images
-            let contentImageAds = GPTLoader.imageAds.filter(e => e.type == 2);
+            let contentImageAds = GPTLoader.imageAds.filter(e => e.type == 1);
 
             if (contentImageAds.length > 0) {
                 let contentElementOptions = ['.entry-content'];
@@ -1533,7 +1374,7 @@
                 if (contentElements && contentElements.length > 0) {
                     let images = []
                     for (let contentElement of contentElements) {
-                        images = images.concat(Array.from(contentElement.querySelectorAll('figure.aligncenter.size-large img')));
+                        images = images.concat(Array.from(contentElement.querySelectorAll(this.IN_IMAGE_AD_QUERY)));
                     }
 
                     let i = 0;
@@ -1570,7 +1411,7 @@
         // Checks if an image element is correctly tagged within a large figure.
         isLargeFigureImage(image) {
             const parent = image.parentNode;
-            return (parent && parent.tagName === 'FIGURE' && parent.classList.contains('size-large'));            
+            return (parent && parent.tagName === 'FIGURE' && parent.classList.contains('size-large'));
         }
 
         // Insert In Image ads.
@@ -1700,16 +1541,16 @@
     window.gptLoader = new GPTLoader();
 
     // Load custom styling.
-    window.gptLoader.addCustomStyling(); 
+    window.gptLoader.addCustomStyling();
 
     // Start the GPTLoader after the DOM has fully loaded
-    document.addEventListener("DOMContentLoaded", function async () {
+    document.addEventListener("DOMContentLoaded", function async() {
 
         window.gptLoader.autoDiv();
         window.gptLoader.loadLatestNewsDiv();
-        window.gptLoader.adsInImage();
+        window.gptLoader.placeInImageAds();
         setTimeout(function () {
-            
+
             window.gptLoader.start();
         }, GPTLoader.startTimeout); // Wait for 1 second before calling the start() function
     });
