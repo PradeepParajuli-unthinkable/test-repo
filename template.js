@@ -41,7 +41,7 @@
         static pageInitTime = Date.now();
 
         static enableLatestNews = ('false' !== 'true') ?? false;
-        static latestNewsParagraphId = parseInt('1') || 0;
+        static latestNewsParagraphId = parseInt('2') || 0;
         static latestNewsSpacementStyle = 'pixel' || 'pixel';
         static latestNewsSpacementValue = parseInt('50') || 0;
         static latestNewsDivName = 'taboola-latest-news' || '';
