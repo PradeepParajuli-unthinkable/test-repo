@@ -3,7 +3,154 @@
 
     class GPTLoader {
         static domain = 'jornaldia.com.br';
-        static contentSlots = [{"id":1003,"mobile":true,"tablet":true,"desktop":true,"slot":"ad_paragraph_1","display":"/22794149020/jornaldia/jornaldia_content1","sizesMobile":["fluid","336x280","300x250","320x100"],"sizesTablet":["fluid","336x280","300x250","320x100"],"sizes":["fluid","336x280","300x250","250x250"],"autoTargeting":false,"refreshIndividually":true,"refresh":true,"refreshTime":30000,"mythValue":0.01},{"id":1004,"mobile":true,"tablet":true,"desktop":true,"slot":"ad_paragraph_2","display":"/22794149020/jornaldia/jornaldia_content2","sizesMobile":["fluid","336x280","300x250","320x100"],"sizesTablet":["fluid","336x280","300x250","320x100"],"sizes":["fluid","336x280","300x250","250x250"],"autoTargeting":false,"refreshIndividually":true,"refresh":true,"refreshTime":30000,"mythValue":0.01},{"id":1005,"mobile":true,"tablet":true,"desktop":true,"slot":"ad_paragraph_3","display":"/22794149020/jornaldia/jornaldia_content3","sizesMobile":["fluid","336x280","300x250","320x100"],"sizesTablet":["fluid","336x280","300x250","320x100"],"sizes":["fluid","336x280","300x250","250x250"],"autoTargeting":false,"refreshIndividually":true,"refresh":true,"refreshTime":30000,"mythValue":0.01},{"id":1006,"mobile":true,"tablet":true,"desktop":true,"slot":"ad_paragraph_4","display":"/22794149020/jornaldia/jornaldia_content4","sizesMobile":["fluid","336x280","300x250","320x100"],"sizesTablet":["fluid","336x280","300x250","320x100"],"sizes":["fluid","336x280","300x250","250x250"],"autoTargeting":false,"refreshIndividually":true,"refresh":true,"refreshTime":30000,"mythValue":0.01},{"id":1007,"mobile":true,"tablet":true,"desktop":true,"slot":"ad_paragraph_5","display":"/22794149020/jornaldia/jornaldia_content5","sizesMobile":["fluid","336x280","300x250","320x100"],"sizesTablet":["fluid","336x280","300x250","320x100"],"sizes":["fluid","336x280","300x250","250x250"],"autoTargeting":false,"refreshIndividually":true,"refresh":true,"refreshTime":30000,"mythValue":0.01},{"id":1008,"mobile":true,"tablet":true,"desktop":true,"slot":"ad_paragraph_6","display":"/22794149020/jornaldia/jornaldia_content6","sizesMobile":["fluid","336x280","300x250","320x100"],"sizesTablet":["fluid","336x280","300x250","320x100"],"sizes":["fluid","336x280","300x250","250x250"],"autoTargeting":false,"refreshIndividually":true,"refresh":true,"refreshTime":30000,"mythValue":0.01},{"id":1009,"mobile":true,"tablet":true,"desktop":true,"slot":"ad_paragraph_7","display":"/22794149020/jornaldia/jornaldia_content7","sizesMobile":["fluid","336x280","300x250","320x100"],"sizesTablet":["fluid","336x280","300x250","320x100"],"sizes":["fluid","336x280","300x250","250x250"],"autoTargeting":false,"refreshIndividually":true,"refresh":true,"refreshTime":30000,"mythValue":0.01},{"id":1010,"mobile":true,"tablet":true,"desktop":true,"slot":"ad_paragraph_8","display":"/22794149020/jornaldia/jornaldia_content8","sizesMobile":["fluid","336x280","300x250","320x100"],"sizesTablet":["fluid","336x280","300x250","320x100"],"sizes":["fluid","336x280","300x250","250x250"],"autoTargeting":false,"refreshIndividually":true,"refresh":true,"refreshTime":30000,"mythValue":0.01},{"id":1011,"mobile":true,"tablet":true,"desktop":true,"slot":"ad_paragraph_9","display":"/22794149020/jornaldia/jornaldia_content9","sizesMobile":["fluid","300x250","336x280","320x100"],"sizesTablet":["fluid","300x250","336x280","320x100"],"sizes":["fluid","250x250","300x250","336x280"],"autoTargeting":false,"refreshIndividually":true,"refresh":true,"refreshTime":30000,"mythValue":0.01}];
+        //static contentSlots = [{"id":1003,"mobile":true,"tablet":true,"desktop":true,"slot":"ad_paragraph_1","display":"/22794149020/jornaldia/jornaldia_content1","sizesMobile":["fluid","336x280","300x250","320x100"],"sizesTablet":["fluid","336x280","300x250","320x100"],"sizes":["fluid","336x280","300x250","250x250"],"autoTargeting":false,"refreshIndividually":true,"refresh":true,"refreshTime":30000,"mythValue":0.01},{"id":1004,"mobile":true,"tablet":true,"desktop":true,"slot":"ad_paragraph_2","display":"/22794149020/jornaldia/jornaldia_content2","sizesMobile":["fluid","336x280","300x250","320x100"],"sizesTablet":["fluid","336x280","300x250","320x100"],"sizes":["fluid","336x280","300x250","250x250"],"autoTargeting":false,"refreshIndividually":true,"refresh":true,"refreshTime":30000,"mythValue":0.01},{"id":1005,"mobile":true,"tablet":true,"desktop":true,"slot":"ad_paragraph_3","display":"/22794149020/jornaldia/jornaldia_content3","sizesMobile":["fluid","336x280","300x250","320x100"],"sizesTablet":["fluid","336x280","300x250","320x100"],"sizes":["fluid","336x280","300x250","250x250"],"autoTargeting":false,"refreshIndividually":true,"refresh":true,"refreshTime":30000,"mythValue":0.01},{"id":1006,"mobile":true,"tablet":true,"desktop":true,"slot":"ad_paragraph_4","display":"/22794149020/jornaldia/jornaldia_content4","sizesMobile":["fluid","336x280","300x250","320x100"],"sizesTablet":["fluid","336x280","300x250","320x100"],"sizes":["fluid","336x280","300x250","250x250"],"autoTargeting":false,"refreshIndividually":true,"refresh":true,"refreshTime":30000,"mythValue":0.01},{"id":1007,"mobile":true,"tablet":true,"desktop":true,"slot":"ad_paragraph_5","display":"/22794149020/jornaldia/jornaldia_content5","sizesMobile":["fluid","336x280","300x250","320x100"],"sizesTablet":["fluid","336x280","300x250","320x100"],"sizes":["fluid","336x280","300x250","250x250"],"autoTargeting":false,"refreshIndividually":true,"refresh":true,"refreshTime":30000,"mythValue":0.01},{"id":1008,"mobile":true,"tablet":true,"desktop":true,"slot":"ad_paragraph_6","display":"/22794149020/jornaldia/jornaldia_content6","sizesMobile":["fluid","336x280","300x250","320x100"],"sizesTablet":["fluid","336x280","300x250","320x100"],"sizes":["fluid","336x280","300x250","250x250"],"autoTargeting":false,"refreshIndividually":true,"refresh":true,"refreshTime":30000,"mythValue":0.01},{"id":1009,"mobile":true,"tablet":true,"desktop":true,"slot":"ad_paragraph_7","display":"/22794149020/jornaldia/jornaldia_content7","sizesMobile":["fluid","336x280","300x250","320x100"],"sizesTablet":["fluid","336x280","300x250","320x100"],"sizes":["fluid","336x280","300x250","250x250"],"autoTargeting":false,"refreshIndividually":true,"refresh":true,"refreshTime":30000,"mythValue":0.01},{"id":1010,"mobile":true,"tablet":true,"desktop":true,"slot":"ad_paragraph_8","display":"/22794149020/jornaldia/jornaldia_content8","sizesMobile":["fluid","336x280","300x250","320x100"],"sizesTablet":["fluid","336x280","300x250","320x100"],"sizes":["fluid","336x280","300x250","250x250"],"autoTargeting":false,"refreshIndividually":true,"refresh":true,"refreshTime":30000,"mythValue":0.01},{"id":1011,"mobile":true,"tablet":true,"desktop":true,"slot":"ad_paragraph_9","display":"/22794149020/jornaldia/jornaldia_content9","sizesMobile":["fluid","300x250","336x280","320x100"],"sizesTablet":["fluid","300x250","336x280","320x100"],"sizes":["fluid","250x250","300x250","336x280"],"autoTargeting":false,"refreshIndividually":true,"refresh":true,"refreshTime":30000,"mythValue":0.01}];
+        static contentSlots = [
+            {
+                id: 1003,
+                mobile: true,
+                tablet: true,
+                desktop: true,
+                slot: "ad_paragraph_1",
+                display: "/22794149020/jornaldia/jornaldia_content1",
+                sizesMobile: ["fluid", [336, 280], [300, 250], [320, 100]],
+                sizesTablet: ["fluid", [336, 280], [300, 250], [320, 100]],
+                sizes: ["fluid", [336, 280], [300, 250], [250, 250]],
+                autoTargeting: false,
+                refreshIndividually: true,
+                refresh: true,
+                refreshTime: 30000,
+                mythValue: 0.01
+            },
+            {
+                id: 1004,
+                mobile: true,
+                tablet: true,
+                desktop: true,
+                slot: "ad_paragraph_2",
+                display: "/22794149020/jornaldia/jornaldia_content2",
+                sizesMobile: ["fluid", [336, 280], [300, 250], [320, 100]],
+                sizesTablet: ["fluid", [336, 280], [300, 250], [320, 100]],
+                sizes: ["fluid", [336, 280], [300, 250], [250, 250]],
+                autoTargeting: false,
+                refreshIndividually: true,
+                refresh: true,
+                refreshTime: 30000,
+                mythValue: 0.01
+            },
+            {
+                id: 1005,
+                mobile: true,
+                tablet: true,
+                desktop: true,
+                slot: "ad_paragraph_3",
+                display: "/22794149020/jornaldia/jornaldia_content3",
+                sizesMobile: ["fluid", [336, 280], [300, 250], [320, 100]],
+                sizesTablet: ["fluid", [336, 280], [300, 250], [320, 100]],
+                sizes: ["fluid", [336, 280], [300, 250], [250, 250]],
+                autoTargeting: false,
+                refreshIndividually: true,
+                refresh: true,
+                refreshTime: 30000,
+                mythValue: 0.01
+            },
+            {
+                id: 1006,
+                mobile: true,
+                tablet: true,
+                desktop: true,
+                slot: "ad_paragraph_4",
+                display: "/22794149020/jornaldia/jornaldia_content4",
+                sizesMobile: ["fluid", [336, 280], [300, 250], [320, 100]],
+                sizesTablet: ["fluid", [336, 280], [300, 250], [320, 100]],
+                sizes: ["fluid", [336, 280], [300, 250], [250, 250]],
+                autoTargeting: false,
+                refreshIndividually: true,
+                refresh: true,
+                refreshTime: 30000,
+                mythValue: 0.01
+            },
+            {
+                id: 1007,
+                mobile: true,
+                tablet: true,
+                desktop: true,
+                slot: "ad_paragraph_5",
+                display: "/22794149020/jornaldia/jornaldia_content5",
+                sizesMobile: ["fluid", [336, 280], [300, 250], [320, 100]],
+                sizesTablet: ["fluid", [336, 280], [300, 250], [320, 100]],
+                sizes: ["fluid", [336, 280], [300, 250], [250, 250]],
+                autoTargeting: false,
+                refreshIndividually: true,
+                refresh: true,
+                refreshTime: 30000,
+                mythValue: 0.01
+            },
+            {
+                id: 1008,
+                mobile: true,
+                tablet: true,
+                desktop: true,
+                slot: "ad_paragraph_6",
+                display: "/22794149020/jornaldia/jornaldia_content6",
+                sizesMobile: ["fluid", [336, 280], [300, 250], [320, 100]],
+                sizesTablet: ["fluid", [336, 280], [300, 250], [320, 100]],
+                sizes: ["fluid", [336, 280], [300, 250], [250, 250]],
+                autoTargeting: false,
+                refreshIndividually: true,
+                refresh: true,
+                refreshTime: 30000,
+                mythValue: 0.01
+            },
+            {
+                id: 1009,
+                mobile: true,
+                tablet: true,
+                desktop: true,
+                slot: "ad_paragraph_7",
+                display: "/22794149020/jornaldia/jornaldia_content7",
+                sizesMobile: ["fluid", [336, 280], [300, 250], [320, 100]],
+                sizesTablet: ["fluid", [336, 280], [300, 250], [320, 100]],
+                sizes: ["fluid", [336, 280], [300, 250], [250, 250]],
+                autoTargeting: false,
+                refreshIndividually: true,
+                refresh: true,
+                refreshTime: 30000,
+                mythValue: 0.01
+            },
+            {
+                id: 1010,
+                mobile: true,
+                tablet: true,
+                desktop: true,
+                slot: "ad_paragraph_8",
+                display: "/22794149020/jornaldia/jornaldia_content8",
+                sizesMobile: ["fluid", [336, 280], [300, 250], [320, 100]],
+                sizesTablet: ["fluid", [336, 280], [300, 250], [320, 100]],
+                sizes: ["fluid", [336, 280], [300, 250], [250, 250]],
+                autoTargeting: false,
+                refreshIndividually: true,
+                refresh: true,
+                refreshTime: 30000,
+                mythValue: 0.01
+            },
+            {
+                id: 1011,
+                mobile: true,
+                tablet: true,
+                desktop: true,
+                slot: "ad_paragraph_9",
+                display: "/22794149020/jornaldia/jornaldia_content9",
+                sizesMobile: ["fluid", [300, 250], [336, 280], [320, 100]],
+                sizesTablet: ["fluid", [300, 250], [336, 280], [320, 100]],
+                sizes: ["fluid", [250, 250], [300, 250], [336, 280]],
+                autoTargeting: false,
+                refreshIndividually: true,
+                refresh: true,
+                refreshTime: 30000,
+                mythValue: 0.01
+            }
+        ];
+
         static customSlots = [];
         static fallbackPaths = [
             {
@@ -28,7 +175,23 @@
         static disableCssSizing = false;
         static hideAfterMaxFails = false;
         static categoryAndUserTargeting = false;
-        static imageAds = [{ "name": "in-image", "content": "/22794149020/uainoticias/uainoticias_inimage", "target": ".size-large img", "type": 2, "refreshIndividually": true, "refresh": true, "refreshTime": 20000, "mythValue": 0.01 }];
+        //static imageAds = [{ "name": "in-image", "content": "/22794149020/uainoticias/uainoticias_inimage", "target": ".size-large img", "type": 2, "refreshIndividually": true, "refresh": true, "refreshTime": 20000, "mythValue": 0.01 }];
+        static imageAds = [
+            {
+                name: "in-image",
+                content: "/22794149020/uainoticias/uainoticias_inimage",
+                target: ".size-large img",
+                type: 2, // 2 = in-image ad type
+                sizesMobile: ["fluid", [300, 250], [320, 100]],
+                sizesTablet: ["fluid", [336, 280], [300, 250], [320, 100]],
+                sizesDesktop: ["fluid", [336, 280], [300, 250], [320, 100], [728, 90]],
+                refreshIndividually: true,
+                refresh: true,
+                refreshTime: 20000, // 20 seconds refresh
+                mythValue: 0.01
+            }
+        ];
+
         static refreshTime = 20000;
         static enableTruvidScript = true;
         static truvidTarget = '.wp-post-image';
@@ -836,7 +999,7 @@
                     if (!GPTLoader.hideAfterMaxFails) {
                         element.style.display = '';
                     }
-                }, 3000);
+                }, 7000);
             } else {
                 if (window.location.search.indexOf('mythdebug') !== -1) console.log(`Ad slot ${elementId} loaded successfully.`);
                 
