@@ -39,7 +39,7 @@
         static enableIngest = 0 == 1;
         static pageInitTime = Date.now();
 
-        static enableLatestNews = ('false' != 'true') ?? false;
+        static enableLatestNews = ('false' == 'true') ?? false;
         static latestNewsParagraphId = parseInt('1') || 0;
         static latestNewsSpacementStyle = 'pixel' || 'pixel';
         static latestNewsSpacementValue = parseInt('50') || 0;
@@ -1364,7 +1364,7 @@
                 if (contentElements && contentElements.length > 0) {
                     let images = []
                     for (let contentElement of contentElements) {
-                        images = images.concat(Array.from(contentElement.querySelectorAll('img')));
+                        images = images.concat(Array.from(contentElement.querySelectorAll('figure.aligncenter.size-large img')));
                     }
 
                     let i = 0;
@@ -1379,7 +1379,7 @@
                             image.id = id;
                         }
 
-                        if (this.isLargeFigureImage(image)) {
+                        //if (this.isLargeFigureImage(image)) {
 
                             let div = this.createOverlayDiv(`#${id}`);
                             imageAd.div = div;
@@ -1387,7 +1387,7 @@
                             imageAd.type = 1;
                         
                             this.insertInImageAd(image, div.id);
-                        }
+                        //}
                     }
                 }
             }
@@ -1526,20 +1526,12 @@
                 if (window.location.search.indexOf('mythdebug') !== -1) console.error('[GPTLoader] Failed to load GPT script:', error);
             }
         }
-
-        async preLoadScripts() {
-
-            // Load custom styling.
-            window.gptLoader.addCustomStyling();
-
-            // Initialize GPT library
-            // await window.gptLoader.loadGPTScript();
-            
-        }
     }
 
     window.gptLoader = new GPTLoader();
-    window.gptLoader.preLoadScripts();
+
+    // Load custom styling.
+    window.gptLoader.addCustomStyling(); 
 
     // Start the GPTLoader after the DOM has fully loaded
     document.addEventListener("DOMContentLoaded", function async () {
