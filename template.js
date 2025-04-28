@@ -1119,7 +1119,6 @@
 
         loadLatestNewsDiv() {
             if (!GPTLoader.enableLatestNews) {
-                this.adsInImage();
                 return
             };
 
@@ -1241,7 +1240,7 @@
                         el.style.display = '';
                     }
                     insertedElement.style.display = 'none';
-                    this.adsInImage();
+                    
                 });
             }
         }        
@@ -1545,7 +1544,7 @@
 
         window.gptLoader.autoDiv();
         window.gptLoader.loadLatestNewsDiv();
-
+        window.gptLoader.adsInImage();
         setTimeout(function () {
             
             window.gptLoader.start();
