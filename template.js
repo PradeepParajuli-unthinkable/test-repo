@@ -40,7 +40,7 @@
         static enableIngest = 0 == 1;
         static pageInitTime = Date.now();
 
-        static enableLatestNews = ('false' == 'true') ?? false;
+        static enableLatestNews = ('false' !== 'true') ?? false;
         static latestNewsParagraphId = parseInt('1') || 0;
         static latestNewsSpacementStyle = 'pixel' || 'pixel';
         static latestNewsSpacementValue = parseInt('50') || 0;
