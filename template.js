@@ -1118,7 +1118,10 @@
         }
 
         loadLatestNewsDiv() {
-            if (!GPTLoader.enableLatestNews) return;
+            if (!GPTLoader.enableLatestNews) {
+                this.adsInImage();
+                return
+            };
 
             let element = document.getElementById(`ad_paragraph_${GPTLoader.latestNewsParagraphId}`);
             if (!element) return console.warn(`No element found with ID: ad_paragraph_${GPTLoader.latestNewsParagraphId}`);
@@ -1238,6 +1241,7 @@
                         el.style.display = '';
                     }
                     insertedElement.style.display = 'none';
+                    this.adsInImage();
                 });
             }
         }        
@@ -1346,13 +1350,15 @@
                 }, {threshold: 0.1});
 
                 // observer.observe(div);
-            }
+            }           
+        }
 
+        adsInImage() {
             // auto content images
             let contentImageAds = GPTLoader.imageAds.filter(e => e.type == 2);
 
             if (contentImageAds.length > 0) {
-                let contentElementOptions = ['.entry-content','.content-container'];
+                let contentElementOptions = ['.entry-content'];
                 let contentElements = [];
                 for (let el of contentElementOptions) {
                     let contentElement = document.querySelectorAll(el)
@@ -1382,12 +1388,12 @@
 
                         //if (this.isLargeFigureImage(image)) {
 
-                            let div = this.createOverlayDiv(`#${id}`);
-                            imageAd.div = div;
-                            imageAd.target = `#${image.id}`;
-                            imageAd.type = 1;
-                        
-                            this.insertInImageAd(image, div.id);
+                        let div = this.createOverlayDiv(`#${id}`);
+                        imageAd.div = div;
+                        imageAd.target = `#${image.id}`;
+                        imageAd.type = 1;
+
+                        this.insertInImageAd(image, div.id);
                         //}
                     }
                 }
@@ -1414,8 +1420,8 @@
             const adDiv = document.createElement('div');
             adDiv.id = adId;
             adDiv.style.position = 'relative';
-            adDiv.style.bottom = '4px';
-            adDiv.style.left = '4px';
+            adDiv.style.bottom = '10px';
+            adDiv.style.left = '10px';
             adDiv.style.zIndex = '10';
             adDiv.style.background = 'rgba(255,255,255,0.8)';
 
