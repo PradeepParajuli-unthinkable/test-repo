@@ -1108,7 +1108,7 @@
             adElement.style.height = '100%';
             insideWrapper.append(adElement);
             insideWrapper.append(closeButton);
-            
+
             this.updateOverlayDiv(element, targetElement);
             setInterval(this.updateOverlayDiv.bind(this), 5000, element, targetElement);
             window.addEventListener('resize', this.updateOverlayDiv.bind(this, element, targetElement));
@@ -1393,7 +1393,7 @@
                         imageAd.target = `#${image.id}`;
                         imageAd.type = 1;
 
-                        this.insertInImageAd(image, div.id);
+                        //this.insertInImageAd(image, div.id);
                         //}
                     }
                 }
