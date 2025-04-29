@@ -59,11 +59,10 @@
             this.fallbackAttemptedSlots = new Set(); // Keeps track of throttled slots
             this.MAX_FALLBACKS = GPTLoader.fallbackPaths.length; // Maximum number of fallbacks based on the number of defined paths
             this.slotsFallbackCount = {}; // Stores the fallback count for each slot
-            
 
-            if (this.enableIndividualSlotRefresh) {
-                this.contentSlots.forEach(slot => { slot.refreshIndividually = true; });
-            }
+            // Update the slot refreshIndividually based on global variable.
+            GPTLoader.contentSlots.forEach(slot => { slot["refreshIndividually"] = GPTLoader.enableIndividualSlotRefresh; });
+            
         }
 
         static location() {
@@ -844,7 +843,7 @@
                         if (!GPTLoader.hideAfterMaxFails) {
                             element.style.display = '';
                         }
-                    }, this.TIMEOUT_FOR_SLOT_REFRESH);
+                    }, GPTLoader.TIMEOUT_FOR_SLOT_REFRESH);
                 } else {
                     if (window.location.search.indexOf('mythdebug') !== -1) console.log(`Ad slot ${elementId} loaded successfully.`);
 
@@ -1250,6 +1249,7 @@
                     for (let el of elementsAfter) {
                         el.style.display = '';
                     }
+                    this.desplayAllAdSlots();                    
                     insertedElement.style.display = 'none';
                 });
             }
@@ -1380,7 +1380,7 @@
                 if (contentElements && contentElements.length > 0) {
                     let images = []
                     for (let contentElement of contentElements) {
-                        images = images.concat(Array.from(contentElement.querySelectorAll(this.IN_IMAGE_AD_QUERY)));
+                        images = images.concat(Array.from(contentElement.querySelectorAll(GPTLoader.IN_IMAGE_AD_QUERY)));
                     }
 
                     let i = 0;
