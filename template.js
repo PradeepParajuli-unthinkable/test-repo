@@ -36,7 +36,7 @@
         static enableTaboolaScript = false;
         static taboolaScriptId = '';
         static taboolaTarget = '';
-        static startTimeout = 1000;
+        static startTimeout = 3000;
         static enableIngest = 0 == 1;
         static pageInitTime = Date.now();
 
@@ -323,7 +323,7 @@
                                     this.updateOverlayDiv(element, document.querySelector(imageSlot.target));
                                 }
                             }
-                        }, refreshTime); // Refresh after 30 seconds
+                        }, refreshTime); // Refresh after 20 seconds
                     });
 
                 });
