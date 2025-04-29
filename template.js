@@ -638,7 +638,7 @@
         }
 
         configureImageSlot(slot) {
-            if (!googletag.pubads().getSlots().find(adSlot => adSlot.getSlotElementId() == slot.div?.id)) {
+            if (!googletag.pubads().getSlots().find(adSlot => adSlot.getSlotElementId() == slot.div.id)) {
                 googletag.cmd.push(() => {
                     if (slot.type == 1) {
                         let device = (window.innerWidth <= 768) ? 'mobile' : 'desktop';
@@ -1252,9 +1252,7 @@
                     for (let el of elementsAfter) {
                         el.style.display = '';
                     }
-                    this.placeInImageAds();
-                    this.configureImageSlots();  // defines new in-image ad slots
-                    this.desplayAllAdSlots();                   
+                    this.desplayAllAdSlots();                    
                     insertedElement.style.display = 'none';
                 });
             }
