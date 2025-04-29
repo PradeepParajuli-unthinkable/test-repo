@@ -49,11 +49,11 @@
         static latestNewsDivSwapColors = ('false' == 'true') ?? false;
         static sentTracing = [];
         static enableIndividualSlotRefresh = true; // Individual Slot Refresh
-        static TIMEOUT_FOR_SLOT_REFRESH = 6000;
+        static TIMEOUT_FOR_SLOT_REFRESH = 5000;
         static IN_IMAGE_AD_QUERY = 'figure.aligncenter.size-large img';
 
         constructor() {
-            this.MAX_RETRIES = 50; // Maximum number of retries for the original content
+            this.MAX_RETRIES = 300; // Maximum number of retries for the original content
             this.TOTAL_WORDS_LENGTH = 50;
             this.slotsRefreshCount = {}; // Stores the refresh count for each slot
             this.fallbackAttemptedSlots = new Set(); // Keeps track of throttled slots
@@ -1486,6 +1486,7 @@
                     margin: 10px auto !important;
                     max-width: 100% !important;
                     min-height: 250px;
+                    height: inharit;
                     padding: 10px 0 !important;
                     text-align: center !important;
                 }
@@ -1502,6 +1503,7 @@
                     .ad-wrapper-div {
                         min-width: 728px;
                         min-height: 280px;
+                        height: inharit;
                     }
                 }
 
@@ -1516,6 +1518,7 @@
                     .ad-wrapper-div {
                         min-width: 100%;
                         min-height: 90px;
+                        height: inharit;
                         padding-top: 5px !important;
                         padding-bottom: 5px !important;
                     }
