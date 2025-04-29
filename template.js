@@ -314,7 +314,7 @@
                             refreshTime = customSlot.refreshTime;
                         }
 
-                        setTimeout(function () {
+                        setTimeout(() => {
                             googletag.pubads().refresh([slot]);
                             slot.refreshCount++;
 
@@ -324,7 +324,7 @@
                                     this.updateOverlayDiv(element, document.querySelector(imageSlot.target));
                                 }
                             }
-                        }, refreshTime).bind(this); // Refresh after 20 seconds
+                        }, refreshTime); // Refresh after 20 seconds
                     });
 
                 });
