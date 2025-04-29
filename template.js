@@ -251,23 +251,6 @@
                     googletag.pubads().enableSingleRequest();
                     googletag.pubads().collapseEmptyDivs(false);
 
-                    if (window.googletag && window.googletag.apiReady) {
-                        googletag.pubads().addEventListener('slotRenderEnded', event => {
-                            this.handleSlotRenderEnded(event);
-                        });
-                        googletag.pubads().addEventListener('slotOnload', event => {
-                            this.handleSlotLoadEnded(event);
-                        });
-                        googletag.pubads().addEventListener('slotVisibilityChanged', event => {
-                            this.handleSlotVisibilityChanged(event);
-                        });
-                    } else {
-                        console.error('GPT API is not ready when trying to set up event listeners.');
-                    }
-
-                    // 
-                    // 
-
                     if (anchorSlot) {
                         this.executeDisplaySlot(anchorSlot);
                     }
@@ -285,8 +268,7 @@
                             this.initTaboolaScript();
                         });
                     }
-
-                    this.desplayAllAdSlots();
+                    
 
                     // Auto-refresh ad slots
                     googletag.pubads().addEventListener('impressionViewable', (event) => {
@@ -312,6 +294,22 @@
                             if (customSlot.refresh == false) return;
                             refreshTime = customSlot.refreshTime;
                         }
+
+                        if (window.googletag && window.googletag.apiReady) {
+                        googletag.pubads().addEventListener('slotRenderEnded', event => {
+                            this.handleSlotRenderEnded(event);
+                        });
+                        googletag.pubads().addEventListener('slotOnload', event => {
+                            this.handleSlotLoadEnded(event);
+                        });
+                        googletag.pubads().addEventListener('slotVisibilityChanged', event => {
+                            this.handleSlotVisibilityChanged(event);
+                        });
+                        } else {
+                            console.error('GPT API is not ready when trying to set up event listeners.');
+                        }
+
+                        this.desplayAllAdSlots();
 
                         setTimeout(() => {
                             googletag.pubads().refresh([slot]);
@@ -794,7 +792,7 @@
             // }
 
             const isInImageSlot = GPTLoader.imageAds?.some(e => e.div?.id === elementId);
-            if (isInImageSlot) console.log("image slot",slot);
+            if (isInImageSlot && window.location.search.indexOf('mythdebug') !== -1) console.log("image slot",slot);
 
             try {
 
@@ -1494,7 +1492,6 @@
                     margin: 10px auto !important;
                     max-width: 100% !important;
                     min-height: 250px;
-                    height: inharit;
                     padding: 10px 0 !important;
                     text-align: center !important;
                 }
