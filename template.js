@@ -324,7 +324,7 @@
                                     this.updateOverlayDiv(element, document.querySelector(imageSlot.target));
                                 }
                             }
-                        }, refreshTime); // Refresh after 20 seconds
+                        }, refreshTime).bind(this); // Refresh after 20 seconds
                     });
 
                 });
