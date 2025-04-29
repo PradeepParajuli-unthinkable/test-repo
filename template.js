@@ -49,11 +49,11 @@
         static latestNewsDivSwapColors = ('false' == 'true') ?? false;
         static sentTracing = [];
         static enableIndividualSlotRefresh = true; // Individual Slot Refresh
-        static TIMEOUT_FOR_SLOT_REFRESH = 5000;
+        static TIMEOUT_FOR_SLOT_REFRESH = 7000;
         static IN_IMAGE_AD_QUERY = 'figure.aligncenter.size-large img';
 
         constructor() {
-            this.MAX_RETRIES = 300; // Maximum number of retries for the original content
+            this.MAX_RETRIES = 10; // Maximum number of retries for the original content
             this.TOTAL_WORDS_LENGTH = 50;
             this.slotsRefreshCount = {}; // Stores the refresh count for each slot
             this.fallbackAttemptedSlots = new Set(); // Keeps track of throttled slots
@@ -794,80 +794,85 @@
             //     }
             // }
 
-            // Initialize refresh and fallback counts for the slot if they haven't been set
-            this.slotsRefreshCount[elementId] = this.slotsRefreshCount[elementId] || 0;
-            this.slotsFallbackCount[elementId] = this.slotsFallbackCount[elementId] || 0;
+            try {
 
-            if (event.isEmpty) {
-                setTimeout(() => {
-                    if (this.slotsRefreshCount[elementId] < this.MAX_RETRIES) {
-                        this.slotsRefreshCount[elementId]++;
-                        if (window.location.search.indexOf('mythdebug') !== -1) console.log(`${elementId} slot is empty, retrying (${this.slotsRefreshCount[elementId]}/${this.MAX_RETRIES})`);
-                        try {
-                            googletag.pubads().refresh([slot]);
-                        } catch (error) {
-                            if (window.location.search.indexOf('mythdebug') !== -1) console.error(`Failed to reload ad slot ${elementId}:`, error);
-                        }
-                    } else if (this.slotsFallbackCount[elementId] < this.MAX_FALLBACKS) {
-                        // Exclude Stick and Interstitial slots from fallback mechanism
-                        if (elementId.includes("Stick") || elementId.includes("Interstitial")
-                            || elementId.includes("stick") || elementId.includes("interstitial")) {
-                            if (window.location.search.indexOf('mythdebug') !== -1) console.log(`No fallback for ${elementId} as it's a Stick or Interstitial slot.`);
-                        } else {
-                            if (window.location.search.indexOf('mythdebug') !== -1) console.log(`${elementId} slot is still empty after ${this.MAX_RETRIES} retries, attempting fallback.`);
-                            this.slotsFallbackCount[elementId]++;
-                            this.loadFallbackContent(slot, elementId);
-                        }
-                    } else {
-                        if (window.location.search.indexOf('mythdebug') !== -1) console.log(`No more fallbacks available for ${elementId}.`);
+                // Initialize refresh and fallback counts for the slot if they haven't been set
+                this.slotsRefreshCount[elementId] = this.slotsRefreshCount[elementId] || 0;
+                this.slotsFallbackCount[elementId] = this.slotsFallbackCount[elementId] || 0;
 
-                        if (GPTLoader.hideAfterMaxFails) {
-                            let parent = element.parentElement;
-                            if (parent) {
-                                parent.style.display = 'none';
+                if (event.isEmpty) {
+                    setTimeout(() => {
+                        if (this.slotsRefreshCount[elementId] < this.MAX_RETRIES) {
+                            this.slotsRefreshCount[elementId]++;
+                            if (window.location.search.indexOf('mythdebug') !== -1) console.log(`${elementId} slot is empty, retrying (${this.slotsRefreshCount[elementId]}/${this.MAX_RETRIES})`);
+                            try {
+                                googletag.pubads().refresh([slot]);
+                            } catch (error) {
+                                if (window.location.search.indexOf('mythdebug') !== -1) console.error(`Failed to reload ad slot ${elementId}:`, error);
                             }
+                        } else if (this.slotsFallbackCount[elementId] < this.MAX_FALLBACKS) {
+                            // Exclude Stick and Interstitial slots from fallback mechanism
+                            if (elementId.includes("Stick") || elementId.includes("Interstitial")
+                                || elementId.includes("stick") || elementId.includes("interstitial")) {
+                                if (window.location.search.indexOf('mythdebug') !== -1) console.log(`No fallback for ${elementId} as it's a Stick or Interstitial slot.`);
+                            } else {
+                                if (window.location.search.indexOf('mythdebug') !== -1) console.log(`${elementId} slot is still empty after ${this.MAX_RETRIES} retries, attempting fallback.`);
+                                this.slotsFallbackCount[elementId]++;
+                                this.loadFallbackContent(slot, elementId);
+                            }
+                        } else {
+                            if (window.location.search.indexOf('mythdebug') !== -1) console.log(`No more fallbacks available for ${elementId}.`);
+
+                            if (GPTLoader.hideAfterMaxFails) {
+                                let parent = element.parentElement;
+                                if (parent) {
+                                    parent.style.display = 'none';
+                                }
+                            }
+
+                            let slotType = this.getSlotDetails(slot);
+                            let mythValue = this.getSlotMythValue(slot);
+
+                            this.sendTracingData({
+                                SlotId: slotType,
+                                State: 'Empty',
+                                FallbackCallsCount: this.slotsFallbackCount[elementId],
+                                MythValue: mythValue,
+                            });
                         }
 
-                        let slotType = this.getSlotDetails(slot);
-                        let mythValue = this.getSlotMythValue(slot);
+                        if (!GPTLoader.hideAfterMaxFails) {
+                            element.style.display = '';
+                        }
+                    }, this.TIMEOUT_FOR_SLOT_REFRESH);
+                } else {
+                    if (window.location.search.indexOf('mythdebug') !== -1) console.log(`Ad slot ${elementId} loaded successfully.`);
 
-                        this.sendTracingData({
-                            SlotId: slotType,
-                            State: 'Empty',
-                            FallbackCallsCount: this.slotsFallbackCount[elementId],
-                            MythValue: mythValue,
-                        });
-                    }
+                    let imageAd = GPTLoader.imageAds.find(ad => (ad.div ? ad.div.id : '') === elementId);
+                    if (imageAd) {
+                        imageAd.div.style.display = 'flex';
+                        imageAd.div.style.justifyContent = 'end';
+                        imageAd.div.style.alignItems = 'center';
 
-                    if (!GPTLoader.hideAfterMaxFails) {
-                        element.style.display = '';
-                    }
-                }, this.TIMEOUT_FOR_SLOT_REFRESH);
-            } else {
-                if (window.location.search.indexOf('mythdebug') !== -1) console.log(`Ad slot ${elementId} loaded successfully.`);
+                        // find iframe and set height to 100%
+                        let iframe = imageAd.div.querySelector('iframe');
+                        if (iframe) {
+                            // iframe.style.height = '100%';
+                        }
 
-                let imageAd = GPTLoader.imageAds.find(ad => (ad.div ? ad.div.id : '') === elementId);
-                if (imageAd) {
-                    imageAd.div.style.display = 'flex';
-                    imageAd.div.style.justifyContent = 'end';
-                    imageAd.div.style.alignItems = 'center';
+                        let closeButton = document.getElementById(`${elementId.replace('__ad-element', '__wrapper-close')}`);
+                        if (closeButton) {
+                            closeButton.style.display = 'flex';
+                        }
 
-                    // find iframe and set height to 100%
-                    let iframe = imageAd.div.querySelector('iframe');
-                    if (iframe) {
-                        // iframe.style.height = '100%';
-                    }
-
-                    let closeButton = document.getElementById(`${elementId.replace('__ad-element', '__wrapper-close')}`);
-                    if (closeButton) {
-                        closeButton.style.display = 'flex';
-                    }
-
-                    let wrapper = document.getElementById(`${elementId.replace('__ad-element', '__wrapper')}`);
-                    if (wrapper) {
-                        wrapper.style.opacity = 1;
+                        let wrapper = document.getElementById(`${elementId.replace('__ad-element', '__wrapper')}`);
+                        if (wrapper) {
+                            wrapper.style.opacity = 1;
+                        }
                     }
                 }
+            } catch (ex) {
+                if (window.location.search.indexOf('mythdebug') !== -1) console.error(`Error in handleSlotRenderEnded, elementId: ${elementId}`);
             }
         }
 
