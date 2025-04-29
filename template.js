@@ -268,6 +268,22 @@
                             this.initTaboolaScript();
                         });
                     }
+
+                    if (window.googletag && window.googletag.apiReady) {
+                        googletag.pubads().addEventListener('slotRenderEnded', event => {
+                            this.handleSlotRenderEnded(event);
+                        });
+                        googletag.pubads().addEventListener('slotOnload', event => {
+                            this.handleSlotLoadEnded(event);
+                        });
+                        googletag.pubads().addEventListener('slotVisibilityChanged', event => {
+                            this.handleSlotVisibilityChanged(event);
+                        });
+                    } else {
+                        console.error('GPT API is not ready when trying to set up event listeners.');
+                    }
+
+                    this.desplayAllAdSlots();
                     
 
                     // Auto-refresh ad slots
@@ -293,23 +309,7 @@
                         if (customSlot && customSlot.refreshIndividually) {
                             if (customSlot.refresh == false) return;
                             refreshTime = customSlot.refreshTime;
-                        }
-
-                        if (window.googletag && window.googletag.apiReady) {
-                        googletag.pubads().addEventListener('slotRenderEnded', event => {
-                            this.handleSlotRenderEnded(event);
-                        });
-                        googletag.pubads().addEventListener('slotOnload', event => {
-                            this.handleSlotLoadEnded(event);
-                        });
-                        googletag.pubads().addEventListener('slotVisibilityChanged', event => {
-                            this.handleSlotVisibilityChanged(event);
-                        });
-                        } else {
-                            console.error('GPT API is not ready when trying to set up event listeners.');
-                        }
-
-                        this.desplayAllAdSlots();
+                        }                        
 
                         setTimeout(() => {
                             googletag.pubads().refresh([slot]);
