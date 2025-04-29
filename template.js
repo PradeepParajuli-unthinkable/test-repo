@@ -59,6 +59,7 @@
             this.fallbackAttemptedSlots = new Set(); // Keeps track of throttled slots
             this.MAX_FALLBACKS = GPTLoader.fallbackPaths.length; // Maximum number of fallbacks based on the number of defined paths
             this.slotsFallbackCount = {}; // Stores the fallback count for each slot
+            this.placedImageIds = new Set();
 
             // Update the slot refreshIndividually based on global variable.
             GPTLoader.contentSlots.forEach(slot => { slot["refreshIndividually"] = GPTLoader.enableIndividualSlotRefresh; });
@@ -1250,7 +1251,10 @@
                     for (let el of elementsAfter) {
                         el.style.display = '';
                     }
-                    this.desplayAllAdSlots();                    
+
+                    this.placeInImageAds();
+                    this.configureImageSlots();
+                    this.desplayAllAdSlots();                  
                     insertedElement.style.display = 'none';
                 });
             }
@@ -1364,56 +1368,41 @@
         }
 
         placeInImageAds() {
-            // auto content images
-            let contentImageAds = GPTLoader.imageAds.filter(e => e.type == 1);
+            const contentImageAds = GPTLoader.imageAds.filter(e => e.type == 1);
+            if (contentImageAds.length === 0) return;
 
-            if (contentImageAds.length > 0) {
-                let contentElementOptions = ['.entry-content'];
-                let contentElements = [];
-                for (let el of contentElementOptions) {
-                    let contentElement = document.querySelectorAll(el)
-
-                    if (contentElement.length > 0) {
-                        contentElements = contentElements.concat(Array.from(contentElement));
-                    }
-                }
-
-                if (contentElements && contentElements.length > 0) {
-                    let images = []
-                    for (let contentElement of contentElements) {
-                        images = images.concat(Array.from(contentElement.querySelectorAll(GPTLoader.IN_IMAGE_AD_QUERY)));
-                    }
-
-                    let i = 0;
-                    for (let image of images) {
-                        if (i >= contentImageAds.length) break;
-
-                        let imageAd = contentImageAds[i];
-                        let id = `auto-image-${i++}`;
-                        if (image.id) {
-                            id = image.id;
-                        } else {
-                            image.id = id;
-                        }
-
-                        //if (this.isLargeFigureImage(image)) {
-
-                        let div = this.createOverlayDiv(`#${id}`);
-                        imageAd.div = div;
-                        imageAd.target = `#${image.id}`;
-                        imageAd.type = 1;
-
-                        //this.insertInImageAd(image, div.id);
-                        //}
-                    }
-                }
+            const contentElementOptions = ['.entry-content'];
+            let contentElements = [];
+            for (const sel of contentElementOptions) {
+                contentElements.push(...document.querySelectorAll(sel));
             }
 
-            for (let slot of GPTLoader.imageAds) {
-                if (slot.div) continue;
-                slot.div = this.createOverlayDiv(slot.target);
+            let availableImages = [];
+            for (const contentElement of contentElements) {
+                availableImages.push(...contentElement.querySelectorAll(GPTLoader.IN_IMAGE_AD_QUERY));
+            }
+
+            let i = 0;
+            for (let img of availableImages) {
+                if (!img || this.placedImageIds.has(img)) continue;
+
+                if (!img.id) {
+                    img.id = `auto-image-${Math.floor(Math.random() * 1000000)}`;
+                }
+
+                if (document.getElementById(`${img.id}__wrapper`)) {
+                    this.placedImageIds.add(img);
+                    continue; // Skip if wrapper already exists
+                }
+
+                const ad = contentImageAds[i % contentImageAds.length]; // rotate if needed
+                ad.target = `#${img.id}`;
+                ad.div = this.createOverlayDiv(`#${img.id}`);
+                this.placedImageIds.add(img);
+                i++;
             }
         }
+
 
         // Checks if an image element is correctly tagged within a large figure.
         isLargeFigureImage(image) {
