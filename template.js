@@ -28,7 +28,7 @@
         static disableCssSizing = false;
         static hideAfterMaxFails = false;
         static categoryAndUserTargeting = false;
-        static imageAds = [{ "name": "in-image", "content": "/22794149020/uainoticias/uainoticias_inimage", "target": ".size-large img", "type": 1, "refreshIndividually": true, "refresh": true, "refreshTime": 20000, "mythValue": 0.01 }];
+        static imageAds = [{ "name": "in-image", "content": "/22794149020/uainoticias/uainoticias_inimage", "target": ".size-large img", "type": 1, "refreshIndividually": true, "refresh": true, "refreshTime": 20000, "mythValue": 0.01 }, { "name": "in-image-2", "content": "/22794149020/uainoticias/uainoticias_inimage_2", "target": ".size-large img", "type": 1, "refreshIndividually": true, "refresh": true, "refreshTime": 20000, "mythValue": 0.01 }];
         static refreshTime = 20000;
         static enableTruvidScript = true;
         static truvidTarget = '.wp-post-image';
@@ -36,12 +36,12 @@
         static enableTaboolaScript = false;
         static taboolaScriptId = '';
         static taboolaTarget = '';
-        static startTimeout = 3000;
+        static startTimeout = 1000;
         static enableIngest = 0 == 1;
         static pageInitTime = Date.now();
 
-        static enableLatestNews = ('false' !== 'true') ?? false;
-        static latestNewsParagraphId = parseInt('2') || 0;
+        static enableLatestNews = true; // Read more button.
+        static latestNewsParagraphId = 2; // After the n number of paragraph readmore button should be added.
         static latestNewsSpacementStyle = 'pixel' || 'pixel';
         static latestNewsSpacementValue = parseInt('50') || 0;
         static latestNewsDivName = 'taboola-latest-news' || '';
@@ -53,7 +53,7 @@
         static IN_IMAGE_AD_QUERY = 'figure.aligncenter.size-large img';
 
         constructor() {
-            this.MAX_RETRIES = 300; // Maximum number of retries for the original content
+            this.MAX_RETRIES = 50; // Maximum number of retries for the original content
             this.TOTAL_WORDS_LENGTH = 50;
             this.slotsRefreshCount = {}; // Stores the refresh count for each slot
             this.fallbackAttemptedSlots = new Set(); // Keeps track of throttled slots
@@ -238,7 +238,7 @@
                     this.configureCustomSlots();
                     this.configureContentSlots();
                     this.configureImageSlots();
-
+                                        
                     googletag.pubads().enableLazyLoad();
                     googletag.pubads().enableLazyLoad({ fetchMarginPercent: -1 });
                     // Enable lazy loading with specific configuration (method-1)
@@ -250,6 +250,7 @@
 
                     googletag.enableServices();
                     googletag.pubads().enableSingleRequest();
+                    googletag.pubads().collapseEmptyDivs(false);
 
                     if (window.googletag && window.googletag.apiReady) {
                         googletag.pubads().addEventListener('slotRenderEnded', event => {
@@ -909,7 +910,7 @@
                         googleTag.setTargeting('myth_value', fallbackPath.mythValue)
 
                     googletag.display(elementId);
-                    // googletag.pubads().refresh([newSlot]);
+                    googletag.pubads().refresh([slot]);
                 } catch (error) {
                     if (window.location.search.indexOf('mythdebug') !== -1) console.error(`Failed to load fallback content for ${elementId}:`, error);
                 }
@@ -1342,15 +1343,15 @@
                 currentId++;
 
                 // Use IntersectionObserver for lazy loading (method-2)
-                let observer = new IntersectionObserver((entries) => {
-                    entries.forEach((entry) => {
-                        if (entry.isIntersecting) {
-                            let adDiv = entry.target;
-                            this.executeDisplaySlot(adDiv.id);
-                            observer.unobserve(adDiv);
-                        }
-                    });
-                }, { threshold: 0.1 });
+                //let observer = new IntersectionObserver((entries) => {
+                //    entries.forEach((entry) => {
+                //        if (entry.isIntersecting) {
+                //            let adDiv = entry.target;
+                //            this.executeDisplaySlot(adDiv.id);
+                //            observer.unobserve(adDiv);
+                //        }
+                //    });
+                //}, { threshold: 0.1 });
 
                 // observer.observe(div);
             }
