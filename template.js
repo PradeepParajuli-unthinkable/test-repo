@@ -599,8 +599,8 @@
             for (let slot of GPTLoader.imageAds) {
                 if (!document.querySelector(slot.target)) continue;
 
-                if (slot.div && googletag.pubads().getSlots().some(s => s.getSlotElementId() === slot.div.id)) {
-                    this.executeDisplaySlot(slot.div.id);
+                if (slot.div && googletag.pubads().getSlots().some(s => s.getSlotElementId() === slot.div?.id)) {
+                    this.executeDisplaySlot(slot.div?.id);
                 } else {
                     if (window.location.search.includes("mythdebug"))
                         console.warn(`[GPT] Skipping display for image ad ${slot.div?.id} — slot not defined yet.`);
@@ -637,7 +637,7 @@
         }
 
         configureImageSlot(slot) {
-            if (!googletag.pubads().getSlots().find(adSlot => adSlot.getSlotElementId() == slot.div.id)) {
+            if (!googletag.pubads().getSlots().find(adSlot => adSlot.getSlotElementId() == slot.div?.id)) {
                 googletag.cmd.push(() => {
                     if (slot.type == 1) {
                         let device = (window.innerWidth <= 768) ? 'mobile' : 'desktop';
