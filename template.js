@@ -59,7 +59,6 @@
             this.fallbackAttemptedSlots = new Set(); // Keeps track of throttled slots
             this.MAX_FALLBACKS = GPTLoader.fallbackPaths.length; // Maximum number of fallbacks based on the number of defined paths
             this.slotsFallbackCount = {}; // Stores the fallback count for each slot
-            this.placedImageIds = new Set();
 
             // Update the slot refreshIndividually based on global variable.
             GPTLoader.contentSlots.forEach(slot => { slot["refreshIndividually"] = GPTLoader.enableIndividualSlotRefresh; });
@@ -252,6 +251,23 @@
                     googletag.pubads().enableSingleRequest();
                     googletag.pubads().collapseEmptyDivs(false);
 
+                    if (window.googletag && window.googletag.apiReady) {
+                        googletag.pubads().addEventListener('slotRenderEnded', event => {
+                            this.handleSlotRenderEnded(event);
+                        });
+                        googletag.pubads().addEventListener('slotOnload', event => {
+                            this.handleSlotLoadEnded(event);
+                        });
+                        googletag.pubads().addEventListener('slotVisibilityChanged', event => {
+                            this.handleSlotVisibilityChanged(event);
+                        });
+                    } else {
+                        console.error('GPT API is not ready when trying to set up event listeners.');
+                    }
+
+                    // 
+                    // 
+
                     if (anchorSlot) {
                         this.executeDisplaySlot(anchorSlot);
                     }
@@ -270,22 +286,7 @@
                         });
                     }
 
-                    if (window.googletag && window.googletag.apiReady) {
-                        googletag.pubads().addEventListener('slotRenderEnded', event => {
-                            this.handleSlotRenderEnded(event);
-                        });
-                        googletag.pubads().addEventListener('slotOnload', event => {
-                            this.handleSlotLoadEnded(event);
-                        });
-                        googletag.pubads().addEventListener('slotVisibilityChanged', event => {
-                            this.handleSlotVisibilityChanged(event);
-                        });
-                    } else {
-                        console.error('GPT API is not ready when trying to set up event listeners.');
-                    }
-
                     this.desplayAllAdSlots();
-                    
 
                     // Auto-refresh ad slots
                     googletag.pubads().addEventListener('impressionViewable', (event) => {
@@ -310,7 +311,7 @@
                         if (customSlot && customSlot.refreshIndividually) {
                             if (customSlot.refresh == false) return;
                             refreshTime = customSlot.refreshTime;
-                        }                        
+                        }
 
                         setTimeout(() => {
                             googletag.pubads().refresh([slot]);
@@ -599,8 +600,8 @@
             for (let slot of GPTLoader.imageAds) {
                 if (!document.querySelector(slot.target)) continue;
 
-                if (slot.div && googletag.pubads().getSlots().some(s => s.getSlotElementId() === slot.div?.id)) {
-                    this.executeDisplaySlot(slot.div?.id);
+                if (slot.div && googletag.pubads().getSlots().some(s => s.getSlotElementId() === slot.div.id)) {
+                    this.executeDisplaySlot(slot.div.id);
                 } else {
                     if (window.location.search.includes("mythdebug"))
                         console.warn(`[GPT] Skipping display for image ad ${slot.div?.id} — slot not defined yet.`);
@@ -1251,10 +1252,9 @@
                     for (let el of elementsAfter) {
                         el.style.display = '';
                     }
-
                     this.placeInImageAds();
-                    this.configureImageSlots();
-                    this.desplayAllAdSlots();                  
+                    this.configureImageSlots();  // defines new in-image ad slots
+                    this.desplayAllAdSlots();                   
                     insertedElement.style.display = 'none';
                 });
             }
@@ -1368,41 +1368,56 @@
         }
 
         placeInImageAds() {
-            const contentImageAds = GPTLoader.imageAds.filter(e => e.type == 1);
-            if (contentImageAds.length === 0) return;
+            // auto content images
+            let contentImageAds = GPTLoader.imageAds.filter(e => e.type == 1);
 
-            const contentElementOptions = ['.entry-content'];
-            let contentElements = [];
-            for (const sel of contentElementOptions) {
-                contentElements.push(...document.querySelectorAll(sel));
-            }
+            if (contentImageAds.length > 0) {
+                let contentElementOptions = ['.entry-content'];
+                let contentElements = [];
+                for (let el of contentElementOptions) {
+                    let contentElement = document.querySelectorAll(el)
 
-            let availableImages = [];
-            for (const contentElement of contentElements) {
-                availableImages.push(...contentElement.querySelectorAll(GPTLoader.IN_IMAGE_AD_QUERY));
-            }
-
-            let i = 0;
-            for (let img of availableImages) {
-                if (!img || this.placedImageIds.has(img)) continue;
-
-                if (!img.id) {
-                    img.id = `auto-image-${Math.floor(Math.random() * 1000000)}`;
+                    if (contentElement.length > 0) {
+                        contentElements = contentElements.concat(Array.from(contentElement));
+                    }
                 }
 
-                if (document.getElementById(`${img.id}__wrapper`)) {
-                    this.placedImageIds.add(img);
-                    continue; // Skip if wrapper already exists
-                }
+                if (contentElements && contentElements.length > 0) {
+                    let images = []
+                    for (let contentElement of contentElements) {
+                        images = images.concat(Array.from(contentElement.querySelectorAll(GPTLoader.IN_IMAGE_AD_QUERY)));
+                    }
 
-                const ad = contentImageAds[i % contentImageAds.length]; // rotate if needed
-                ad.target = `#${img.id}`;
-                ad.div = this.createOverlayDiv(`#${img.id}`);
-                this.placedImageIds.add(img);
-                i++;
+                    let i = 0;
+                    for (let image of images) {
+                        if (i >= contentImageAds.length) break;
+
+                        let imageAd = contentImageAds[i];
+                        let id = `auto-image-${i++}`;
+                        if (image.id) {
+                            id = image.id;
+                        } else {
+                            image.id = id;
+                        }
+
+                        //if (this.isLargeFigureImage(image)) {
+
+                        let div = this.createOverlayDiv(`#${id}`);
+                        imageAd.div = div;
+                        imageAd.target = `#${image.id}`;
+                        imageAd.type = 1;
+
+                        //this.insertInImageAd(image, div.id);
+                        //}
+                    }
+                }
+            }
+
+            for (let slot of GPTLoader.imageAds) {
+                if (slot.div) continue;
+                slot.div = this.createOverlayDiv(slot.target);
             }
         }
-
 
         // Checks if an image element is correctly tagged within a large figure.
         isLargeFigureImage(image) {
