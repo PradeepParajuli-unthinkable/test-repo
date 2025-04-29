@@ -793,7 +793,7 @@
             //     }
             // }
 
-            const isInImageSlot = GPTLoader.imageAds?.some(e => e.div?.id === slotId);
+            const isInImageSlot = GPTLoader.imageAds?.some(e => e.div?.id === elementId);
             if (isInImageSlot) console.log("image slot",slot);
 
             try {
