@@ -1242,6 +1242,7 @@
                     for (let el of elementsAfter) {
                         el.style.display = '';
                     }
+                    this.placeInImageAds();
                     this.desplayAllAdSlots();                    
                     insertedElement.style.display = 'none';
                 });
