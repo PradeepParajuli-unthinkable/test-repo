@@ -28,7 +28,7 @@
         static disableCssSizing = false;
         static hideAfterMaxFails = false;
         static categoryAndUserTargeting = false;
-        static imageAds = [{"id":1101, "name": "in-image", "content": "/22794149020/uainoticias/uainoticias_inimage", "target": ".size-large img", "type": 1, "refreshIndividually": true, "refresh": true, "refreshTime": 20000, "mythValue": 0.01 }, {"id":1102, "name": "in-image-2", "content": "/22794149020/uainoticias/uainoticias_inimage_2", "target": ".size-large img", "type": 1, "refreshIndividually": true, "refresh": true, "refreshTime": 20000, "mythValue": 0.01 }];
+        static imageAds = [{"id":1101, "name": "in-image", "content": "/22794149020/uainoticias/uainoticias_inimage", "target": ".size-large img", "type": 1, "refreshIndividually": true, "refresh": true, "refreshTime": 20000, "mythValue": 0.01 }];
         static refreshTime = 20000;
         static enableTruvidScript = true;
         static truvidTarget = '.wp-post-image';
@@ -145,11 +145,7 @@
 
         async init() {
             try {
-                // load custom styling.
-                //this.addCustomStyling();
 
-                // Initialize GPT library
-                //await this.loadGPTScript();
                 let exceptions = [];
 
                 window.googletag = window.googletag || { cmd: [] };
@@ -162,9 +158,6 @@
                 }
 
                 googletag.cmd.push(() => {
-
-                    //this.autoDiv();
-                    //this.loadLatestNewsDiv();
 
                     for (let target of GPTLoader.targetting) {
                         let allowed = true;
@@ -263,10 +256,7 @@
                         });
                     } else {
                         console.error('GPT API is not ready when trying to set up event listeners.');
-                    }
-
-                    // 
-                    // 
+                    } 
 
                     if (anchorSlot) {
                         this.executeDisplaySlot(anchorSlot);
@@ -1550,6 +1540,9 @@
     }
 
     window.gptLoader = new GPTLoader();
+
+    // Initialize GPT library
+    window.gptLoader.loadGPTScript();
 
     // Load custom styling.
     window.gptLoader.addCustomStyling();
