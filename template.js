@@ -1242,7 +1242,6 @@
                     for (let el of elementsAfter) {
                         el.style.display = '';
                     }
-                    this.placeInImageAds();
                     this.desplayAllAdSlots();                    
                     insertedElement.style.display = 'none';
                 });
@@ -1485,6 +1484,8 @@
                     margin: 10px auto !important;
                     max-width: 100% !important;
                     min-height: 250px;
+                    height: auto;
+                    width: auto;
                     padding: 10px 0 !important;
                     text-align: center !important;
                 }
