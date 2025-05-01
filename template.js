@@ -1241,7 +1241,7 @@
                 document.getElementById('latest-news-button').addEventListener('click', () => {
                     for (let el of elementsAfter) {
                         el.style.display = '';
-                    }
+                    }                    
                     this.placeInImageAds();
                     this.configureImageSlots();
                     this.desplayAllAdSlots();                    
@@ -1538,6 +1538,19 @@
             document.head.appendChild(style);
         }
 
+        observeLazyLoadedImages() {
+            const observer = new MutationObserver(() => {
+                this.placeInImageAds();
+                this.configureImageSlots();
+                this.desplayAllAdSlots();
+            });
+
+            observer.observe(document.body, {
+                childList: true,
+                subtree: true
+            });
+        }
+
 
         async start() {
             try {
@@ -1562,6 +1575,7 @@
         window.gptLoader.autoDiv();
         window.gptLoader.loadLatestNewsDiv();
         window.gptLoader.placeInImageAds();
+        window.gptLoader.observeLazyLoadedImages();
         setTimeout(function () {
 
             window.gptLoader.start();
