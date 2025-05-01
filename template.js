@@ -1539,15 +1539,10 @@
         }
 
         observeLazyLoadedImages() {
-            const observer = new MutationObserver(() => {
+            document.addEventListener('scroll',() => {
                 this.placeInImageAds();
                 this.configureImageSlots();
                 this.desplayAllAdSlots();
-            });
-
-            observer.observe(document.body, {
-                childList: true,
-                subtree: true
             });
         }
 
