@@ -53,7 +53,7 @@
         static IN_IMAGE_AD_QUERY = 'figure.aligncenter.size-large img';
 
         constructor() {
-            this.MAX_RETRIES = 10; // Maximum number of retries for the original content
+            this.MAX_RETRIES = 100; // Maximum number of retries for the original content
             this.TOTAL_WORDS_LENGTH = 50;
             this.slotsRefreshCount = {}; // Stores the refresh count for each slot
             this.fallbackAttemptedSlots = new Set(); // Keeps track of throttled slots
@@ -1242,6 +1242,8 @@
                     for (let el of elementsAfter) {
                         el.style.display = '';
                     }
+                    this.placeInImageAds();
+                    this.configureImageSlots();
                     this.desplayAllAdSlots();                    
                     insertedElement.style.display = 'none';
                 });
@@ -1386,6 +1388,10 @@
                             id = image.id;
                         } else {
                             image.id = id;
+                        }
+
+                        if (document.getElementById(`${id}__wrapper`)) {
+                            continue;
                         }
 
                         //if (this.isLargeFigureImage(image)) {
