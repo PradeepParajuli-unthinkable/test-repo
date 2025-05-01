@@ -1487,6 +1487,7 @@
                     height: auto;
                     width: auto;
                     padding: 10px 0 !important;
+                    margin: 15px 0 !important;
                     text-align: center !important;
                 }
 
@@ -1516,7 +1517,7 @@
                 @media only screen and (max-width: 767px) {
                     .ad-wrapper-div {
                         min-width: 100%;
-                        min-height: 90px;
+                        min-height: 100px;
                         height: inharit;
                         padding-top: 5px !important;
                         padding-bottom: 5px !important;
