@@ -594,7 +594,7 @@
                     this.executeDisplaySlot(slot.div.id);
                 } else {
                     if (window.location.search.includes("mythdebug"))
-                        console.warn(`[GPT] Skipping display for image ad ${slot.div?.id} — slot not defined yet.`);
+                        console.warn(`[GPT] Skipping display for image ad ${slot.div?.id} � slot not defined yet.`);
                 }
             }
 
@@ -1242,11 +1242,7 @@
                     for (let el of elementsAfter) {
                         el.style.display = '';
                     }
-                    //setTimeout(() => {
-                        this.placeInImageAds();
-                        this.configureImageSlots();
-                        this.desplayAllAdSlots();
-                    //},5000);
+                    this.desplayAllAdSlots();
                     insertedElement.style.display = 'none';
                 });
             }
@@ -1386,9 +1382,9 @@
 
                     let i = 0;
                     for (let image of images) {
-                        if (i >= contentImageAds.length) break;
+                        if (contentImageAds.length > 0) break;
 
-                        let imageAd = contentImageAds[i];
+                        let imageAd = contentImageAds[0];
                         let id = `auto-image-${i++}`;
                         if (image.id) {
                             id = image.id;
@@ -1400,15 +1396,10 @@
                             continue;
                         }
 
-                        //if (this.isLargeFigureImage(image)) {
-
                         let div = this.createOverlayDiv(`#${id}`);
                         imageAd.div = div;
                         imageAd.target = `#${image.id}`;
                         imageAd.type = 1;
-
-                        //this.insertInImageAd(image, div.id);
-                        //}
                     }
                 }
             }
@@ -1417,33 +1408,6 @@
                 if (slot.div) continue;
                 slot.div = this.createOverlayDiv(slot.target);
             }
-        }
-
-        // Checks if an image element is correctly tagged within a large figure.
-        isLargeFigureImage(image) {
-            const parent = image.parentNode;
-            return (parent && parent.tagName === 'FIGURE' && parent.classList.contains('size-large'));
-        }
-
-        // Insert In Image ads.
-        insertInImageAd(img, adId) {
-            const wrapper = document.createElement('div');
-            wrapper.style.position = 'relative';
-            wrapper.style.display = 'inline-block';
-
-            const adDiv = document.createElement('div');
-            adDiv.id = adId;
-            adDiv.style.position = 'relative';
-            adDiv.style.bottom = '10px';
-            adDiv.style.left = '10px';
-            adDiv.style.zIndex = '10';
-            adDiv.style.background = 'rgba(255,255,255,0.8)';
-
-            img.parentNode.insertBefore(wrapper, img);
-            wrapper.appendChild(img);
-            wrapper.appendChild(adDiv);
-
-            //googletag.display(adId);
         }
 
         // Function to check if an element is within a specified parent tagName
