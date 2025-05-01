@@ -594,7 +594,7 @@
                     this.executeDisplaySlot(slot.div.id);
                 } else {
                     if (window.location.search.includes("mythdebug"))
-                        console.warn(`[GPT] Skipping display for image ad ${slot.div?.id} � slot not defined yet.`);
+                        console.warn(`[GPT] Skipping display for image ad ${slot.div?.id} — slot not defined yet.`);
                 }
             }
 
@@ -1382,7 +1382,7 @@
 
                     let i = 0;
                     for (let image of images) {
-                        if (contentImageAds.length > 0) break;
+                        if (contentImageAds.length < 0) break;
 
                         let imageAd = contentImageAds[0];
                         let id = `auto-image-${i++}`;
