@@ -50,7 +50,7 @@
         static sentTracing = [];
         static enableIndividualSlotRefresh = true; // Individual Slot Refresh
         static TIMEOUT_FOR_SLOT_REFRESH = 7000;
-        static IN_IMAGE_AD_QUERY = 'figure.aligncenter.size-large img';
+        static IN_IMAGE_AD_QUERIES = ['figure.aligncenter.size-large img', 'figure.aligncenter.size-full img'];
 
         constructor() {
             this.MAX_RETRIES = 100; // Maximum number of retries for the original content
@@ -1241,10 +1241,12 @@
                 document.getElementById('latest-news-button').addEventListener('click', () => {
                     for (let el of elementsAfter) {
                         el.style.display = '';
-                    }                    
-                    this.placeInImageAds();
-                    this.configureImageSlots();
-                    this.desplayAllAdSlots();                    
+                    }
+                    //setTimeout(() => {
+                        this.placeInImageAds();
+                        this.configureImageSlots();
+                        this.desplayAllAdSlots();
+                    //},5000);
                     insertedElement.style.display = 'none';
                 });
             }
@@ -1375,7 +1377,11 @@
                 if (contentElements && contentElements.length > 0) {
                     let images = []
                     for (let contentElement of contentElements) {
-                        images = images.concat(Array.from(contentElement.querySelectorAll(GPTLoader.IN_IMAGE_AD_QUERY)));
+                        if (GPTLoader.IN_IMAGE_AD_QUERIES && GPTLoader.IN_IMAGE_AD_QUERIES.length > 0) {
+                            GPTLoader.IN_IMAGE_AD_QUERIES.forEach((query) => {
+                                images = images.concat(Array.from(contentElement.querySelectorAll(query)));
+                            });
+                        }                        
                     }
 
                     let i = 0;
@@ -1538,14 +1544,6 @@
             document.head.appendChild(style);
         }
 
-        observeLazyLoadedImages() {
-            document.addEventListener('scroll',() => {
-                this.placeInImageAds();
-                this.configureImageSlots();
-                this.desplayAllAdSlots();
-            });
-        }
-
 
         async start() {
             try {
@@ -1570,7 +1568,6 @@
         window.gptLoader.autoDiv();
         window.gptLoader.loadLatestNewsDiv();
         window.gptLoader.placeInImageAds();
-        window.gptLoader.observeLazyLoadedImages();
         setTimeout(function () {
 
             window.gptLoader.start();
