@@ -5,21 +5,7 @@
         static domain = 'jornaldia.com.br';
         static contentSlots = [{ "id": 1003, "mobile": true, "tablet": true, "desktop": true, "slot": "ad_paragraph_1", "display": "/22794149020/jornaldia/jornaldia_content1", "sizesMobile": ["fluid", "336x280", "300x250", "320x100"], "sizesTablet": ["fluid", "336x280", "300x250", "320x100"], "sizes": ["fluid", "336x280", "300x250", "250x250"], "autoTargeting": false, "refreshIndividually": true, "refresh": true, "refreshTime": 30000, "mythValue": 0.01 }, { "id": 1004, "mobile": true, "tablet": true, "desktop": true, "slot": "ad_paragraph_2", "display": "/22794149020/jornaldia/jornaldia_content2", "sizesMobile": ["fluid", "336x280", "300x250", "320x100"], "sizesTablet": ["fluid", "336x280", "300x250", "320x100"], "sizes": ["fluid", "336x280", "300x250", "250x250"], "autoTargeting": false, "refreshIndividually": true, "refresh": true, "refreshTime": 30000, "mythValue": 0.01 }, { "id": 1005, "mobile": true, "tablet": true, "desktop": true, "slot": "ad_paragraph_3", "display": "/22794149020/jornaldia/jornaldia_content3", "sizesMobile": ["fluid", "336x280", "300x250", "320x100"], "sizesTablet": ["fluid", "336x280", "300x250", "320x100"], "sizes": ["fluid", "336x280", "300x250", "250x250"], "autoTargeting": false, "refreshIndividually": true, "refresh": true, "refreshTime": 30000, "mythValue": 0.01 }, { "id": 1006, "mobile": true, "tablet": true, "desktop": true, "slot": "ad_paragraph_4", "display": "/22794149020/jornaldia/jornaldia_content4", "sizesMobile": ["fluid", "336x280", "300x250", "320x100"], "sizesTablet": ["fluid", "336x280", "300x250", "320x100"], "sizes": ["fluid", "336x280", "300x250", "250x250"], "autoTargeting": false, "refreshIndividually": true, "refresh": true, "refreshTime": 30000, "mythValue": 0.01 }, { "id": 1007, "mobile": true, "tablet": true, "desktop": true, "slot": "ad_paragraph_5", "display": "/22794149020/jornaldia/jornaldia_content5", "sizesMobile": ["fluid", "336x280", "300x250", "320x100"], "sizesTablet": ["fluid", "336x280", "300x250", "320x100"], "sizes": ["fluid", "336x280", "300x250", "250x250"], "autoTargeting": false, "refreshIndividually": true, "refresh": true, "refreshTime": 30000, "mythValue": 0.01 }, { "id": 1008, "mobile": true, "tablet": true, "desktop": true, "slot": "ad_paragraph_6", "display": "/22794149020/jornaldia/jornaldia_content6", "sizesMobile": ["fluid", "336x280", "300x250", "320x100"], "sizesTablet": ["fluid", "336x280", "300x250", "320x100"], "sizes": ["fluid", "336x280", "300x250", "250x250"], "autoTargeting": false, "refreshIndividually": true, "refresh": true, "refreshTime": 30000, "mythValue": 0.01 }, { "id": 1009, "mobile": true, "tablet": true, "desktop": true, "slot": "ad_paragraph_7", "display": "/22794149020/jornaldia/jornaldia_content7", "sizesMobile": ["fluid", "336x280", "300x250", "320x100"], "sizesTablet": ["fluid", "336x280", "300x250", "320x100"], "sizes": ["fluid", "336x280", "300x250", "250x250"], "autoTargeting": false, "refreshIndividually": true, "refresh": true, "refreshTime": 30000, "mythValue": 0.01 }, { "id": 1010, "mobile": true, "tablet": true, "desktop": true, "slot": "ad_paragraph_8", "display": "/22794149020/jornaldia/jornaldia_content8", "sizesMobile": ["fluid", "336x280", "300x250", "320x100"], "sizesTablet": ["fluid", "336x280", "300x250", "320x100"], "sizes": ["fluid", "336x280", "300x250", "250x250"], "autoTargeting": false, "refreshIndividually": true, "refresh": true, "refreshTime": 30000, "mythValue": 0.01 }, { "id": 1011, "mobile": true, "tablet": true, "desktop": true, "slot": "ad_paragraph_9", "display": "/22794149020/jornaldia/jornaldia_content9", "sizesMobile": ["fluid", "300x250", "336x280", "320x100"], "sizesTablet": ["fluid", "300x250", "336x280", "320x100"], "sizes": ["fluid", "250x250", "300x250", "336x280"], "autoTargeting": false, "refreshIndividually": true, "refresh": true, "refreshTime": 30000, "mythValue": 0.01 }];
         static customSlots = [];
-        static fallbackPaths = [
-            {
-                slot: 'ad_paragraph_1',
-                path: '/22794149020/jornaldia/jornaldia_content9'
-            },
-            {
-                slot: 'ad_paragraph_2',
-                path: '/22794149020/jornaldia/jornaldia_content8'
-            },
-            {
-                slot: 'ad_paragraph_3',
-                path: '/22794149020/jornaldia/jornaldia_content7'
-            }
-        ];
-
+        static fallbackPaths = [];
         static avoids = [];
         static targetting = [];
         static interstitial = { "display": "/22794149020/jornaldia/jornaldia_interstitial", "mythValue": 0.01 };
@@ -28,8 +14,64 @@
         static disableCssSizing = false;
         static hideAfterMaxFails = false;
         static categoryAndUserTargeting = false;
-        static imageAds = [{"id":1101, "name": "in-image", "content": "/22794149020/uainoticias/uainoticias_inimage", "target": ".size-large img", "type": 1, "refreshIndividually": true, "refresh": true, "refreshTime": 20000, "mythValue": 0.01 }];
-        static refreshTime = 20000;
+        static imageAds = [
+            {
+                "id": 1101,
+                "name": "in-image-1",
+                "content": "/22794149020/uainoticias/uainoticias_inimage_1",
+                "type": 1,
+                "refreshIndividually": true,
+                "refresh": true,
+                "refreshTime": 20000,
+                "mythValue": 0.01,
+                "sizes": [[300, 250], [336, 280]]
+            },
+            {
+                "id": 1102,
+                "name": "in-image-2",
+                "content": "/22794149020/uainoticias/uainoticias_inimage_2",
+                "type": 1,
+                "refreshIndividually": true,
+                "refresh": true,
+                "refreshTime": 20000,
+                "mythValue": 0.01,
+                "sizes": [[300, 250], [336, 280]]
+            },
+            {
+                "id": 1103,
+                "name": "in-image-3",
+                "content": "/22794149020/uainoticias/uainoticias_inimage_3",
+                "type": 1,
+                "refreshIndividually": true,
+                "refresh": true,
+                "refreshTime": 20000,
+                "mythValue": 0.01,
+                "sizes": [[300, 250], [336, 280]]
+            },
+            {
+                "id": 1104,
+                "name": "in-image-4",
+                "content": "/22794149020/uainoticias/uainoticias_inimage_4",
+                "type": 1,
+                "refreshIndividually": true,
+                "refresh": true,
+                "refreshTime": 20000,
+                "mythValue": 0.01,
+                "sizes": [[300, 250], [336, 280]]
+            },
+            {
+                "id": 1105,
+                "name": "in-image-5",
+                "content": "/22794149020/uainoticias/uainoticias_inimage_5",
+                "type": 1,
+                "refreshIndividually": true,
+                "refresh": true,
+                "refreshTime": 20000,
+                "mythValue": 0.01,
+                "sizes": [[300, 250], [336, 280]]
+            }
+        ];
+static refreshTime = 20000;
         static enableTruvidScript = true;
         static truvidTarget = '.wp-post-image';
         static truvidCode = `<div class="truvidPos"><script async type="text/javascript" src="https://cnt.trvdp.com/js/1646/11775.js"></script></div>`;
@@ -1242,7 +1284,11 @@
                     for (let el of elementsAfter) {
                         el.style.display = '';
                     }
-                    this.desplayAllAdSlots();
+                    //setTimeout(() => {
+                        this.placeInImageAds();
+                        this.configureImageSlots();
+                        this.desplayAllAdSlots();
+                    //},5000);
                     insertedElement.style.display = 'none';
                 });
             }
@@ -1382,9 +1428,9 @@
 
                     let i = 0;
                     for (let image of images) {
-                        if (contentImageAds.length < 0) break;
+                        if (i >= contentImageAds.length) break;
 
-                        let imageAd = contentImageAds[0];
+                        let imageAd = contentImageAds[i];
                         let id = `auto-image-${i++}`;
                         if (image.id) {
                             id = image.id;
@@ -1408,6 +1454,33 @@
                 if (slot.div) continue;
                 slot.div = this.createOverlayDiv(slot.target);
             }
+        }
+
+        // Checks if an image element is correctly tagged within a large figure.
+        isLargeFigureImage(image) {
+            const parent = image.parentNode;
+            return (parent && parent.tagName === 'FIGURE' && parent.classList.contains('size-large'));
+        }
+
+        // Insert In Image ads.
+        insertInImageAd(img, adId) {
+            const wrapper = document.createElement('div');
+            wrapper.style.position = 'relative';
+            wrapper.style.display = 'inline-block';
+
+            const adDiv = document.createElement('div');
+            adDiv.id = adId;
+            adDiv.style.position = 'relative';
+            adDiv.style.bottom = '10px';
+            adDiv.style.left = '10px';
+            adDiv.style.zIndex = '10';
+            adDiv.style.background = 'rgba(255,255,255,0.8)';
+
+            img.parentNode.insertBefore(wrapper, img);
+            wrapper.appendChild(img);
+            wrapper.appendChild(adDiv);
+
+            //googletag.display(adId);
         }
 
         // Function to check if an element is within a specified parent tagName
