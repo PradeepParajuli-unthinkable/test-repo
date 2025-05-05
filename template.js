@@ -240,7 +240,7 @@
                 googletag.cmd.push(() => {
 
                     for (let target of GPTLoader.targetting) {
-                        let allowed = true;
+                        let allowed = false; // Disabled targating.
                         if (target.condition && target.condition == 1) {
                             let pageUrl = window.location.href;
                             if (pageUrl.indexOf(target.conditionValue) == -1) {
