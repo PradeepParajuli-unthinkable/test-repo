@@ -760,7 +760,7 @@
             let slot = event.slot;
             let elementId = slot.getSlotElementId();
             let element = document.getElementById(elementId);
-            if (!element && element.style.display == 'none') return;
+            if (!element || element.style.display == 'none') return;
 
             // if (element && element.style && element.style.display === 'none' && element.getAttribute('auto-height')) {
             //     let parent = element.parentElement;
@@ -1157,6 +1157,8 @@
                     div.id = GPTLoader.latestNewsDivName;
                     insertAfter.insertAdjacentElement('afterend', div);
                     div.style.marginTop = '5px';
+                    div.style.marginBottom = '5px';
+                    div.style.paddingTop = '5px';
                     insertedElement = div;
                 } else {
                     console.warn('No paragraph found to insert the div');
