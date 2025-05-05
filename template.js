@@ -4,7 +4,6 @@
     class GPTLoader {
         static domain = 'jornaldia.com.br';
         static contentSlots = [{ "id": 1003, "mobile": true, "tablet": true, "desktop": true, "slot": "ad_paragraph_1", "display": "/22794149020/jornaldia/jornaldia_content1", "sizesMobile": ["fluid", "336x280", "300x250", "320x100"], "sizesTablet": ["fluid", "336x280", "300x250", "320x100"], "sizes": ["fluid", "336x280", "300x250", "250x250"], "autoTargeting": false, "refreshIndividually": true, "refresh": true, "refreshTime": 30000, "mythValue": 0.01 }, { "id": 1004, "mobile": true, "tablet": true, "desktop": true, "slot": "ad_paragraph_2", "display": "/22794149020/jornaldia/jornaldia_content2", "sizesMobile": ["fluid", "336x280", "300x250", "320x100"], "sizesTablet": ["fluid", "336x280", "300x250", "320x100"], "sizes": ["fluid", "336x280", "300x250", "250x250"], "autoTargeting": false, "refreshIndividually": true, "refresh": true, "refreshTime": 30000, "mythValue": 0.01 }, { "id": 1005, "mobile": true, "tablet": true, "desktop": true, "slot": "ad_paragraph_3", "display": "/22794149020/jornaldia/jornaldia_content3", "sizesMobile": ["fluid", "336x280", "300x250", "320x100"], "sizesTablet": ["fluid", "336x280", "300x250", "320x100"], "sizes": ["fluid", "336x280", "300x250", "250x250"], "autoTargeting": false, "refreshIndividually": true, "refresh": true, "refreshTime": 30000, "mythValue": 0.01 }, { "id": 1006, "mobile": true, "tablet": true, "desktop": true, "slot": "ad_paragraph_4", "display": "/22794149020/jornaldia/jornaldia_content4", "sizesMobile": ["fluid", "336x280", "300x250", "320x100"], "sizesTablet": ["fluid", "336x280", "300x250", "320x100"], "sizes": ["fluid", "336x280", "300x250", "250x250"], "autoTargeting": false, "refreshIndividually": true, "refresh": true, "refreshTime": 30000, "mythValue": 0.01 }, { "id": 1007, "mobile": true, "tablet": true, "desktop": true, "slot": "ad_paragraph_5", "display": "/22794149020/jornaldia/jornaldia_content5", "sizesMobile": ["fluid", "336x280", "300x250", "320x100"], "sizesTablet": ["fluid", "336x280", "300x250", "320x100"], "sizes": ["fluid", "336x280", "300x250", "250x250"], "autoTargeting": false, "refreshIndividually": true, "refresh": true, "refreshTime": 30000, "mythValue": 0.01 }, { "id": 1008, "mobile": true, "tablet": true, "desktop": true, "slot": "ad_paragraph_6", "display": "/22794149020/jornaldia/jornaldia_content6", "sizesMobile": ["fluid", "336x280", "300x250", "320x100"], "sizesTablet": ["fluid", "336x280", "300x250", "320x100"], "sizes": ["fluid", "336x280", "300x250", "250x250"], "autoTargeting": false, "refreshIndividually": true, "refresh": true, "refreshTime": 30000, "mythValue": 0.01 }, { "id": 1009, "mobile": true, "tablet": true, "desktop": true, "slot": "ad_paragraph_7", "display": "/22794149020/jornaldia/jornaldia_content7", "sizesMobile": ["fluid", "336x280", "300x250", "320x100"], "sizesTablet": ["fluid", "336x280", "300x250", "320x100"], "sizes": ["fluid", "336x280", "300x250", "250x250"], "autoTargeting": false, "refreshIndividually": true, "refresh": true, "refreshTime": 30000, "mythValue": 0.01 }, { "id": 1010, "mobile": true, "tablet": true, "desktop": true, "slot": "ad_paragraph_8", "display": "/22794149020/jornaldia/jornaldia_content8", "sizesMobile": ["fluid", "336x280", "300x250", "320x100"], "sizesTablet": ["fluid", "336x280", "300x250", "320x100"], "sizes": ["fluid", "336x280", "300x250", "250x250"], "autoTargeting": false, "refreshIndividually": true, "refresh": true, "refreshTime": 30000, "mythValue": 0.01 }, { "id": 1011, "mobile": true, "tablet": true, "desktop": true, "slot": "ad_paragraph_9", "display": "/22794149020/jornaldia/jornaldia_content9", "sizesMobile": ["fluid", "300x250", "336x280", "320x100"], "sizesTablet": ["fluid", "300x250", "336x280", "320x100"], "sizes": ["fluid", "250x250", "300x250", "336x280"], "autoTargeting": false, "refreshIndividually": true, "refresh": true, "refreshTime": 30000, "mythValue": 0.01 }];
-        
         static customSlots = [];
         static fallbackPaths = [];
         static avoids = [];
@@ -16,7 +15,6 @@
         static hideAfterMaxFails = false;
         static categoryAndUserTargeting = false;
         static imageAds = [{"id":1101, "name": "in-image", "content": "/22794149020/uainoticias/uainoticias_inimage", "target": ".size-large img", "type": 1, "refreshIndividually": true, "refresh": true, "refreshTime": 20000, "mythValue": 0.01 }];
-        
         static refreshTime = 30000;
         static enableTruvidScript = true;
         static truvidTarget = '.wp-post-image';
@@ -37,7 +35,7 @@
         static latestNewsDivSwapColors = ('false' == 'true') ?? false;
         static sentTracing = [];
         static enableIndividualSlotRefresh = true; // Individual Slot Refresh
-        static TIMEOUT_FOR_SLOT_REFRESH = 10000;
+        static TIMEOUT_FOR_SLOT_REFRESH = 7000;
         static IN_IMAGE_AD_QUERIES = ['figure.aligncenter.size-large img', 'figure.aligncenter.size-full img'];
 
         constructor() {
@@ -51,7 +49,7 @@
             // Update the slot refreshIndividually based on global variable.
             GPTLoader.contentSlots.forEach(slot => { slot["refreshIndividually"] = GPTLoader.enableIndividualSlotRefresh; });
             
-        }        
+        }
 
         static location() {
             let url = window.location.origin + window.location.pathname;
@@ -1230,7 +1228,7 @@
                     for (let el of elementsAfter) {
                         el.style.display = '';
                     }
-                    GPTLoader.MAX_RETRIES = GPTLoader.MAX_RETRIES + 5;
+                    this.MAX_RETRIES = this.MAX_RETRIES + 5; // Incremented so that after, clicking readmore other content also refreshes.
                     this.desplayAllAdSlots();
                     insertedElement.style.display = 'none';
                 });
@@ -1371,9 +1369,9 @@
 
                     let i = 0;
                     for (let image of images) {
-                        if (!contentImageAds || i >= contentImageAds.length) break;
+                        if (contentImageAds.length == 0) break;
 
-                        let imageAd = contentImageAds[i];
+                        let imageAd = contentImageAds[0];
                         let id = `auto-image-${i++}`;
                         if (image.id) {
                             id = image.id;
