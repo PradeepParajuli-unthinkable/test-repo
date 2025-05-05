@@ -788,7 +788,7 @@
                             } catch (error) {
                                 if (window.location.search.indexOf('mythdebug') !== -1) console.error(`Failed to reload ad slot ${elementId}:`, error);
                             }
-                        } else if (this.slotsFallbackCount[elementId] < this.MAX_FALLBACKS) {
+                        } else if (this.fallbackPaths && this.fallbackPaths.length > 0 && this.slotsFallbackCount[elementId] < this.MAX_FALLBACKS) {
                             // Exclude Stick and Interstitial slots from fallback mechanism
                             if (elementId.includes("Stick") || elementId.includes("Interstitial")
                                 || elementId.includes("stick") || elementId.includes("interstitial")) {
@@ -1525,4 +1525,3 @@
         }, GPTLoader.startTimeout); // Wait for 1 second before calling the start() function
     });
 })();
-
