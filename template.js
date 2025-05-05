@@ -3,7 +3,298 @@
 
     class GPTLoader {
         static domain = 'jornaldia.com.br';
-        static contentSlots = [{ "id": 1003, "mobile": true, "tablet": true, "desktop": true, "slot": "ad_paragraph_1", "display": "/22794149020/jornaldia/jornaldia_content1", "sizesMobile": ["fluid", "336x280", "300x250", "320x100"], "sizesTablet": ["fluid", "336x280", "300x250", "320x100"], "sizes": ["fluid", "336x280", "300x250", "250x250"], "autoTargeting": false, "refreshIndividually": true, "refresh": true, "refreshTime": 30000, "mythValue": 0.01 }, { "id": 1004, "mobile": true, "tablet": true, "desktop": true, "slot": "ad_paragraph_2", "display": "/22794149020/jornaldia/jornaldia_content2", "sizesMobile": ["fluid", "336x280", "300x250", "320x100"], "sizesTablet": ["fluid", "336x280", "300x250", "320x100"], "sizes": ["fluid", "336x280", "300x250", "250x250"], "autoTargeting": false, "refreshIndividually": true, "refresh": true, "refreshTime": 30000, "mythValue": 0.01 }, { "id": 1005, "mobile": true, "tablet": true, "desktop": true, "slot": "ad_paragraph_3", "display": "/22794149020/jornaldia/jornaldia_content3", "sizesMobile": ["fluid", "336x280", "300x250", "320x100"], "sizesTablet": ["fluid", "336x280", "300x250", "320x100"], "sizes": ["fluid", "336x280", "300x250", "250x250"], "autoTargeting": false, "refreshIndividually": true, "refresh": true, "refreshTime": 30000, "mythValue": 0.01 }, { "id": 1006, "mobile": true, "tablet": true, "desktop": true, "slot": "ad_paragraph_4", "display": "/22794149020/jornaldia/jornaldia_content4", "sizesMobile": ["fluid", "336x280", "300x250", "320x100"], "sizesTablet": ["fluid", "336x280", "300x250", "320x100"], "sizes": ["fluid", "336x280", "300x250", "250x250"], "autoTargeting": false, "refreshIndividually": true, "refresh": true, "refreshTime": 30000, "mythValue": 0.01 }, { "id": 1007, "mobile": true, "tablet": true, "desktop": true, "slot": "ad_paragraph_5", "display": "/22794149020/jornaldia/jornaldia_content5", "sizesMobile": ["fluid", "336x280", "300x250", "320x100"], "sizesTablet": ["fluid", "336x280", "300x250", "320x100"], "sizes": ["fluid", "336x280", "300x250", "250x250"], "autoTargeting": false, "refreshIndividually": true, "refresh": true, "refreshTime": 30000, "mythValue": 0.01 }, { "id": 1008, "mobile": true, "tablet": true, "desktop": true, "slot": "ad_paragraph_6", "display": "/22794149020/jornaldia/jornaldia_content6", "sizesMobile": ["fluid", "336x280", "300x250", "320x100"], "sizesTablet": ["fluid", "336x280", "300x250", "320x100"], "sizes": ["fluid", "336x280", "300x250", "250x250"], "autoTargeting": false, "refreshIndividually": true, "refresh": true, "refreshTime": 30000, "mythValue": 0.01 }, { "id": 1009, "mobile": true, "tablet": true, "desktop": true, "slot": "ad_paragraph_7", "display": "/22794149020/jornaldia/jornaldia_content7", "sizesMobile": ["fluid", "336x280", "300x250", "320x100"], "sizesTablet": ["fluid", "336x280", "300x250", "320x100"], "sizes": ["fluid", "336x280", "300x250", "250x250"], "autoTargeting": false, "refreshIndividually": true, "refresh": true, "refreshTime": 30000, "mythValue": 0.01 }, { "id": 1010, "mobile": true, "tablet": true, "desktop": true, "slot": "ad_paragraph_8", "display": "/22794149020/jornaldia/jornaldia_content8", "sizesMobile": ["fluid", "336x280", "300x250", "320x100"], "sizesTablet": ["fluid", "336x280", "300x250", "320x100"], "sizes": ["fluid", "336x280", "300x250", "250x250"], "autoTargeting": false, "refreshIndividually": true, "refresh": true, "refreshTime": 30000, "mythValue": 0.01 }, { "id": 1011, "mobile": true, "tablet": true, "desktop": true, "slot": "ad_paragraph_9", "display": "/22794149020/jornaldia/jornaldia_content9", "sizesMobile": ["fluid", "300x250", "336x280", "320x100"], "sizesTablet": ["fluid", "300x250", "336x280", "320x100"], "sizes": ["fluid", "250x250", "300x250", "336x280"], "autoTargeting": false, "refreshIndividually": true, "refresh": true, "refreshTime": 30000, "mythValue": 0.01 }];
+        //static contentSlots = [{ "id": 1003, "mobile": true, "tablet": true, "desktop": true, "slot": "ad_paragraph_1", "display": "/22794149020/jornaldia/jornaldia_content1", "sizesMobile": ["fluid", "336x280", "300x250", "320x100"], "sizesTablet": ["fluid", "336x280", "300x250", "320x100"], "sizes": ["fluid", "336x280", "300x250", "250x250"], "autoTargeting": false, "refreshIndividually": true, "refresh": true, "refreshTime": 30000, "mythValue": 0.01 }, { "id": 1004, "mobile": true, "tablet": true, "desktop": true, "slot": "ad_paragraph_2", "display": "/22794149020/jornaldia/jornaldia_content2", "sizesMobile": ["fluid", "336x280", "300x250", "320x100"], "sizesTablet": ["fluid", "336x280", "300x250", "320x100"], "sizes": ["fluid", "336x280", "300x250", "250x250"], "autoTargeting": false, "refreshIndividually": true, "refresh": true, "refreshTime": 30000, "mythValue": 0.01 }, { "id": 1005, "mobile": true, "tablet": true, "desktop": true, "slot": "ad_paragraph_3", "display": "/22794149020/jornaldia/jornaldia_content3", "sizesMobile": ["fluid", "336x280", "300x250", "320x100"], "sizesTablet": ["fluid", "336x280", "300x250", "320x100"], "sizes": ["fluid", "336x280", "300x250", "250x250"], "autoTargeting": false, "refreshIndividually": true, "refresh": true, "refreshTime": 30000, "mythValue": 0.01 }, { "id": 1006, "mobile": true, "tablet": true, "desktop": true, "slot": "ad_paragraph_4", "display": "/22794149020/jornaldia/jornaldia_content4", "sizesMobile": ["fluid", "336x280", "300x250", "320x100"], "sizesTablet": ["fluid", "336x280", "300x250", "320x100"], "sizes": ["fluid", "336x280", "300x250", "250x250"], "autoTargeting": false, "refreshIndividually": true, "refresh": true, "refreshTime": 30000, "mythValue": 0.01 }, { "id": 1007, "mobile": true, "tablet": true, "desktop": true, "slot": "ad_paragraph_5", "display": "/22794149020/jornaldia/jornaldia_content5", "sizesMobile": ["fluid", "336x280", "300x250", "320x100"], "sizesTablet": ["fluid", "336x280", "300x250", "320x100"], "sizes": ["fluid", "336x280", "300x250", "250x250"], "autoTargeting": false, "refreshIndividually": true, "refresh": true, "refreshTime": 30000, "mythValue": 0.01 }, { "id": 1008, "mobile": true, "tablet": true, "desktop": true, "slot": "ad_paragraph_6", "display": "/22794149020/jornaldia/jornaldia_content6", "sizesMobile": ["fluid", "336x280", "300x250", "320x100"], "sizesTablet": ["fluid", "336x280", "300x250", "320x100"], "sizes": ["fluid", "336x280", "300x250", "250x250"], "autoTargeting": false, "refreshIndividually": true, "refresh": true, "refreshTime": 30000, "mythValue": 0.01 }, { "id": 1009, "mobile": true, "tablet": true, "desktop": true, "slot": "ad_paragraph_7", "display": "/22794149020/jornaldia/jornaldia_content7", "sizesMobile": ["fluid", "336x280", "300x250", "320x100"], "sizesTablet": ["fluid", "336x280", "300x250", "320x100"], "sizes": ["fluid", "336x280", "300x250", "250x250"], "autoTargeting": false, "refreshIndividually": true, "refresh": true, "refreshTime": 30000, "mythValue": 0.01 }, { "id": 1010, "mobile": true, "tablet": true, "desktop": true, "slot": "ad_paragraph_8", "display": "/22794149020/jornaldia/jornaldia_content8", "sizesMobile": ["fluid", "336x280", "300x250", "320x100"], "sizesTablet": ["fluid", "336x280", "300x250", "320x100"], "sizes": ["fluid", "336x280", "300x250", "250x250"], "autoTargeting": false, "refreshIndividually": true, "refresh": true, "refreshTime": 30000, "mythValue": 0.01 }, { "id": 1011, "mobile": true, "tablet": true, "desktop": true, "slot": "ad_paragraph_9", "display": "/22794149020/jornaldia/jornaldia_content9", "sizesMobile": ["fluid", "300x250", "336x280", "320x100"], "sizesTablet": ["fluid", "300x250", "336x280", "320x100"], "sizes": ["fluid", "250x250", "300x250", "336x280"], "autoTargeting": false, "refreshIndividually": true, "refresh": true, "refreshTime": 30000, "mythValue": 0.01 }];
+        static contentSlots = [
+            {
+                id: 1003, slot: "ad_paragraph_1", display: "/22794149020/jornaldia/jornaldia_content1",
+                mobile: true, tablet: true, desktop: true,
+                sizesMobile: ["fluid", "336x280", "300x250", "320x100"],
+                sizesTablet: ["fluid", "336x280", "300x250", "320x100"],
+                sizes: ["fluid", "336x280", "300x250", "250x250"],
+                autoTargeting: false, refreshIndividually: true, refresh: true,
+                refreshTime: 30000, mythValue: 0.01
+            },
+            {
+                id: 1004, slot: "ad_paragraph_2", display: "/22794149020/jornaldia/jornaldia_content2",
+                mobile: true, tablet: true, desktop: true,
+                sizesMobile: ["fluid", "336x280", "300x250", "320x100"],
+                sizesTablet: ["fluid", "336x280", "300x250", "320x100"],
+                sizes: ["fluid", "336x280", "300x250", "250x250"],
+                autoTargeting: false, refreshIndividually: true, refresh: true,
+                refreshTime: 30000, mythValue: 0.01
+            },
+            {
+                id: 1005, slot: "ad_paragraph_3", display: "/22794149020/jornaldia/jornaldia_content3",
+                mobile: true, tablet: true, desktop: true,
+                sizesMobile: ["fluid", "336x280", "300x250", "320x100"],
+                sizesTablet: ["fluid", "336x280", "300x250", "320x100"],
+                sizes: ["fluid", "336x280", "300x250", "250x250"],
+                autoTargeting: false, refreshIndividually: true, refresh: true,
+                refreshTime: 30000, mythValue: 0.01
+            },
+            {
+                id: 1006, slot: "ad_paragraph_4", display: "/22794149020/jornaldia/jornaldia_content4",
+                mobile: true, tablet: true, desktop: true,
+                sizesMobile: ["fluid", "336x280", "300x250", "320x100"],
+                sizesTablet: ["fluid", "336x280", "300x250", "320x100"],
+                sizes: ["fluid", "336x280", "300x250", "250x250"],
+                autoTargeting: false, refreshIndividually: true, refresh: true,
+                refreshTime: 30000, mythValue: 0.01
+            },
+            {
+                id: 1007, slot: "ad_paragraph_5", display: "/22794149020/jornaldia/jornaldia_content5",
+                mobile: true, tablet: true, desktop: true,
+                sizesMobile: ["fluid", "336x280", "300x250", "320x100"],
+                sizesTablet: ["fluid", "336x280", "300x250", "320x100"],
+                sizes: ["fluid", "336x280", "300x250", "250x250"],
+                autoTargeting: false, refreshIndividually: true, refresh: true,
+                refreshTime: 30000, mythValue: 0.01
+            },
+            {
+                id: 1008, slot: "ad_paragraph_6", display: "/22794149020/jornaldia/jornaldia_content6",
+                mobile: true, tablet: true, desktop: true,
+                sizesMobile: ["fluid", "336x280", "300x250", "320x100"],
+                sizesTablet: ["fluid", "336x280", "300x250", "320x100"],
+                sizes: ["fluid", "336x280", "300x250", "250x250"],
+                autoTargeting: false, refreshIndividually: true, refresh: true,
+                refreshTime: 30000, mythValue: 0.01
+            },
+            {
+                id: 1009, slot: "ad_paragraph_7", display: "/22794149020/jornaldia/jornaldia_content7",
+                mobile: true, tablet: true, desktop: true,
+                sizesMobile: ["fluid", "336x280", "300x250", "320x100"],
+                sizesTablet: ["fluid", "336x280", "300x250", "320x100"],
+                sizes: ["fluid", "336x280", "300x250", "250x250"],
+                autoTargeting: false, refreshIndividually: true, refresh: true,
+                refreshTime: 30000, mythValue: 0.01
+            },
+            {
+                id: 1010, slot: "ad_paragraph_8", display: "/22794149020/jornaldia/jornaldia_content8",
+                mobile: true, tablet: true, desktop: true,
+                sizesMobile: ["fluid", "336x280", "300x250", "320x100"],
+                sizesTablet: ["fluid", "336x280", "300x250", "320x100"],
+                sizes: ["fluid", "336x280", "300x250", "250x250"],
+                autoTargeting: false, refreshIndividually: true, refresh: true,
+                refreshTime: 30000, mythValue: 0.01
+            },
+            {
+                id: 1011, slot: "ad_paragraph_9", display: "/22794149020/jornaldia/jornaldia_content9",
+                mobile: true, tablet: true, desktop: true,
+                sizesMobile: ["fluid", "336x280", "300x250", "320x100"],
+                sizesTablet: ["fluid", "336x280", "300x250", "320x100"],
+                sizes: ["fluid", "336x280", "300x250", "250x250"],
+                autoTargeting: false, refreshIndividually: true, refresh: true,
+                refreshTime: 30000, mythValue: 0.01
+            },
+            {
+                id: 1012, slot: "ad_paragraph_10", display: "/22794149020/jornaldia/jornaldia_content1",
+                mobile: true, tablet: true, desktop: true,
+                sizesMobile: ["fluid", "336x280", "300x250", "320x100"],
+                sizesTablet: ["fluid", "336x280", "300x250", "320x100"],
+                sizes: ["fluid", "336x280", "300x250", "250x250"],
+                autoTargeting: false, refreshIndividually: true, refresh: true,
+                refreshTime: 30000, mythValue: 0.01
+            },
+            {
+                id: 1013, slot: "ad_paragraph_11", display: "/22794149020/jornaldia/jornaldia_content2",
+                mobile: true, tablet: true, desktop: true,
+                sizesMobile: ["fluid", "336x280", "300x250", "320x100"],
+                sizesTablet: ["fluid", "336x280", "300x250", "320x100"],
+                sizes: ["fluid", "336x280", "300x250", "250x250"],
+                autoTargeting: false, refreshIndividually: true, refresh: true,
+                refreshTime: 30000, mythValue: 0.01
+            },
+            {
+                id: 1014, slot: "ad_paragraph_12", display: "/22794149020/jornaldia/jornaldia_content3",
+                mobile: true, tablet: true, desktop: true,
+                sizesMobile: ["fluid", "336x280", "300x250", "320x100"],
+                sizesTablet: ["fluid", "336x280", "300x250", "320x100"],
+                sizes: ["fluid", "336x280", "300x250", "250x250"],
+                autoTargeting: false, refreshIndividually: true, refresh: true,
+                refreshTime: 30000, mythValue: 0.01
+            },
+            {
+                id: 1015, slot: "ad_paragraph_13", display: "/22794149020/jornaldia/jornaldia_content4",
+                mobile: true, tablet: true, desktop: true,
+                sizesMobile: ["fluid", "336x280", "300x250", "320x100"],
+                sizesTablet: ["fluid", "336x280", "300x250", "320x100"],
+                sizes: ["fluid", "336x280", "300x250", "250x250"],
+                autoTargeting: false, refreshIndividually: true, refresh: true,
+                refreshTime: 30000, mythValue: 0.01
+            },
+            {
+                id: 1016, slot: "ad_paragraph_14", display: "/22794149020/jornaldia/jornaldia_content5",
+                mobile: true, tablet: true, desktop: true,
+                sizesMobile: ["fluid", "336x280", "300x250", "320x100"],
+                sizesTablet: ["fluid", "336x280", "300x250", "320x100"],
+                sizes: ["fluid", "336x280", "300x250", "250x250"],
+                autoTargeting: false, refreshIndividually: true, refresh: true,
+                refreshTime: 30000, mythValue: 0.01
+            },
+            {
+                id: 1017, slot: "ad_paragraph_15", display: "/22794149020/jornaldia/jornaldia_content6",
+                mobile: true, tablet: true, desktop: true,
+                sizesMobile: ["fluid", "336x280", "300x250", "320x100"],
+                sizesTablet: ["fluid", "336x280", "300x250", "320x100"],
+                sizes: ["fluid", "336x280", "300x250", "250x250"],
+                autoTargeting: false, refreshIndividually: true, refresh: true,
+                refreshTime: 30000, mythValue: 0.01
+            },
+            {
+                id: 1018, slot: "ad_paragraph_16", display: "/22794149020/jornaldia/jornaldia_content7",
+                mobile: true, tablet: true, desktop: true,
+                sizesMobile: ["fluid", "336x280", "300x250", "320x100"],
+                sizesTablet: ["fluid", "336x280", "300x250", "320x100"],
+                sizes: ["fluid", "336x280", "300x250", "250x250"],
+                autoTargeting: false, refreshIndividually: true, refresh: true,
+                refreshTime: 30000, mythValue: 0.01
+            },
+            {
+                id: 1019, slot: "ad_paragraph_17", display: "/22794149020/jornaldia/jornaldia_content8",
+                mobile: true, tablet: true, desktop: true,
+                sizesMobile: ["fluid", "336x280", "300x250", "320x100"],
+                sizesTablet: ["fluid", "336x280", "300x250", "320x100"],
+                sizes: ["fluid", "336x280", "300x250", "250x250"],
+                autoTargeting: false, refreshIndividually: true, refresh: true,
+                refreshTime: 30000, mythValue: 0.01
+            },
+            {
+                id: 1020, slot: "ad_paragraph_18", display: "/22794149020/jornaldia/jornaldia_content9",
+                mobile: true, tablet: true, desktop: true,
+                sizesMobile: ["fluid", "336x280", "300x250", "320x100"],
+                sizesTablet: ["fluid", "336x280", "300x250", "320x100"],
+                sizes: ["fluid", "336x280", "300x250", "250x250"],
+                autoTargeting: false, refreshIndividually: true, refresh: true,
+                refreshTime: 30000, mythValue: 0.01
+            },
+            {
+                id: 1021, slot: "ad_paragraph_19", display: "/22794149020/jornaldia/jornaldia_content1",
+                mobile: true, tablet: true, desktop: true,
+                sizesMobile: ["fluid", "336x280", "300x250", "320x100"],
+                sizesTablet: ["fluid", "336x280", "300x250", "320x100"],
+                sizes: ["fluid", "336x280", "300x250", "250x250"],
+                autoTargeting: false, refreshIndividually: true, refresh: true,
+                refreshTime: 30000, mythValue: 0.01
+            },
+            {
+                id: 1022, slot: "ad_paragraph_20", display: "/22794149020/jornaldia/jornaldia_content2",
+                mobile: true, tablet: true, desktop: true,
+                sizesMobile: ["fluid", "336x280", "300x250", "320x100"],
+                sizesTablet: ["fluid", "336x280", "300x250", "320x100"],
+                sizes: ["fluid", "336x280", "300x250", "250x250"],
+                autoTargeting: false, refreshIndividually: true, refresh: true,
+                refreshTime: 30000, mythValue: 0.01
+            },
+            {
+                id: 1023, slot: "ad_paragraph_21", display: "/22794149020/jornaldia/jornaldia_content3",
+                mobile: true, tablet: true, desktop: true,
+                sizesMobile: ["fluid", "336x280", "300x250", "320x100"],
+                sizesTablet: ["fluid", "336x280", "300x250", "320x100"],
+                sizes: ["fluid", "336x280", "300x250", "250x250"],
+                autoTargeting: false, refreshIndividually: true, refresh: true,
+                refreshTime: 30000, mythValue: 0.01
+            },
+            {
+                id: 1024, slot: "ad_paragraph_22", display: "/22794149020/jornaldia/jornaldia_content4",
+                mobile: true, tablet: true, desktop: true,
+                sizesMobile: ["fluid", "336x280", "300x250", "320x100"],
+                sizesTablet: ["fluid", "336x280", "300x250", "320x100"],
+                sizes: ["fluid", "336x280", "300x250", "250x250"],
+                autoTargeting: false, refreshIndividually: true, refresh: true,
+                refreshTime: 30000, mythValue: 0.01
+            },
+            {
+                id: 1025, slot: "ad_paragraph_23", display: "/22794149020/jornaldia/jornaldia_content5",
+                mobile: true, tablet: true, desktop: true,
+                sizesMobile: ["fluid", "336x280", "300x250", "320x100"],
+                sizesTablet: ["fluid", "336x280", "300x250", "320x100"],
+                sizes: ["fluid", "336x280", "300x250", "250x250"],
+                autoTargeting: false, refreshIndividually: true, refresh: true,
+                refreshTime: 30000, mythValue: 0.01
+            },
+            {
+                id: 1026, slot: "ad_paragraph_24", display: "/22794149020/jornaldia/jornaldia_content6",
+                mobile: true, tablet: true, desktop: true,
+                sizesMobile: ["fluid", "336x280", "300x250", "320x100"],
+                sizesTablet: ["fluid", "336x280", "300x250", "320x100"],
+                sizes: ["fluid", "336x280", "300x250", "250x250"],
+                autoTargeting: false, refreshIndividually: true, refresh: true,
+                refreshTime: 30000, mythValue: 0.01
+            },
+            {
+                id: 1027, slot: "ad_paragraph_25", display: "/22794149020/jornaldia/jornaldia_content7",
+                mobile: true, tablet: true, desktop: true,
+                sizesMobile: ["fluid", "336x280", "300x250", "320x100"],
+                sizesTablet: ["fluid", "336x280", "300x250", "320x100"],
+                sizes: ["fluid", "336x280", "300x250", "250x250"],
+                autoTargeting: false, refreshIndividually: true, refresh: true,
+                refreshTime: 30000, mythValue: 0.01
+            },
+            {
+                id: 1028, slot: "ad_paragraph_26", display: "/22794149020/jornaldia/jornaldia_content8",
+                mobile: true, tablet: true, desktop: true,
+                sizesMobile: ["fluid", "336x280", "300x250", "320x100"],
+                sizesTablet: ["fluid", "336x280", "300x250", "320x100"],
+                sizes: ["fluid", "336x280", "300x250", "250x250"],
+                autoTargeting: false, refreshIndividually: true, refresh: true,
+                refreshTime: 30000, mythValue: 0.01
+            },
+            {
+                id: 1029, slot: "ad_paragraph_27", display: "/22794149020/jornaldia/jornaldia_content9",
+                mobile: true, tablet: true, desktop: true,
+                sizesMobile: ["fluid", "336x280", "300x250", "320x100"],
+                sizesTablet: ["fluid", "336x280", "300x250", "320x100"],
+                sizes: ["fluid", "336x280", "300x250", "250x250"],
+                autoTargeting: false, refreshIndividually: true, refresh: true,
+                refreshTime: 30000, mythValue: 0.01
+            },
+            {
+                id: 1030, slot: "ad_paragraph_28", display: "/22794149020/jornaldia/jornaldia_content1",
+                mobile: true, tablet: true, desktop: true,
+                sizesMobile: ["fluid", "336x280", "300x250", "320x100"],
+                sizesTablet: ["fluid", "336x280", "300x250", "320x100"],
+                sizes: ["fluid", "336x280", "300x250", "250x250"],
+                autoTargeting: false, refreshIndividually: true, refresh: true,
+                refreshTime: 30000, mythValue: 0.01
+            },
+            {
+                id: 1031, slot: "ad_paragraph_29", display: "/22794149020/jornaldia/jornaldia_content2",
+                mobile: true, tablet: true, desktop: true,
+                sizesMobile: ["fluid", "336x280", "300x250", "320x100"],
+                sizesTablet: ["fluid", "336x280", "300x250", "320x100"],
+                sizes: ["fluid", "336x280", "300x250", "250x250"],
+                autoTargeting: false, refreshIndividually: true, refresh: true,
+                refreshTime: 30000, mythValue: 0.01
+            },
+            {
+                id: 1032, slot: "ad_paragraph_30", display: "/22794149020/jornaldia/jornaldia_content3",
+                mobile: true, tablet: true, desktop: true,
+                sizesMobile: ["fluid", "336x280", "300x250", "320x100"],
+                sizesTablet: ["fluid", "336x280", "300x250", "320x100"],
+                sizes: ["fluid", "336x280", "300x250", "250x250"],
+                autoTargeting: false, refreshIndividually: true, refresh: true,
+                refreshTime: 30000, mythValue: 0.01
+            },
+            {
+                id: 1033, slot: "ad_paragraph_31", display: "/22794149020/jornaldia/jornaldia_content4",
+                mobile: true, tablet: true, desktop: true,
+                sizesMobile: ["fluid", "336x280", "300x250", "320x100"],
+                sizesTablet: ["fluid", "336x280", "300x250", "320x100"],
+                sizes: ["fluid", "336x280", "300x250", "250x250"],
+                autoTargeting: false, refreshIndividually: true, refresh: true,
+                refreshTime: 30000, mythValue: 0.01
+            },
+            {
+                id: 1034, slot: "ad_paragraph_32", display: "/22794149020/jornaldia/jornaldia_content5",
+                mobile: true, tablet: true, desktop: true,
+                sizesMobile: ["fluid", "336x280", "300x250", "320x100"],
+                sizesTablet: ["fluid", "336x280", "300x250", "320x100"],
+                sizes: ["fluid", "336x280", "300x250", "250x250"],
+                autoTargeting: false, refreshIndividually: true, refresh: true,
+                refreshTime: 30000, mythValue: 0.01
+            }
+        ];
+
         static customSlots = [];
         static fallbackPaths = [];
         static avoids = [];
@@ -14,7 +305,203 @@
         static disableCssSizing = false;
         static hideAfterMaxFails = false;
         static categoryAndUserTargeting = false;
-        static imageAds = [{"id":1101, "name": "in-image", "content": "/22794149020/uainoticias/uainoticias_inimage", "target": ".size-large img", "type": 1, "refreshIndividually": true, "refresh": true, "refreshTime": 20000, "mythValue": 0.01 }];
+        //static imageAds = [{"id":1101, "name": "in-image", "content": "/22794149020/uainoticias/uainoticias_inimage", "target": ".size-large img", "type": 1, "refreshIndividually": true, "refresh": true, "refreshTime": 20000, "mythValue": 0.01 }];
+        static imageAds = [
+            {
+                id: 1101, name: "in-image", content: "/22794149020/uainoticias/uainoticias_inimage",
+                target: ".size-large img", type: 1,
+                refreshIndividually: true, refresh: true,
+                refreshTime: 20000, mythValue: 0.01
+            },
+            {
+                id: 1102, name: "in-image", content: "/22794149020/uainoticias/uainoticias_inimage",
+                target: ".size-large img", type: 1,
+                refreshIndividually: true, refresh: true,
+                refreshTime: 20000, mythValue: 0.01
+            },
+            {
+                id: 1103, name: "in-image", content: "/22794149020/uainoticias/uainoticias_inimage",
+                target: ".size-large img", type: 1,
+                refreshIndividually: true, refresh: true,
+                refreshTime: 20000, mythValue: 0.01
+            },
+            {
+                id: 1104, name: "in-image", content: "/22794149020/uainoticias/uainoticias_inimage",
+                target: ".size-large img", type: 1,
+                refreshIndividually: true, refresh: true,
+                refreshTime: 20000, mythValue: 0.01
+            },
+            {
+                id: 1105, name: "in-image", content: "/22794149020/uainoticias/uainoticias_inimage",
+                target: ".size-large img", type: 1,
+                refreshIndividually: true, refresh: true,
+                refreshTime: 20000, mythValue: 0.01
+            },
+            {
+                id: 1106, name: "in-image", content: "/22794149020/uainoticias/uainoticias_inimage",
+                target: ".size-large img", type: 1,
+                refreshIndividually: true, refresh: true,
+                refreshTime: 20000, mythValue: 0.01
+            },
+            {
+                id: 1107, name: "in-image", content: "/22794149020/uainoticias/uainoticias_inimage",
+                target: ".size-large img", type: 1,
+                refreshIndividually: true, refresh: true,
+                refreshTime: 20000, mythValue: 0.01
+            },
+            {
+                id: 1108, name: "in-image", content: "/22794149020/uainoticias/uainoticias_inimage",
+                target: ".size-large img", type: 1,
+                refreshIndividually: true, refresh: true,
+                refreshTime: 20000, mythValue: 0.01
+            },
+            {
+                id: 1109, name: "in-image", content: "/22794149020/uainoticias/uainoticias_inimage",
+                target: ".size-large img", type: 1,
+                refreshIndividually: true, refresh: true,
+                refreshTime: 20000, mythValue: 0.01
+            },
+            {
+                id: 1110, name: "in-image", content: "/22794149020/uainoticias/uainoticias_inimage",
+                target: ".size-large img", type: 1,
+                refreshIndividually: true, refresh: true,
+                refreshTime: 20000, mythValue: 0.01
+            },
+            {
+                id: 1111, name: "in-image", content: "/22794149020/uainoticias/uainoticias_inimage",
+                target: ".size-large img", type: 1,
+                refreshIndividually: true, refresh: true,
+                refreshTime: 20000, mythValue: 0.01
+            },
+            {
+                id: 1112, name: "in-image", content: "/22794149020/uainoticias/uainoticias_inimage",
+                target: ".size-large img", type: 1,
+                refreshIndividually: true, refresh: true,
+                refreshTime: 20000, mythValue: 0.01
+            },
+            {
+                id: 1113, name: "in-image", content: "/22794149020/uainoticias/uainoticias_inimage",
+                target: ".size-large img", type: 1,
+                refreshIndividually: true, refresh: true,
+                refreshTime: 20000, mythValue: 0.01
+            },
+            {
+                id: 1114, name: "in-image", content: "/22794149020/uainoticias/uainoticias_inimage",
+                target: ".size-large img", type: 1,
+                refreshIndividually: true, refresh: true,
+                refreshTime: 20000, mythValue: 0.01
+            },
+            {
+                id: 1115, name: "in-image", content: "/22794149020/uainoticias/uainoticias_inimage",
+                target: ".size-large img", type: 1,
+                refreshIndividually: true, refresh: true,
+                refreshTime: 20000, mythValue: 0.01
+            },
+            {
+                id: 1116, name: "in-image", content: "/22794149020/uainoticias/uainoticias_inimage",
+                target: ".size-large img", type: 1,
+                refreshIndividually: true, refresh: true,
+                refreshTime: 20000, mythValue: 0.01
+            },
+            {
+                id: 1117, name: "in-image", content: "/22794149020/uainoticias/uainoticias_inimage",
+                target: ".size-large img", type: 1,
+                refreshIndividually: true, refresh: true,
+                refreshTime: 20000, mythValue: 0.01
+            },
+            {
+                id: 1118, name: "in-image", content: "/22794149020/uainoticias/uainoticias_inimage",
+                target: ".size-large img", type: 1,
+                refreshIndividually: true, refresh: true,
+                refreshTime: 20000, mythValue: 0.01
+            },
+            {
+                id: 1119, name: "in-image", content: "/22794149020/uainoticias/uainoticias_inimage",
+                target: ".size-large img", type: 1,
+                refreshIndividually: true, refresh: true,
+                refreshTime: 20000, mythValue: 0.01
+            },
+            {
+                id: 1120, name: "in-image", content: "/22794149020/uainoticias/uainoticias_inimage",
+                target: ".size-large img", type: 1,
+                refreshIndividually: true, refresh: true,
+                refreshTime: 20000, mythValue: 0.01
+            },
+            {
+                id: 1121, name: "in-image", content: "/22794149020/uainoticias/uainoticias_inimage",
+                target: ".size-large img", type: 1,
+                refreshIndividually: true, refresh: true,
+                refreshTime: 20000, mythValue: 0.01
+            },
+            {
+                id: 1122, name: "in-image", content: "/22794149020/uainoticias/uainoticias_inimage",
+                target: ".size-large img", type: 1,
+                refreshIndividually: true, refresh: true,
+                refreshTime: 20000, mythValue: 0.01
+            },
+            {
+                id: 1123, name: "in-image", content: "/22794149020/uainoticias/uainoticias_inimage",
+                target: ".size-large img", type: 1,
+                refreshIndividually: true, refresh: true,
+                refreshTime: 20000, mythValue: 0.01
+            },
+            {
+                id: 1124, name: "in-image", content: "/22794149020/uainoticias/uainoticias_inimage",
+                target: ".size-large img", type: 1,
+                refreshIndividually: true, refresh: true,
+                refreshTime: 20000, mythValue: 0.01
+            },
+            {
+                id: 1125, name: "in-image", content: "/22794149020/uainoticias/uainoticias_inimage",
+                target: ".size-large img", type: 1,
+                refreshIndividually: true, refresh: true,
+                refreshTime: 20000, mythValue: 0.01
+            },
+            {
+                id: 1126, name: "in-image", content: "/22794149020/uainoticias/uainoticias_inimage",
+                target: ".size-large img", type: 1,
+                refreshIndividually: true, refresh: true,
+                refreshTime: 20000, mythValue: 0.01
+            },
+            {
+                id: 1127, name: "in-image", content: "/22794149020/uainoticias/uainoticias_inimage",
+                target: ".size-large img", type: 1,
+                refreshIndividually: true, refresh: true,
+                refreshTime: 20000, mythValue: 0.01
+            },
+            {
+                id: 1128, name: "in-image", content: "/22794149020/uainoticias/uainoticias_inimage",
+                target: ".size-large img", type: 1,
+                refreshIndividually: true, refresh: true,
+                refreshTime: 20000, mythValue: 0.01
+            },
+            {
+                id: 1129, name: "in-image", content: "/22794149020/uainoticias/uainoticias_inimage",
+                target: ".size-large img", type: 1,
+                refreshIndividually: true, refresh: true,
+                refreshTime: 20000, mythValue: 0.01
+            },
+            {
+                id: 1130, name: "in-image", content: "/22794149020/uainoticias/uainoticias_inimage",
+                target: ".size-large img", type: 1,
+                refreshIndividually: true, refresh: true,
+                refreshTime: 20000, mythValue: 0.01
+            },
+            {
+                id: 1131, name: "in-image", content: "/22794149020/uainoticias/uainoticias_inimage",
+                target: ".size-large img", type: 1,
+                refreshIndividually: true, refresh: true,
+                refreshTime: 20000, mythValue: 0.01
+            },
+            {
+                id: 1132, name: "in-image", content: "/22794149020/uainoticias/uainoticias_inimage",
+                target: ".size-large img", type: 1,
+                refreshIndividually: true, refresh: true,
+                refreshTime: 20000, mythValue: 0.01
+            }
+        ];
+
+
         static refreshTime = 30000;
         static enableTruvidScript = true;
         static truvidTarget = '.wp-post-image';
@@ -39,7 +526,7 @@
         static IN_IMAGE_AD_QUERIES = ['figure.aligncenter.size-large img', 'figure.aligncenter.size-full img'];
 
         constructor() {
-            this.MAX_RETRIES = 5; // Maximum number of retries for the original content
+            this.MAX_RETRIES = 3; // Maximum number of retries for the original content
             this.TOTAL_WORDS_LENGTH = 50;
             this.slotsRefreshCount = {}; // Stores the refresh count for each slot
             this.fallbackAttemptedSlots = new Set(); // Keeps track of throttled slots
@@ -1368,9 +1855,9 @@
 
                     let i = 0;
                     for (let image of images) {
-                        if (contentImageAds.length == 0) break;
+                        if (!contentImageAds || i >= contentImageAds.length) break;
 
-                        let imageAd = contentImageAds[0];
+                        let imageAd = contentImageAds[i];
                         let id = `auto-image-${i++}`;
                         if (image.id) {
                             id = image.id;
