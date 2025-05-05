@@ -1446,13 +1446,12 @@
                     box-sizing: content-box;
                     float: none !important;
                     line-height: 0px;
-                    margin: 10px auto !important;
+                    margin: 15px auto !important;
                     max-width: 100% !important;
                     min-height: 250px;
                     height: auto !important;
                     width: auto !important;
                     padding: 10px 0 !important;
-                    margin: 15px 0 !important;
                     text-align: center !important;
                 }
 
