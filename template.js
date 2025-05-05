@@ -14,64 +14,8 @@
         static disableCssSizing = false;
         static hideAfterMaxFails = false;
         static categoryAndUserTargeting = false;
-        static imageAds = [
-            {
-                "id": 1101,
-                "name": "in-image-1",
-                "content": "/22794149020/uainoticias/uainoticias_inimage_1",
-                "type": 1,
-                "refreshIndividually": true,
-                "refresh": true,
-                "refreshTime": 20000,
-                "mythValue": 0.01,
-                "sizes": [[300, 250], [336, 280]]
-            },
-            {
-                "id": 1102,
-                "name": "in-image-2",
-                "content": "/22794149020/uainoticias/uainoticias_inimage_2",
-                "type": 1,
-                "refreshIndividually": true,
-                "refresh": true,
-                "refreshTime": 20000,
-                "mythValue": 0.01,
-                "sizes": [[300, 250], [336, 280]]
-            },
-            {
-                "id": 1103,
-                "name": "in-image-3",
-                "content": "/22794149020/uainoticias/uainoticias_inimage_3",
-                "type": 1,
-                "refreshIndividually": true,
-                "refresh": true,
-                "refreshTime": 20000,
-                "mythValue": 0.01,
-                "sizes": [[300, 250], [336, 280]]
-            },
-            {
-                "id": 1104,
-                "name": "in-image-4",
-                "content": "/22794149020/uainoticias/uainoticias_inimage_4",
-                "type": 1,
-                "refreshIndividually": true,
-                "refresh": true,
-                "refreshTime": 20000,
-                "mythValue": 0.01,
-                "sizes": [[300, 250], [336, 280]]
-            },
-            {
-                "id": 1105,
-                "name": "in-image-5",
-                "content": "/22794149020/uainoticias/uainoticias_inimage_5",
-                "type": 1,
-                "refreshIndividually": true,
-                "refresh": true,
-                "refreshTime": 20000,
-                "mythValue": 0.01,
-                "sizes": [[300, 250], [336, 280]]
-            }
-        ];
-static refreshTime = 20000;
+        static imageAds = [{"id":1101, "name": "in-image", "content": "/22794149020/uainoticias/uainoticias_inimage", "target": ".size-large img", "type": 1, "refreshIndividually": true, "refresh": true, "refreshTime": 20000, "mythValue": 0.01 }];
+        static refreshTime = 30000;
         static enableTruvidScript = true;
         static truvidTarget = '.wp-post-image';
         static truvidCode = `<div class="truvidPos"><script async type="text/javascript" src="https://cnt.trvdp.com/js/1646/11775.js"></script></div>`;
@@ -91,11 +35,11 @@ static refreshTime = 20000;
         static latestNewsDivSwapColors = ('false' == 'true') ?? false;
         static sentTracing = [];
         static enableIndividualSlotRefresh = true; // Individual Slot Refresh
-        static TIMEOUT_FOR_SLOT_REFRESH = 7000;
+        static TIMEOUT_FOR_SLOT_REFRESH = 10000;
         static IN_IMAGE_AD_QUERIES = ['figure.aligncenter.size-large img', 'figure.aligncenter.size-full img'];
 
         constructor() {
-            this.MAX_RETRIES = 100; // Maximum number of retries for the original content
+            this.MAX_RETRIES = 5; // Maximum number of retries for the original content
             this.TOTAL_WORDS_LENGTH = 50;
             this.slotsRefreshCount = {}; // Stores the refresh count for each slot
             this.fallbackAttemptedSlots = new Set(); // Keeps track of throttled slots
@@ -105,6 +49,10 @@ static refreshTime = 20000;
             // Update the slot refreshIndividually based on global variable.
             GPTLoader.contentSlots.forEach(slot => { slot["refreshIndividually"] = GPTLoader.enableIndividualSlotRefresh; });
             
+        }
+
+        fillImageAds() {
+
         }
 
         static location() {
@@ -1284,11 +1232,7 @@ static refreshTime = 20000;
                     for (let el of elementsAfter) {
                         el.style.display = '';
                     }
-                    //setTimeout(() => {
-                        this.placeInImageAds();
-                        this.configureImageSlots();
-                        this.desplayAllAdSlots();
-                    //},5000);
+                    this.desplayAllAdSlots();
                     insertedElement.style.display = 'none';
                 });
             }
@@ -1428,9 +1372,9 @@ static refreshTime = 20000;
 
                     let i = 0;
                     for (let image of images) {
-                        if (i >= contentImageAds.length) break;
+                        if (contentImageAds.length == 0) break;
 
-                        let imageAd = contentImageAds[i];
+                        let imageAd = contentImageAds[0];
                         let id = `auto-image-${i++}`;
                         if (image.id) {
                             id = image.id;
@@ -1454,33 +1398,6 @@ static refreshTime = 20000;
                 if (slot.div) continue;
                 slot.div = this.createOverlayDiv(slot.target);
             }
-        }
-
-        // Checks if an image element is correctly tagged within a large figure.
-        isLargeFigureImage(image) {
-            const parent = image.parentNode;
-            return (parent && parent.tagName === 'FIGURE' && parent.classList.contains('size-large'));
-        }
-
-        // Insert In Image ads.
-        insertInImageAd(img, adId) {
-            const wrapper = document.createElement('div');
-            wrapper.style.position = 'relative';
-            wrapper.style.display = 'inline-block';
-
-            const adDiv = document.createElement('div');
-            adDiv.id = adId;
-            adDiv.style.position = 'relative';
-            adDiv.style.bottom = '10px';
-            adDiv.style.left = '10px';
-            adDiv.style.zIndex = '10';
-            adDiv.style.background = 'rgba(255,255,255,0.8)';
-
-            img.parentNode.insertBefore(wrapper, img);
-            wrapper.appendChild(img);
-            wrapper.appendChild(adDiv);
-
-            //googletag.display(adId);
         }
 
         // Function to check if an element is within a specified parent tagName
