@@ -49,11 +49,7 @@
             // Update the slot refreshIndividually based on global variable.
             GPTLoader.contentSlots.forEach(slot => { slot["refreshIndividually"] = GPTLoader.enableIndividualSlotRefresh; });
             
-        }
-
-        fillImageAds() {
-
-        }
+        }        
 
         static location() {
             let url = window.location.origin + window.location.pathname;
