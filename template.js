@@ -760,7 +760,7 @@
             let slot = event.slot;
             let elementId = slot.getSlotElementId();
             let element = document.getElementById(elementId);
-            if (!element || element.style.display == 'none') return;
+            if (!element) return;
 
             // if (element && element.style && element.style.display === 'none' && element.getAttribute('auto-height')) {
             //     let parent = element.parentElement;
