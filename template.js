@@ -1490,6 +1490,10 @@
                         font-size: 10px;
                         line-height: 13px;
                     }
+
+                    .ad-wrapper-div iframe{
+                        width: auto;
+                    }
                 }
             `;
             document.head.appendChild(style);
