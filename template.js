@@ -1304,7 +1304,7 @@
                 let adTitle = document.createElement('p');
                 adTitle.innerText = 'Advertisment';
                 wrapperDiv.appendChild(adTitle);
-
+                
                 let divId = 'ad_paragraph_' + currentId;
                 // console.log('creating paragraph ' + divId)
 
@@ -1318,8 +1318,10 @@
                 // wrapperDiv.style.backgroundColor = 'red';
                 div.innerHTML = '';
 
-                // Append the dynamic div to the wrapper div
-                wrapperDiv.appendChild(div);
+                if (currentId < GPTLoader.contentSlots.length) {
+                    // Append the dynamic div to the wrapper div
+                    wrapperDiv.appendChild(div);
+                }
 
                 // Insert the wrapper div after the current paragraph
                 let isActive = GPTLoader.contentSlots[currentId - 1]?.[device] || true;
