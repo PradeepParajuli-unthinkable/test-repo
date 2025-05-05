@@ -1481,7 +1481,7 @@
                 @media only screen and (max-width: 767px) {
                     .ad-wrapper-div {
                         min-width: 100%;
-                        min-height: 100px;
+                        min-height: 320px;
                         padding-top: 5px !important;
                         padding-bottom: 5px !important;
                     }
@@ -1492,7 +1492,7 @@
                     }
 
                     .ad-wrapper-div iframe{
-                        width: auto;
+                        width: auto !important;
                     }
                 }
             `;
