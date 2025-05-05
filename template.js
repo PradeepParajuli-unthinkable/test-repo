@@ -39,7 +39,7 @@
         static IN_IMAGE_AD_QUERIES = ['figure.aligncenter.size-large img', 'figure.aligncenter.size-full img'];
 
         constructor() {
-            this.MAX_RETRIES = 3; // Maximum number of retries for the original content
+            this.MAX_RETRIES = 10; // Maximum number of retries for the original content
             this.TOTAL_WORDS_LENGTH = 50;
             this.slotsRefreshCount = {}; // Stores the refresh count for each slot
             this.fallbackAttemptedSlots = new Set(); // Keeps track of throttled slots
@@ -760,7 +760,7 @@
             let slot = event.slot;
             let elementId = slot.getSlotElementId();
             let element = document.getElementById(elementId);
-            if (!element) return;
+            if (!element && element.style.display == 'none') return;
 
             // if (element && element.style && element.style.display === 'none' && element.getAttribute('auto-height')) {
             //     let parent = element.parentElement;
@@ -788,7 +788,7 @@
                             } catch (error) {
                                 if (window.location.search.indexOf('mythdebug') !== -1) console.error(`Failed to reload ad slot ${elementId}:`, error);
                             }
-                        } else if (this.fallbackPaths && this.fallbackPaths.length > 0 && this.slotsFallbackCount[elementId] < this.MAX_FALLBACKS) {
+                        } else if (this.slotsFallbackCount[elementId] < this.MAX_FALLBACKS) {
                             // Exclude Stick and Interstitial slots from fallback mechanism
                             if (elementId.includes("Stick") || elementId.includes("Interstitial")
                                 || elementId.includes("stick") || elementId.includes("interstitial")) {
@@ -801,12 +801,12 @@
                         } else {
                             if (window.location.search.indexOf('mythdebug') !== -1) console.log(`No more fallbacks available for ${elementId}.`);
 
-                            //if (GPTLoader.hideAfterMaxFails) {
-                            //    let parent = element.parentElement;
-                            //    if (parent) {
-                            //        parent.style.display = 'none';
-                            //    }
-                            //}
+                            if (GPTLoader.hideAfterMaxFails) {
+                                let parent = element.parentElement;
+                                if (parent) {
+                                    parent.style.display = 'none';
+                                }
+                            }
 
                             let slotType = this.getSlotDetails(slot);
                             let mythValue = this.getSlotMythValue(slot);
@@ -1228,7 +1228,6 @@
                     for (let el of elementsAfter) {
                         el.style.display = '';
                     }
-                    this.MAX_RETRIES = this.MAX_RETRIES + 5; // Incremented so that after, clicking readmore other content also refreshes.
                     this.desplayAllAdSlots();
                     insertedElement.style.display = 'none';
                 });
