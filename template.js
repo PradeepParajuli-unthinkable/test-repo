@@ -1448,7 +1448,7 @@
                     margin: 10px auto !important;
                     max-width: 100% !important;
                     min-height: 250px;
-                    height: auto;
+                    height: auto !important;
                     width: auto;
                     padding: 10px 0 !important;
                     margin: 15px 0 !important;
