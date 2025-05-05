@@ -1230,6 +1230,7 @@
                     for (let el of elementsAfter) {
                         el.style.display = '';
                     }
+                    this.placeInImageAds();
                     this.desplayAllAdSlots();
                     insertedElement.style.display = 'none';
                 });
@@ -1506,11 +1507,11 @@
 
     window.gptLoader = new GPTLoader();
 
-    // Initialize GPT library
-    window.gptLoader.loadGPTScript();
-
     // Load custom styling.
     window.gptLoader.addCustomStyling();
+
+    // Initialize GPT library
+    window.gptLoader.loadGPTScript();
 
     // Start the GPTLoader after the DOM has fully loaded
     document.addEventListener("DOMContentLoaded", function async() {
@@ -1519,7 +1520,6 @@
         window.gptLoader.loadLatestNewsDiv();
         window.gptLoader.placeInImageAds();
         setTimeout(function () {
-
             window.gptLoader.start();
         }, GPTLoader.startTimeout); // Wait for 1 second before calling the start() function
     });
