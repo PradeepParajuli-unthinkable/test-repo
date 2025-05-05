@@ -801,12 +801,12 @@
                         } else {
                             if (window.location.search.indexOf('mythdebug') !== -1) console.log(`No more fallbacks available for ${elementId}.`);
 
-                            if (GPTLoader.hideAfterMaxFails) {
-                                let parent = element.parentElement;
-                                if (parent) {
-                                    parent.style.display = 'none';
-                                }
-                            }
+                            //if (GPTLoader.hideAfterMaxFails) {
+                            //    let parent = element.parentElement;
+                            //    if (parent) {
+                            //        parent.style.display = 'none';
+                            //    }
+                            //}
 
                             let slotType = this.getSlotDetails(slot);
                             let mythValue = this.getSlotMythValue(slot);
@@ -1525,3 +1525,4 @@
         }, GPTLoader.startTimeout); // Wait for 1 second before calling the start() function
     });
 })();
+
