@@ -1318,14 +1318,12 @@
                 // wrapperDiv.style.backgroundColor = 'red';
                 div.innerHTML = '';
 
-                if (currentId < GPTLoader.contentSlots.length) {
-                    // Append the dynamic div to the wrapper div
-                    wrapperDiv.appendChild(div);
-                }
+                // Append the dynamic div to the wrapper div
+                wrapperDiv.appendChild(div);
 
                 // Insert the wrapper div after the current paragraph
                 let isActive = GPTLoader.contentSlots[currentId - 1]?.[device] || true;
-                if (isActive) {
+                if (isActive && currentId < GPTLoader.contentSlots.length) {
                     paragraph.insertAdjacentElement('afterend', wrapperDiv);
                 }
 
