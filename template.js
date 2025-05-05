@@ -1449,7 +1449,7 @@
                     max-width: 100% !important;
                     min-height: 250px;
                     height: auto !important;
-                    width: auto;
+                    width: auto !important;
                     padding: 10px 0 !important;
                     margin: 15px 0 !important;
                     text-align: center !important;
@@ -1467,7 +1467,6 @@
                     .ad-wrapper-div {
                         min-width: 728px;
                         min-height: 280px;
-                        height: inharit;
                     }
                 }
 
@@ -1482,7 +1481,6 @@
                     .ad-wrapper-div {
                         min-width: 100%;
                         min-height: 100px;
-                        height: inharit;
                         padding-top: 5px !important;
                         padding-bottom: 5px !important;
                     }
