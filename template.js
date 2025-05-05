@@ -1491,7 +1491,7 @@
                     }
 
                     .ad-wrapper-div iframe{
-                        width: auto !important;
+                        
                     }
                 }
             `;
