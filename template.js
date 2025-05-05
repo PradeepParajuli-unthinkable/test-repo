@@ -1373,7 +1373,7 @@
                     for (let image of images) {
                         if (contentImageAds.length == 0) break;
 
-                        let imageAd = (contentImageAds.length >= i) ? contentImageAds[i]: contentImageAds[0];
+                        let imageAd = (contentImageAds.length > i) ? contentImageAds[i]: contentImageAds[0];
                         let id = `auto-image-${i}`;
                         if (image.id) {
                             id = image.id;
@@ -1388,7 +1388,7 @@
                         let div = this.createOverlayDiv(`#${id}`);
                         imageAd.div = div;
                         imageAd.target = `#${image.id}`;
-                        imageAd.content = (contentImageAds.length >= i) ? imageAd.content : imageAd.content + `_${id}`;
+                        imageAd.content = (contentImageAds.length > i) ? imageAd.content : imageAd.content + `_${id}`;
                         imageAd.type = 1;
 
                         i += 1;
