@@ -14,7 +14,110 @@
         static disableCssSizing = false;
         static hideAfterMaxFails = false;
         static categoryAndUserTargeting = false;
-        static imageAds = [{"id":1101, "name": "in-image", "content": "/22794149020/uainoticias/uainoticias_inimage", "target": ".size-large img", "type": 1, "refreshIndividually": true, "refresh": true, "refreshTime": 20000, "mythValue": 0.01 }];
+        //static imageAds = [{"id":1101, "name": "in-image", "content": "/22794149020/uainoticias/uainoticias_inimage", "target": ".size-large img", "type": 1, "refreshIndividually": true, "refresh": true, "refreshTime": 20000, "mythValue": 0.01 }];
+
+        static imageAds = [
+            {
+                "id": 1101,
+                "name": "in-image-1",
+                "content": "/22794149020/uainoticias/uainoticias_inimage",
+                "target": ".size-large img",
+                "type": 1,
+                "refreshIndividually": true,
+                "refresh": true,
+                "refreshTime": 20000,
+                "mythValue": 0.01
+            },
+            {
+                "id": 1102,
+                "name": "in-image-2",
+                "content": "/22794149020/uainoticias/uainoticias_inimage",
+                "target": ".size-large img",
+                "type": 1,
+                "refreshIndividually": true,
+                "refresh": true,
+                "refreshTime": 20000,
+                "mythValue": 0.01
+            },
+            {
+                "id": 1103,
+                "name": "in-image-3",
+                "content": "/22794149020/uainoticias/uainoticias_inimage",
+                "target": ".size-large img",
+                "type": 1,
+                "refreshIndividually": true,
+                "refresh": true,
+                "refreshTime": 20000,
+                "mythValue": 0.01
+            },
+            {
+                "id": 1104,
+                "name": "in-image-4",
+                "content": "/22794149020/uainoticias/uainoticias_inimage",
+                "target": ".size-large img",
+                "type": 1,
+                "refreshIndividually": true,
+                "refresh": true,
+                "refreshTime": 20000,
+                "mythValue": 0.01
+            },
+            {
+                "id": 1105,
+                "name": "in-image-5",
+                "content": "/22794149020/uainoticias/uainoticias_inimage",
+                "target": ".size-large img",
+                "type": 1,
+                "refreshIndividually": true,
+                "refresh": true,
+                "refreshTime": 20000,
+                "mythValue": 0.01
+            },
+            {
+                "id": 1106,
+                "name": "in-image-6",
+                "content": "/22794149020/uainoticias/uainoticias_inimage",
+                "target": ".size-large img",
+                "type": 1,
+                "refreshIndividually": true,
+                "refresh": true,
+                "refreshTime": 20000,
+                "mythValue": 0.01
+            },
+            {
+                "id": 1107,
+                "name": "in-image-7",
+                "content": "/22794149020/uainoticias/uainoticias_inimage",
+                "target": ".size-large img",
+                "type": 1,
+                "refreshIndividually": true,
+                "refresh": true,
+                "refreshTime": 20000,
+                "mythValue": 0.01
+            },
+            {
+                "id": 1108,
+                "name": "in-image-8",
+                "content": "/22794149020/uainoticias/uainoticias_inimage",
+                "target": ".size-large img",
+                "type": 1,
+                "refreshIndividually": true,
+                "refresh": true,
+                "refreshTime": 20000,
+                "mythValue": 0.01
+            },
+            {
+                "id": 1109,
+                "name": "in-image-9",
+                "content": "/22794149020/uainoticias/uainoticias_inimage",
+                "target": ".size-large img",
+                "type": 1,
+                "refreshIndividually": true,
+                "refresh": true,
+                "refreshTime": 20000,
+                "mythValue": 0.01
+            }
+        ];
+
         static refreshTime = 30000;
         static enableTruvidScript = true;
         static truvidTarget = '.wp-post-image';
@@ -1386,6 +1489,7 @@
                         }
 
                         let div = this.createOverlayDiv(`#${id}`);
+                        imageAd.id = (contentImageAds.length > i) ? imageAd.id : imageAd.id + i;
                         imageAd.div = div;
                         imageAd.target = `#${image.id}`;
                         imageAd.content = (contentImageAds.length > i) ? imageAd.content : imageAd.content + `_${id}`;
