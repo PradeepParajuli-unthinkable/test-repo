@@ -1587,7 +1587,7 @@
                 @media only screen and (max-width: 767px) {
                     .ad-wrapper-div {
                         min-width: 100%;
-                        min-height: 320px;
+                        min-height: 250px;
                         padding-top: 5px !important;
                         padding-bottom: 5px !important;
                     }
