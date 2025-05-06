@@ -120,7 +120,7 @@
         static enableIngest = 0 == 1;
         static pageInitTime = Date.now();
 
-        static enableLatestNews = true; // Read more button.
+        static enableLatestNews = false; // Read more button.
         static latestNewsParagraphId = 2; // After the n number of paragraph readmore button should be added.
         static latestNewsSpacementStyle = 'pixel' || 'pixel';
         static latestNewsSpacementValue = parseInt('50') || 0;
