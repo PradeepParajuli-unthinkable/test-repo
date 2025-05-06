@@ -133,7 +133,7 @@
         static IN_IMAGE_AD_QUERIES = ['figure.aligncenter.size-large img', 'figure.aligncenter.size-full img'];
 
         constructor() {
-            this.MAX_RETRIES = 5; // Maximum number of retries for the original content
+            this.MAX_RETRIES = 3; // Maximum number of retries for the original content
             this.TOTAL_WORDS_LENGTH = 50;
             this.slotsRefreshCount = {}; // Stores the refresh count for each slot
             this.fallbackAttemptedSlots = new Set(); // Keeps track of throttled slots
