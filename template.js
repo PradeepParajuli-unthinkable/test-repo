@@ -129,11 +129,11 @@
         static latestNewsDivSwapColors = ('false' == 'true') ?? false;
         static sentTracing = [];
         static enableIndividualSlotRefresh = true; // Individual Slot Refresh
-        static TIMEOUT_FOR_SLOT_REFRESH = 10000;
+        static TIMEOUT_FOR_SLOT_REFRESH = 7000;
         static IN_IMAGE_AD_QUERIES = ['figure.aligncenter.size-large img', 'figure.aligncenter.size-full img'];
 
         constructor() {
-            this.MAX_RETRIES = 10; // Maximum number of retries for the original content
+            this.MAX_RETRIES = 5; // Maximum number of retries for the original content
             this.TOTAL_WORDS_LENGTH = 50;
             this.slotsRefreshCount = {}; // Stores the refresh count for each slot
             this.fallbackAttemptedSlots = new Set(); // Keeps track of throttled slots
