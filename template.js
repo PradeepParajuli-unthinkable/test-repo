@@ -311,17 +311,18 @@
                     this.configureContentSlots();
                     this.configureImageSlots();
                                         
-                    googletag.pubads().enableLazyLoad();
-                    googletag.pubads().enableLazyLoad({ fetchMarginPercent: 70 }); // 0.7 start loading when they are 1.5 viewport heights away from becoming visible.
+                    //googletag.pubads().enableLazyLoad();
+                    //googletag.pubads().enableLazyLoad({ fetchMarginPercent: 70 }); // 0.7 start loading when they are 1.5 viewport heights away from becoming visible.
                     // Enable lazy loading with specific configuration (method-1)
                     googletag.pubads().enableLazyLoad({
-                        fetchMarginPercent: 150,  // Fetch ads when n viewport heights away.
-                        renderMarginPercent: 100, // Render ads when n viewport heights away.
+                        fetchMarginPercent: 70,  // Fetch ads when n viewport heights away.
+                        renderMarginPercent: 70, // Render ads when n viewport heights away.
                         mobileScaling: 1.5,       // Adjust scaling for mobile devices.
                     });
 
-                    googletag.enableServices();
                     googletag.pubads().enableSingleRequest();
+                    googletag.enableServices();
+                    
                     googletag.pubads().collapseEmptyDivs(false);
 
                     if (window.googletag && window.googletag.apiReady) {
