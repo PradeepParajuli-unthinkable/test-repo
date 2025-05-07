@@ -312,7 +312,7 @@
                     this.configureImageSlots();
                                         
                     googletag.pubads().enableLazyLoad();
-                    googletag.pubads().enableLazyLoad({ fetchMarginPercent: 150 }); // 1.5 start loading when they are 1.5 viewport heights away from becoming visible.
+                    googletag.pubads().enableLazyLoad({ fetchMarginPercent: 70 }); // 0.7 start loading when they are 1.5 viewport heights away from becoming visible.
                     // Enable lazy loading with specific configuration (method-1)
                     googletag.pubads().enableLazyLoad({
                         fetchMarginPercent: 150,  // Fetch ads when n viewport heights away.
