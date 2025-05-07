@@ -315,9 +315,9 @@
                     googletag.pubads().enableLazyLoad({ fetchMarginPercent: -1 });
                     // Enable lazy loading with specific configuration (method-1)
                     googletag.pubads().enableLazyLoad({
-                        fetchMarginPercent: 500,  // Fetch ads when n viewport heights away.
-                        renderMarginPercent: 200, // Render ads when n viewport heights away.
-                        mobileScaling: 2.0,       // Adjust scaling for mobile devices.
+                        fetchMarginPercent: 150,  // Fetch ads when n viewport heights away.
+                        renderMarginPercent: 100, // Render ads when n viewport heights away.
+                        mobileScaling: 2,       // Adjust scaling for mobile devices.
                     });
 
                     googletag.enableServices();
