@@ -651,34 +651,11 @@
 
                 let mythValue = GPTLoader.contentSlots[i].mythValue;
 
-                const observer = new IntersectionObserver((entries, obs) => {
-                    entries.forEach(entry => {
-                        if (entry.isIntersecting) {
-                            // Only run once
-                            console.error("New Vew Port", entry);
-                            obs.unobserve(entry.target);
+                if (elName && display) {
+                    this.configureAdSlots(elName, display, sizes, undefined, undefined, undefined, autoTargeting, undefined, mythValue);
 
-                            this.configureAdSlots(elName, display, sizes, undefined, undefined, undefined, autoTargeting, undefined, mythValue);
-                            GPTLoader.usedAdSlots[elName] = `slot-${slotConfig.id}`;
-
-                            if (window.location.search.includes('mythdebug')) {
-                                console.log(`Loaded lazy content slot: ${elName}`);
-                            }
-                        }
-                    });
-                }, {
-                    root: null,
-                    rootMargin: '150% 0px', // triggers just before entering viewport
-                    threshold: 0.01
-                });
-
-                observer.observe(divElement);
-
-                //if (elName && display) {
-                //    this.configureAdSlots(elName, display, sizes, undefined, undefined, undefined, autoTargeting, undefined, mythValue);
-
-                //    GPTLoader.usedAdSlots[elName] = `slot-${GPTLoader.contentSlots[i].id}`
-                //}
+                    GPTLoader.usedAdSlots[elName] = `slot-${GPTLoader.contentSlots[i].id}`
+                }
             }
         }
 
@@ -1613,6 +1590,10 @@
                     .ad-wrapper-div p {
                         font-size: 10px;
                         line-height: 13px;
+                    }
+
+                    .ad-wrapper-div iframe{
+                        
                     }
                 }
             `;
