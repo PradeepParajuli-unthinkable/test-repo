@@ -652,11 +652,11 @@
                 let mythValue = GPTLoader.contentSlots[i].mythValue;
 
                 if (elName && display) {
-                    this.configureAdSlots(elName, display, sizes, undefined, undefined, undefined, autoTargeting, undefined, mythValue);
+                            this.configureAdSlots(elName, display, sizes, undefined, undefined, undefined, autoTargeting, undefined, mythValue);
 
                     GPTLoader.usedAdSlots[elName] = `slot-${GPTLoader.contentSlots[i].id}`
-                }
-            }
+                            }
+                        }
         }
 
         // configure content slots
@@ -1190,6 +1190,7 @@
             adElement.id = `${elementName}__ad-element`;
             adElement.style.backgroundColor = 'rgba(65, 65, 65, 0.8)';
             adElement.style.height = '100%';
+            adElement.classList.add('in-image-wrapper');
             insideWrapper.append(adElement);
             insideWrapper.append(closeButton);
 
@@ -1539,6 +1540,14 @@
         addCustomStyling() {
             const style = document.createElement('style');
             style.innerHTML = `
+                .ad-in-image-element {
+                  position: absolute;
+                  display: flex;
+                  justify-content: flex-end;
+                  align-items: flex-end;
+                  z-index: 10;
+                }
+
                 .ad-wrapper-div {
                     background-color: #FAF9F9 !important;
                     border: 2px solid #F5F5F5 !important;
@@ -1590,10 +1599,6 @@
                     .ad-wrapper-div p {
                         font-size: 10px;
                         line-height: 13px;
-                    }
-
-                    .ad-wrapper-div iframe{
-                        
                     }
                 }
             `;
