@@ -386,7 +386,7 @@
                         }
 
                         setTimeout(() => {
-                            //googletag.pubads().refresh([slot]);
+                            googletag.pubads().refresh([slot]);
                             slot.refreshCount++;
 
                             if (imageSlot) {
@@ -880,7 +880,7 @@
                             this.slotsRefreshCount[elementId]++;
                             if (window.location.search.indexOf('mythdebug') !== -1) console.log(`${elementId} slot is empty, retrying (${this.slotsRefreshCount[elementId]}/${this.MAX_RETRIES})`);
                             try {
-                                //googletag.pubads().refresh([slot]);
+                                googletag.pubads().refresh([slot]);
                             } catch (error) {
                                 if (window.location.search.indexOf('mythdebug') !== -1) console.error(`Failed to reload ad slot ${elementId}:`, error);
                             }
@@ -989,7 +989,7 @@
                         googleTag.setTargeting('myth_value', fallbackPath.mythValue)
 
                     googletag.display(elementId);
-                    //googletag.pubads().refresh([slot]);
+                    googletag.pubads().refresh([slot]);
                 } catch (error) {
                     if (window.location.search.indexOf('mythdebug') !== -1) console.error(`Failed to load fallback content for ${elementId}:`, error);
                 }
