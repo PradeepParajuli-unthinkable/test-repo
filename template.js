@@ -321,7 +321,7 @@
                     // Enable lazy loading with specific configuration (method-1)
                     
 
-                    googletag.pubads().enableSingleRequest();
+                    //googletag.pubads().enableSingleRequest();
                     googletag.enableServices();
                     
                     googletag.pubads().collapseEmptyDivs(false);
