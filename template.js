@@ -238,6 +238,11 @@
                 }
 
                 googletag.cmd.push(() => {
+                    googletag.pubads().enableLazyLoad({
+                        fetchMarginPercent: 70,  // Fetch ads when n viewport heights away.
+                        renderMarginPercent: 70, // Render ads when n viewport heights away.
+                        mobileScaling: 1.5,       // Adjust scaling for mobile devices.
+                    });
 
                     for (let target of GPTLoader.targetting) {
                         let allowed = false; // Disabled targating.
@@ -307,11 +312,7 @@
                         }
                     }
 
-                    googletag.pubads().enableLazyLoad({
-                        fetchMarginPercent: 70,  // Fetch ads when n viewport heights away.
-                        renderMarginPercent: 70, // Render ads when n viewport heights away.
-                        mobileScaling: 1.5,       // Adjust scaling for mobile devices.
-                    });
+                    
 
                     this.configureCustomSlots();
                     this.configureContentSlots();
