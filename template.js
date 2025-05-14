@@ -117,7 +117,7 @@
         static taboolaScriptId = '';
         static taboolaTarget = '';
         static startTimeout = 1000;
-        static enableIngest = 0 == 1;
+        static enableIngest = true;
         static pageInitTime = Date.now();
 
         static enableLatestNews = false; // Read more button.
