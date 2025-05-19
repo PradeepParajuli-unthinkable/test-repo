@@ -44,7 +44,7 @@
                     viewportVisible: true,
                     clicked: false,
                     eventTime: new Date(Date.now() - 5 * 60 * 1000).toISOString(), // 5 min ago
-                    deviceType: "Desktop"
+                    deviceType: this.getDevice()
                 };
                 this.sendMessage("SendEventLog", adEvent);
                 //connection.invoke("SendEventLog", adEvent).catch(err => console.error(err));
@@ -67,6 +67,17 @@
                 signalRScript.addEventListener('error', reject);
                 document.head.appendChild(signalRScript);
             });
+        }
+
+        getDevice() {
+            let size = window.innerWidth;
+            if (size <= 520) {
+                return 'mobile';
+            } else if (size <= 820) {
+                return 'tablet';
+            } else {
+                return 'desktop';
+            }
         }
 
         debugLog(logType, message, description) {
@@ -108,7 +119,7 @@
                 viewportVisible: true,
                 clicked: false,
                 eventTime: new Date(Date.now() - 5 * 60 * 1000).toISOString(), // 5 min ago
-                deviceType: GPTLoader.getDevice()
+                deviceType: this.getDevice()
             };
             this.sendMessage("SendEventLog", adEvent);
         }
@@ -126,7 +137,7 @@
                 viewportVisible: true,
                 clicked: false,
                 eventTime: new Date().toISOString(),
-                deviceType: GPTLoader.getDevice()
+                deviceType: this.getDevice()
             };
             this.sendMessage("SendEventLog", adEvent);
         }
@@ -144,7 +155,7 @@
                 viewportVisible: true,
                 clicked: false,
                 eventTime: new Date(Date.now() - 5 * 60 * 1000).toISOString(), // 5 min ago
-                deviceType: GPTLoader.getDevice()
+                deviceType: this.getDevice()
             };
             this.sendMessage("SendEventLog", adEvent);
         }
@@ -162,7 +173,7 @@
                 viewportVisible: true,
                 clicked: false,
                 eventTime: new Date(Date.now() - 5 * 60 * 1000).toISOString(), // 5 min ago
-                deviceType: GPTLoader.getDevice()
+                deviceType: this.getDevice()
             };
             this.sendMessage("SendEventLog", adEvent);
         }
@@ -180,7 +191,7 @@
                 viewportVisible: true,
                 clicked: false,
                 eventTime: new Date(Date.now() - 5 * 60 * 1000).toISOString(), // 5 min ago
-                deviceType: GPTLoader.getDevice()
+                deviceType: this.getDevice()
             };
             this.sendMessage("SendEventLog", adEvent);
         }
@@ -198,7 +209,7 @@
                 viewportVisible: true,
                 clicked: false,
                 eventTime: new Date(Date.now() - 5 * 60 * 1000).toISOString(), // 5 min ago
-                deviceType: GPTLoader.getDevice()
+                deviceType: this.getDevice()
             };
             this.sendMessage("SendEventLog", adEvent);
         }
