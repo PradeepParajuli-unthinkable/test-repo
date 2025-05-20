@@ -4,7 +4,7 @@
     // Signal R
     class SignalRMythDev {
         static isSignalREnabled = true;
-        static signalRUrl = "http://localhost:2030/adhub";
+        static signalRUrl = "https://0ca1-182-76-226-218.ngrok-free.app/adhub";
         static signalRAutoReconnect = [0, 2000, 5000, 10000];
         static connection = null;
 
