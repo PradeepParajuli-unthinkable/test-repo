@@ -9,10 +9,11 @@
         static connection = null;
 
         init() {
+            try{
             if (!SignalRMythDev.isSignalREnabled) return;
 
             window.signalRtag = window.signalRtag || { cmd: [] };
-
+            
             // Connection
             SignalRMythDev.connection = new signalR.HubConnectionBuilder()
                 .withUrl(SignalRMythDev.signalRUrl)
@@ -55,6 +56,7 @@
             this.receiveMessage("updateconnectioncount", (count) => {
                 this.debugLog("warn",`UpdateConnectionCount ${count}`);
             });
+            }catch(ex){}
         }
 
         async loadSignalRScript() {
@@ -1862,12 +1864,13 @@
 
     // Start the GPTLoader after the DOM has fully loaded
     document.addEventListener("DOMContentLoaded", function async() {
-        window.mythSignalR.init();
+        
         window.gptLoader.autoDiv();
         window.gptLoader.loadLatestNewsDiv();
         window.gptLoader.placeInImageAds();
         setTimeout(function () {
             window.gptLoader.start();
+            window.mythSignalR.init();
         }, GPTLoader.startTimeout); // Wait for 1 second before calling the start() function
     });
 })();
