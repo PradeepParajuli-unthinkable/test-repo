@@ -82,7 +82,7 @@
         }
 
         debugLog(logType, message, description) {
-            if (window.location.search.indexOf('mythdebug') !== -1) {
+            if (true || window.location.search.indexOf('mythdebug') !== -1) {
                 switch (logType.toLowerCase()) {
                     case "error":
                         (description) ? console.error(message, description) : console.error(message);
