@@ -4,7 +4,7 @@
     // Signal R
     class SignalRMythDev {
         static isSignalREnabled = true;
-        static signalRUrl = "http://157.180.89.107:8080/adhub";
+        static signalRUrl = "https://fluffy-guests-return.loca.lt/adhub";
         static signalRAutoReconnect = [0, 2000, 5000, 10000];
         static connection = null;
 
