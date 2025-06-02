@@ -1,19 +1,27 @@
 (function () {
     if (window.location.search.indexOf('mythdebug') !== -1) console.log('Current path: ', window.location.pathname);
 
+    function debugLog(message) {
+        if (window.location.search.indexOf('mythdebug') !== -1) {
+            console.log(message)
+        }
+    }
+
     // Signal R
     class SignalRMythDev {
         static isSignalREnabled = true;
-        static signalRUrl = "https://fluffy-guests-return.loca.lt/adhub";
+        //static signalRUrl = "http://localhost:5099/adhub";
+        static signalRUrl = "https://happy-olives-drive.loca.lt/adhub";
         static signalRAutoReconnect = [0, 2000, 5000, 10000];
         static connection = null;
+        static messageQueue = [];
+        static isConnected = false;
 
         init() {
-            try{
             if (!SignalRMythDev.isSignalREnabled) return;
 
             window.signalRtag = window.signalRtag || { cmd: [] };
-            
+
             // Connection
             SignalRMythDev.connection = new signalR.HubConnectionBuilder()
                 .withUrl(SignalRMythDev.signalRUrl)
@@ -23,45 +31,32 @@
 
             // Start Connection
             SignalRMythDev.connection.start().then(() => {
-                this.debugLog("log", "signalR connection stablished.");
-
+                SignalRMythDev.isConnected = true;
+                this.setSessionDetails();
+                this.flushQueue();
+                console.warn("Success");
             }).catch((err) => {
-                this.debugLog("error", "SignalR Error Log: ", err.toString());
+                console.error("SignalR Error Log: ", err.toString());
             });
 
             // DisconnectReason
-            SignalRMythDev.connection.onclose((error) => {
-                this.debugLog("error","Disconnected. Reason:", error?.message || "Unknown");
+            SignalRMythDev.connection.onclose(error => {
+                debugLog();
+                console.error("Disconnected. Reason:", error?.message || "Unknown");
             });
-
-            setTimeout(async () => {
-                const adEvent = {
-                    eventId: crypto.randomUUID(),
-                    timestamp: new Date().toISOString(),
-                    eventType: "Impression",
-                    userId: crypto.randomUUID(),
-                    pageUrl: window.location.origin,
-                    pathName: window.location.pathname,
-                    adSlotId: "HeaderBanner", // replace with actual ad slot type
-                    viewportVisible: true,
-                    clicked: false,
-                    eventTime: new Date(Date.now() - 5 * 60 * 1000).toISOString(), // 5 min ago
-                    deviceType: this.getDevice()
-                };
-                this.sendMessage("SendEventLog", adEvent);
-                //connection.invoke("SendEventLog", adEvent).catch(err => console.error(err));
-
-            }, 2000);
 
             this.receiveMessage("updateconnectioncount", (count) => {
-                this.debugLog("warn",`UpdateConnectionCount ${count}`);
+                console.warn(`UpdateConnectionCount: ${count}`);
             });
-            }catch(ex){}
-        }
 
+            
+        }  
+        
         async loadSignalRScript() {
-            // if signalR is disabled or is already loaded, don't load again.
-            if (!SignalRMythDev.isSignalREnabled || window.signalRtag) return;
+            // if is already loaded, don't load again
+            if (window.signalRtag) {
+                return;
+            }
 
             return new Promise((resolve, reject) => {
                 let signalRScript = document.createElement('script');
@@ -72,39 +67,120 @@
             });
         }
 
-        getDevice() {
-            let size = window.innerWidth;
-            if (size <= 520) {
-                return 'mobile';
-            } else if (size <= 820) {
-                return 'tablet';
-            } else {
-                return 'desktop';
+        flushQueue() {
+            while (SignalRMythDev.messageQueue.length > 0) {
+                const { method, args } = SignalRMythDev.messageQueue.shift();
+                connection.invoke(method, ...args).catch(err => {
+                    console.error("Send failed, re-queuing:", err);
+                    SignalRMythDev.messageQueue.unshift({ method, args });
+                    
+                });
             }
         }
 
-        debugLog(logType, message, description) {
-            if (true || window.location.search.indexOf('mythdebug') !== -1) {
-                switch (logType.toLowerCase()) {
-                    case "error":
-                        (description) ? console.error(message, description) : console.error(message);
-                        break;
+        getDeviceType() {
+            const ua = navigator.userAgent;
+            const screenWidth = window.innerWidth;
+            const screenHeight = window.innerHeight;
+            const isTouchEnabled = ('ontouchstart' in window || navigator.maxTouchPoints > 0);
 
-                    case "warn":
-                        (description) ? console.warn(message, description) : console.warn(message);
-                        break;
+            if (navigator.userAgentData) {
+                const uaData = navigator.userAgentData;
 
-                    case "log":
-                        (description) ? console.log(message, description) : console.log(message);
-                        break;
+                if (uaData.mobile) {
+                    if (Math.min(screenWidth, screenHeight) >= 600 && Math.max(screenWidth, screenHeight) >= 768) {
+                        return 'tablet';
+                    }
+                    return 'mobile';
+                }
+
+                const platform = uaData.platform ? uaData.platform.toLowerCase() : '';
+
+                if (platform.includes('windows') || platform.includes('mac') || platform.includes('linux') || platform.includes('cros')) {
+                    return 'desktop';
+                }
+                if (platform.includes('android')) {
+                    if (Math.min(screenWidth, screenHeight) >= 600) {
+                        return 'tablet';
+                    }
+                    return 'mobile';
+                }
+                if (platform.includes('ios')) {
+                    if (/iPad/i.test(ua)) {
+                        return 'tablet';
+                    }
+                    return 'mobile';
+                }
+                if (isTouchEnabled && Math.max(screenWidth, screenHeight) < 1024) {
+                    return 'tablet';
                 }
             }
+
+            if (/Mobi|Android|iPhone|iPod|BlackBerry|IEMobile|Opera Mini/i.test(ua)) {
+                if (/iPad/i.test(ua)) {
+                    return 'tablet';
+                }
+                if (Math.max(screenWidth, screenHeight) >= 768 && Math.min(screenWidth, screenHeight) >= 480) {
+                    if (/(Android)/i.test(ua) && Math.min(screenWidth, screenHeight) >= 600) {
+                        return 'tablet';
+                    }
+                }
+                return 'mobile';
+            }
+
+            if (/Tablet|Nexus 7|Nexus 10|Kindle Fire|SM-T\d+|GT-P\d+|Android [3-9]\.\d|Windows Phone OS 7\.\d|Silk|SCH-I800/i.test(ua)) {
+                return 'tablet';
+            }
+
+            if (/SmartTV|TV|Xbox|PlayStation|NintendoSwitch|KaiOS|AppleTV|CrOS/i.test(ua)) {
+                return 'desktop';
+            }
+
+            if (isTouchEnabled) {
+                if (Math.max(screenWidth, screenHeight) > 1024) {
+                    return 'desktop';
+                } else {
+                    return 'tablet';
+                }
+            }
+
+            if (/Win|Mac|Linux|X11/i.test(ua)) {
+                return 'desktop';
+            }
+
+            return 'desktop';
         }
 
+        setSessionDetails() {
+            const sessionDetails = {
+                sessionId: crypto.randomUUID(),
+                connectionOn: new Date(),
+                deviceType: this.getDeviceType(),
+                loadTimestamp: new Date().toISOString(),
+                domainName: location.host,
+                pagePath: location.pathname,
+                navigatedFrom: document.referrer,
+            };
+            console.log("SignalR connected - session stored:", sessionDetails);
+            sessionStorage.setItem('jornaldiaSessionDetails', JSON.stringify(sessionDetails));
+            this.sendMessage("SetSessionDetails", sessionDetails);
+        }
+
+        clearSessionDetails() {
+            sessionStorage.removeItem('jornaldiaSessionDetails');
+            console.log("SignalR disconnected - session cleared");
+        }
+
+
         sendMessage(event, data) {
-            SignalRMythDev.connection
-                .invoke(event, data)
-                .catch((err) => { this.debugLog("error","Failed to send signalR message. ", err?.message)});
+            if (SignalRMythDev.isConnected) {
+                SignalRMythDev.connection.invoke(event, data).catch(err => {
+
+                    SignalRMythDev.messageQueue.push({ method, args });
+                });
+            } else {
+                SignalRMythDev.messageQueue.push({ method, args });
+            }
         }
 
         receiveMessage(event, callback) {
@@ -113,114 +189,105 @@
 
         impressionViewableEvent(event) {
             const adEvent = {
-                eventId: crypto.randomUUID(),
+                id: crypto.randomUUID(),
+                sessionId: crypto.randomUUID(),
                 timestamp: new Date().toISOString(),
                 eventType: "ImpressionViewableEvent",
-                userId: crypto.randomUUID(),
-                pageUrl: window.location.origin,
-                pathName: window.location.pathname,
+                hostName: window.location.hostname,
+                pagePath: window.location.pagename,
                 adSlotId: event?.slot?.getAdUnitPath(),
+
                 viewportVisible: true,
                 clicked: false,
-                eventTime: new Date(Date.now() - 5 * 60 * 1000).toISOString(), // 5 min ago
-                deviceType: this.getDevice()
+                //eventTime: new Date(Date.now() - 5 * 60 * 1000).toISOString(), // 5 min ago
+                //deviceType: this.getDeviceType()
             };
-            this.sendMessage("SendEventLog", adEvent);
+            //this.sendMessage("SendEventLog", adEvent);
         }
 
         slotOnloadEvent(event) {
-            if (!SignalRMythDev.isSignalREnabled) return;
-
             const adEvent = {
                 eventId: crypto.randomUUID(),
                 timestamp: new Date().toISOString(),
                 eventType: "SlotOnloadEvent",
                 userId: crypto.randomUUID(),
-                pageUrl: window.location.origin,
-                pathName: window.location.pathname,
+                pageUrl: window.location.href,
                 adSlotId: event?.slot?.getAdUnitPath(),
                 viewportVisible: true,
                 clicked: false,
                 eventTime: new Date().toISOString(),
-                deviceType: this.getDevice()
+                deviceType: this.getDeviceType()
             };
-            this.sendMessage("SendEventLog", adEvent);
+            //this.sendMessage("SendEventLog", adEvent);
         }
 
         slotRenderEndedEvent(event) {
-            if (!SignalRMythDev.isSignalREnabled) return;
+            let viewportVisible = (event && event.slot && event.slot.isEmpty) ? false : true;
+            let adSlotId = event?.slot?.getAdUnitPath();
+            let adType = (adSlotId) => adSlotId.includes('/') ? adSlotId.split('/').pop() : '';
 
             const adEvent = {
+                sessionId: crypto.randomUUID(),
                 eventId: crypto.randomUUID(),
-                timestamp: new Date().toISOString(),
                 eventType: "SlotRenderEndedEvent",
-                userId: crypto.randomUUID(),
-                pageUrl: window.location.origin,
+                adType: adType,
+                eventTime: new Date().toISOString(),
+                adSlotId: adSlotId,
+                domainName: window.location.host,
                 pathName: window.location.pathname,
-                adSlotId: event?.slot?.getAdUnitPath(),
-                viewportVisible: true,
-                clicked: false,
-                eventTime: new Date(Date.now() - 5 * 60 * 1000).toISOString(), // 5 min ago
-                deviceType: this.getDevice()
+                viewportVisible: viewportVisible,
+                clicks: 0,
+                deviceType: this.getDeviceType()
             };
             this.sendMessage("SendEventLog", adEvent);
         }
 
         slotRequestedEvent(event) {
-            if (!SignalRMythDev.isSignalREnabled) return;
-
             const adEvent = {
                 eventId: crypto.randomUUID(),
                 timestamp: new Date().toISOString(),
                 eventType: "SlotRequestedEvent",
                 userId: crypto.randomUUID(),
-                pageUrl: window.location.origin,
-                pathName: window.location.pathname,
+                pageUrl: window.location.href,
                 adSlotId: event?.slot?.getAdUnitPath(),
                 viewportVisible: true,
                 clicked: false,
                 eventTime: new Date(Date.now() - 5 * 60 * 1000).toISOString(), // 5 min ago
-                deviceType: this.getDevice()
+                deviceType: this.getDeviceType()
             };
-            this.sendMessage("SendEventLog", adEvent);
+            //this.sendMessage("SendEventLog", adEvent);
         }
 
         slotResponseReceivedEvent(event) {
-            if (!SignalRMythDev.isSignalREnabled) return;
-
             const adEvent = {
                 eventId: crypto.randomUUID(),
                 timestamp: new Date().toISOString(),
                 eventType: "SlotResponseReceivedEvent",
                 userId: crypto.randomUUID(),
-                pageUrl: window.location.origin,
-                pathName: window.location.pathname,
+                pageUrl: window.location.href,
                 adSlotId: event?.slot?.getAdUnitPath(),
                 viewportVisible: true,
                 clicked: false,
                 eventTime: new Date(Date.now() - 5 * 60 * 1000).toISOString(), // 5 min ago
-                deviceType: this.getDevice()
+                deviceType: this.getDeviceType()
             };
-            this.sendMessage("SendEventLog", adEvent);
+            //this.sendMessage("SendEventLog", adEvent);
         }
 
         slotVisibilityChangedEvent(event) {
-            if (!SignalRMythDev.isSignalREnabled) return;
-
             const adEvent = {
                 eventId: crypto.randomUUID(),
                 timestamp: new Date().toISOString(),
                 eventType: "SlotVisibilityChangedEvent",
                 userId: crypto.randomUUID(),
-                pageUrl: window.location.origin,
-                pathName: window.location.pathname,
+                pageUrl: window.location.href,
                 adSlotId: event?.slot?.getAdUnitPath(),
                 viewportVisible: true,
                 clicked: false,
                 eventTime: new Date(Date.now() - 5 * 60 * 1000).toISOString(), // 5 min ago
-                deviceType: this.getDevice()
+                deviceType: this.getDeviceType()
             };
-            this.sendMessage("SendEventLog", adEvent);
+            //this.sendMessage("SendEventLog", adEvent);
         }
     }
 
@@ -366,7 +433,7 @@
 
             // Update the slot refreshIndividually based on global variable.
             GPTLoader.contentSlots.forEach(slot => { slot["refreshIndividually"] = GPTLoader.enableIndividualSlotRefresh; });
-
+            
         }
 
         static location() {
@@ -534,20 +601,20 @@
 
                             GPTLoader.stick.div = anchorSlot.getSlotElementId();
                         }
-                    }
+                    }                    
 
                     this.configureCustomSlots();
                     this.configureContentSlots();
                     this.configureImageSlots();
-
+                                        
                     //googletag.pubads().enableLazyLoad();
                     //googletag.pubads().enableLazyLoad({ fetchMarginPercent: 70 }); // 0.7 start loading when they are 1.5 viewport heights away from becoming visible.
                     // Enable lazy loading with specific configuration (method-1)
-
+                    
 
                     //googletag.pubads().enableSingleRequest();
                     googletag.enableServices();
-
+                    
                     googletag.pubads().collapseEmptyDivs(false);
 
                     if (window.googletag && window.googletag.apiReady) {
@@ -571,7 +638,7 @@
                         });
                     } else {
                         console.error('GPT API is not ready when trying to set up event listeners.');
-                    }
+                    } 
 
                     if (anchorSlot) {
                         this.executeDisplaySlot(anchorSlot);
@@ -791,7 +858,7 @@
             if (!GPTLoader.disableCssSizing) newElement.style.height = '280px';
 
             if (position == 'beforeBegin') {
-                element.insertAdjacentElement('beforebegin', newElement);
+                  element.insertAdjacentElement('beforebegin', newElement);
             } else if (position == 'afterEnd') {
                 element.insertAdjacentElement('afterend', newElement);
             }
@@ -888,11 +955,11 @@
                 let mythValue = GPTLoader.contentSlots[i].mythValue;
 
                 if (elName && display) {
-                    this.configureAdSlots(elName, display, sizes, undefined, undefined, undefined, autoTargeting, undefined, mythValue);
+                            this.configureAdSlots(elName, display, sizes, undefined, undefined, undefined, autoTargeting, undefined, mythValue);
 
                     GPTLoader.usedAdSlots[elName] = `slot-${GPTLoader.contentSlots[i].id}`
-                }
-            }
+                            }
+                        }
         }
 
         // configure content slots
@@ -1101,7 +1168,7 @@
             // }
 
             const isInImageSlot = GPTLoader.imageAds?.some(e => e.div?.id === elementId);
-            if (isInImageSlot && window.location.search.indexOf('mythdebug') !== -1) console.log("image slot", slot);
+            if (isInImageSlot && window.location.search.indexOf('mythdebug') !== -1) console.log("image slot",slot);
 
             try {
 
@@ -1343,7 +1410,7 @@
                 let currentScale = parseFloat(computedStyle.scale);
                 if (isNaN(currentScale)) currentScale = 1;
                 let newScale = parentDom.height / iframeDom.height * currentScale;
-                iframe.style.scale = newScale;
+                iframe.style.scale = newScale; 
             }
 
             iframeDom = iframe.getBoundingClientRect();
@@ -1636,7 +1703,7 @@
                 let adTitle = document.createElement('p');
                 adTitle.innerText = 'Advertisment';
                 wrapperDiv.appendChild(adTitle);
-
+                
                 let divId = 'ad_paragraph_' + currentId;
                 // console.log('creating paragraph ' + divId)
 
@@ -1698,14 +1765,14 @@
                             GPTLoader.IN_IMAGE_AD_QUERIES.forEach((query) => {
                                 images = images.concat(Array.from(contentElement.querySelectorAll(query)));
                             });
-                        }
+                        }                        
                     }
 
                     let i = 0;
                     for (let image of images) {
                         if (contentImageAds.length == 0) break;
 
-                        let imageAd = (contentImageAds.length > i) ? contentImageAds[i] : contentImageAds[0];
+                        let imageAd = (contentImageAds.length > i) ? contentImageAds[i]: contentImageAds[0];
                         let id = `auto-image-${i}`;
                         if (image.id) {
                             id = image.id;
@@ -1852,25 +1919,25 @@
     }
 
     window.gptLoader = new GPTLoader();
+
     window.mythSignalR = new SignalRMythDev();
-    
+    //await window.mythSignalR.loadSignalRScript();
+    window.mythSignalR.init();
+
     // Load custom styling.
     window.gptLoader.addCustomStyling();
 
     // Initialize GPT library
     window.gptLoader.loadGPTScript();
-    // Initialize SignalR library
-    window.mythSignalR.loadSignalRScript();
 
     // Start the GPTLoader after the DOM has fully loaded
     document.addEventListener("DOMContentLoaded", function async() {
-        
+
         window.gptLoader.autoDiv();
         window.gptLoader.loadLatestNewsDiv();
         window.gptLoader.placeInImageAds();
         setTimeout(function () {
             window.gptLoader.start();
-            window.mythSignalR.init();
         }, GPTLoader.startTimeout); // Wait for 1 second before calling the start() function
     });
 })();
