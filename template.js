@@ -1920,7 +1920,8 @@
 
     window.gptLoader = new GPTLoader();
 
-    window.mythSignalR = new SignalRMythDev();   
+    window.mythSignalR = new SignalRMythDev();
+    window.mythSignalR.loadSignalRScript();    
 
     // Load custom styling.
     window.gptLoader.addCustomStyling();
@@ -1930,8 +1931,7 @@
 
     // Start the GPTLoader after the DOM has fully loaded
     document.addEventListener("DOMContentLoaded", function async() {
-        
-    await window.mythSignalR.loadSignalRScript(); 
+
         window.gptLoader.autoDiv();
         window.gptLoader.loadLatestNewsDiv();
         window.gptLoader.placeInImageAds();
