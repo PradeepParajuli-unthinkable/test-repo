@@ -11,7 +11,7 @@
     class SignalRMythDev {
         static isSignalREnabled = true;
         //static signalRUrl = "http://localhost:5099/adhub";
-        static signalRUrl = "https://happy-olives-drive.loca.lt/adhub";
+        static signalRUrl = "https://mean-spiders-film.loca.lt/adhub";
         static signalRAutoReconnect = [0, 2000, 5000, 10000];
         static connection = null;
         static messageQueue = [];
@@ -69,10 +69,10 @@
 
         flushQueue() {
             while (SignalRMythDev.messageQueue.length > 0) {
-                const { method, args } = SignalRMythDev.messageQueue.shift();
-                connection.invoke(method, ...args).catch(err => {
+                const { event, data } = SignalRMythDev.messageQueue.shift();
+                connection.invoke(event, data).catch(err => {
                     console.error("Send failed, re-queuing:", err);
-                    SignalRMythDev.messageQueue.unshift({ method, args });
+                    SignalRMythDev.messageQueue.unshift({ event, data });
                     
                 });
             }
@@ -176,10 +176,10 @@
             if (SignalRMythDev.isConnected) {
                 SignalRMythDev.connection.invoke(event, data).catch(err => {
 
-                    SignalRMythDev.messageQueue.push({ method, args });
+                    SignalRMythDev.messageQueue.push({ event, data });
                 });
             } else {
-                SignalRMythDev.messageQueue.push({ method, args });
+                SignalRMythDev.messageQueue.push({ event, data });
             }
         }
 
