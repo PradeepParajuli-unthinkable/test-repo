@@ -49,9 +49,9 @@
                 console.warn(`UpdateConnectionCount: ${count}`);
             });
 
-            
-        }  
-        
+
+        }
+
         async loadSignalRScript() {
             // if is already loaded, don't load again
             if (window.signalRtag) {
@@ -73,7 +73,7 @@
                 connection.invoke(event, data).catch(err => {
                     console.error("Send failed, re-queuing:", err);
                     SignalRMythDev.messageQueue.unshift({ event, data });
-                    
+
                 });
             }
         }
@@ -433,7 +433,7 @@
 
             // Update the slot refreshIndividually based on global variable.
             GPTLoader.contentSlots.forEach(slot => { slot["refreshIndividually"] = GPTLoader.enableIndividualSlotRefresh; });
-            
+
         }
 
         static location() {
@@ -601,20 +601,20 @@
 
                             GPTLoader.stick.div = anchorSlot.getSlotElementId();
                         }
-                    }                    
+                    }
 
                     this.configureCustomSlots();
                     this.configureContentSlots();
                     this.configureImageSlots();
-                                        
+
                     //googletag.pubads().enableLazyLoad();
                     //googletag.pubads().enableLazyLoad({ fetchMarginPercent: 70 }); // 0.7 start loading when they are 1.5 viewport heights away from becoming visible.
                     // Enable lazy loading with specific configuration (method-1)
-                    
+
 
                     //googletag.pubads().enableSingleRequest();
                     googletag.enableServices();
-                    
+
                     googletag.pubads().collapseEmptyDivs(false);
 
                     if (window.googletag && window.googletag.apiReady) {
@@ -638,7 +638,7 @@
                         });
                     } else {
                         console.error('GPT API is not ready when trying to set up event listeners.');
-                    } 
+                    }
 
                     if (anchorSlot) {
                         this.executeDisplaySlot(anchorSlot);
@@ -858,7 +858,7 @@
             if (!GPTLoader.disableCssSizing) newElement.style.height = '280px';
 
             if (position == 'beforeBegin') {
-                  element.insertAdjacentElement('beforebegin', newElement);
+                element.insertAdjacentElement('beforebegin', newElement);
             } else if (position == 'afterEnd') {
                 element.insertAdjacentElement('afterend', newElement);
             }
@@ -955,11 +955,11 @@
                 let mythValue = GPTLoader.contentSlots[i].mythValue;
 
                 if (elName && display) {
-                            this.configureAdSlots(elName, display, sizes, undefined, undefined, undefined, autoTargeting, undefined, mythValue);
+                    this.configureAdSlots(elName, display, sizes, undefined, undefined, undefined, autoTargeting, undefined, mythValue);
 
                     GPTLoader.usedAdSlots[elName] = `slot-${GPTLoader.contentSlots[i].id}`
-                            }
-                        }
+                }
+            }
         }
 
         // configure content slots
@@ -1168,7 +1168,7 @@
             // }
 
             const isInImageSlot = GPTLoader.imageAds?.some(e => e.div?.id === elementId);
-            if (isInImageSlot && window.location.search.indexOf('mythdebug') !== -1) console.log("image slot",slot);
+            if (isInImageSlot && window.location.search.indexOf('mythdebug') !== -1) console.log("image slot", slot);
 
             try {
 
@@ -1410,7 +1410,7 @@
                 let currentScale = parseFloat(computedStyle.scale);
                 if (isNaN(currentScale)) currentScale = 1;
                 let newScale = parentDom.height / iframeDom.height * currentScale;
-                iframe.style.scale = newScale; 
+                iframe.style.scale = newScale;
             }
 
             iframeDom = iframe.getBoundingClientRect();
@@ -1703,7 +1703,7 @@
                 let adTitle = document.createElement('p');
                 adTitle.innerText = 'Advertisment';
                 wrapperDiv.appendChild(adTitle);
-                
+
                 let divId = 'ad_paragraph_' + currentId;
                 // console.log('creating paragraph ' + divId)
 
@@ -1765,14 +1765,14 @@
                             GPTLoader.IN_IMAGE_AD_QUERIES.forEach((query) => {
                                 images = images.concat(Array.from(contentElement.querySelectorAll(query)));
                             });
-                        }                        
+                        }
                     }
 
                     let i = 0;
                     for (let image of images) {
                         if (contentImageAds.length == 0) break;
 
-                        let imageAd = (contentImageAds.length > i) ? contentImageAds[i]: contentImageAds[0];
+                        let imageAd = (contentImageAds.length > i) ? contentImageAds[i] : contentImageAds[0];
                         let id = `auto-image-${i}`;
                         if (image.id) {
                             id = image.id;
@@ -1921,8 +1921,7 @@
     window.gptLoader = new GPTLoader();
 
     window.mythSignalR = new SignalRMythDev();
-    //await window.mythSignalR.loadSignalRScript();
-    window.mythSignalR.init();
+    window.mythSignalR.loadSignalRScript();    
 
     // Load custom styling.
     window.gptLoader.addCustomStyling();
@@ -1937,6 +1936,7 @@
         window.gptLoader.loadLatestNewsDiv();
         window.gptLoader.placeInImageAds();
         setTimeout(function () {
+            window.mythSignalR.init();
             window.gptLoader.start();
         }, GPTLoader.startTimeout); // Wait for 1 second before calling the start() function
     });
