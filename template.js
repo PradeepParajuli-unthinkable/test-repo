@@ -11,7 +11,7 @@
     class SignalRMythDev {
         static isSignalREnabled = true;
         //static signalRUrl = "http://localhost:5099/adhub";
-        static signalRUrl = "https://mean-spiders-film.loca.lt/adhub";
+        static signalRUrl = "https://cold-bars-flow.loca.lt/adhub";
         static signalRAutoReconnect = [0, 2000, 5000, 10000];
         static connection = null;
         static messageQueue = [];
