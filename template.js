@@ -222,7 +222,7 @@
         }
 
         slotRenderEndedEvent(event) {
-            let viewportVisible = (event && event.slot && event.slot.isEmpty) ? false : true;
+            let viewportVisible = (event && !event.isEmpty) ? true : false;
             let adSlotId = event?.slot?.getAdUnitPath();
             let adType = (adSlotId) => adSlotId.includes('/') ? adSlotId.split('/').pop() : '';
 
