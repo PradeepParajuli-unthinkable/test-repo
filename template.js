@@ -239,7 +239,7 @@
                 clicks: 0,
                 deviceType: this.getDeviceType()
             };
-            this.sendMessage("SendEventLog", adEvent);
+            this.sendMessage("MonitorEventLog", adEvent);
         }
 
         slotRequestedEvent(event) {
