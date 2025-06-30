@@ -151,6 +151,14 @@
             return 'desktop';
         }
 
+        adSlotVisibleEvent(event, slotType) {
+
+        }
+
+        adSlotHiddenEvent(event, slotType) {
+
+        }
+
         setSessionDetails() {
             const sessionDetails = {
                 sessionId: crypto.randomUUID(),
@@ -187,115 +195,60 @@
             SignalRMythDev.connection.on(event, callback);
         }
 
-        impressionViewableEvent(event) {
-            const adEvent = {
-                id: crypto.randomUUID(),
-                sessionId: crypto.randomUUID(),
-                timestamp: new Date().toISOString(),
-                eventType: "ImpressionViewableEvent",
-                hostName: window.location.hostname,
-                pagePath: window.location.pagename,
-                adSlotId: event?.slot?.getAdUnitPath(),
-
-                viewportVisible: true,
-                clicked: false,
-                //eventTime: new Date(Date.now() - 5 * 60 * 1000).toISOString(), // 5 min ago
-                //deviceType: this.getDeviceType()
-            };
-            //this.sendMessage("SendEventLog", adEvent);
-        }
-
-        slotOnloadEvent(event) {
-            const adEvent = {
-                eventId: crypto.randomUUID(),
-                timestamp: new Date().toISOString(),
-                eventType: "SlotOnloadEvent",
-                userId: crypto.randomUUID(),
-                pageUrl: window.location.href,
-                adSlotId: event?.slot?.getAdUnitPath(),
-                viewportVisible: true,
-                clicked: false,
-                eventTime: new Date().toISOString(),
-                deviceType: this.getDeviceType()
-            };
-            //this.sendMessage("SendEventLog", adEvent);
-        }
-
-        slotRenderEndedEvent(event) {
-            let viewportVisible = (event && !event.isEmpty) ? true : false;
+        createAdEventModel(event, eventType, slotType) {
+            let slotAvailable = (event && !event.isEmpty) ? true : false;
             let adSlotId = event?.slot?.getAdUnitPath();
             let adType = (adSlotId) => adSlotId.includes('/') ? adSlotId.split('/').pop() : '';
 
             const adEvent = {
                 sessionId: crypto.randomUUID(),
                 eventId: crypto.randomUUID(),
-                eventType: "SlotRenderEndedEvent",
+                //deviceType: this.getDeviceType(),
+                eventTime: new Date.UTC(),
+
+                //domainName: window.location.host,
+                //pathName: window.location.pathname,
+                eventType: eventType,
                 adType: adType,
-                eventTime: new Date().toISOString(),
                 adSlotId: adSlotId,
-                domainName: window.location.host,
-                pathName: window.location.pathname,
-                viewportVisible: viewportVisible,
+                adSlotType: slotType,
+                slotAvailable : slotAvailable,
+                adVisible: (eventType === "ImpressionViewableEvent") ? true : false,
                 clicks: 0,
-                deviceType: this.getDeviceType()
             };
-            this.sendMessage("MonitorEventLog", adEvent);
+
+            return adEvent;
         }
 
-        slotRequestedEvent(event) {
-            const adEvent = {
-                eventId: crypto.randomUUID(),
-                timestamp: new Date().toISOString(),
-                eventType: "SlotRequestedEvent",
-                userId: crypto.randomUUID(),
-                pageUrl: window.location.href,
-                adSlotId: event?.slot?.getAdUnitPath(),
-                viewportVisible: true,
-                clicked: false,
-                eventTime: new Date(Date.now() - 5 * 60 * 1000).toISOString(), // 5 min ago
-                deviceType: this.getDeviceType()
-            };
-            //this.sendMessage("SendEventLog", adEvent);
+        impressionViewableEvent(event, slotType) {
+            let signalRModel = this.createAdEventModel(event, "ImpressionViewableEvent", slotType);
+            this.sendMessage("MonitorEventLog", signalRModel);
         }
 
-        slotResponseReceivedEvent(event) {
-            const adEvent = {
-                eventId: crypto.randomUUID(),
-                timestamp: new Date().toISOString(),
-                eventType: "SlotResponseReceivedEvent",
-                userId: crypto.randomUUID(),
-                pageUrl: window.location.href,
-                adSlotId: event?.slot?.getAdUnitPath(),
-                viewportVisible: true,
-                clicked: false,
-                eventTime: new Date(Date.now() - 5 * 60 * 1000).toISOString(), // 5 min ago
-                deviceType: this.getDeviceType()
-            };
-            //this.sendMessage("SendEventLog", adEvent);
+        slotOnloadEvent(event, slotType) {
+            let signalRModel = this.createAdEventModel(event, "SlotOnloadEvent", slotType);
+            //this.sendMessage("MonitorEventLog", signalRModel);
         }
 
-        slotVisibilityChangedEvent(eventModel) {
+        slotRenderEndedEvent(event, slotType)
+        {
+            let signalRModel = this.createAdEventModel(event, "SlotRenderEndedEvent", slotType);   
+            this.sendMessage("MonitorEventLog", signalRModel);
+        }        
 
-            //let viewportVisible = (event && !event.isEmpty) ? true : false;
-            //let adSlotId = event?.slot?.getAdUnitPath();
-            //let adType = (adSlotId) => adSlotId.includes('/') ? adSlotId.split('/').pop() : '';
+        slotRequestedEvent(event, slotType) {
+            let signalRModel = this.createAdEventModel(event, "SlotRequestedEvent", slotType);
+            //this.sendMessage("MonitorEventLog", signalRModel);
+        }
 
-            //const adEvent = {
-            //    sessionId: crypto.randomUUID(),
-            //    eventId: crypto.randomUUID(),
-            //    eventType: "SlotVisibilityChangedEvent",
-            //    eventTime: new Date().toISOString(),
-            //    adType: adType,
-            //    adSlotId: adSlotId,
-            //    adSlotType:slotType,
-            //    domainName: window.location.host,
-            //    pathName: window.location.pathname,
-            //    viewportVisible: viewportVisible,
-            //    clicks: 0,
-            //    deviceType: this.getDeviceType()
-            //};
-            if (eventModel)
-            this.sendMessage("MonitorEventLog", eventModel);
+        slotResponseReceivedEvent(event, slotType) {
+            let signalRModel = this.createAdEventModel(event, "SlotResponseReceivedEvent", slotType);
+            //this.sendMessage("MonitorEventLog", signalRModel);
+        }
+
+        slotVisibilityChangedEvent(event, slotType) {
+            let signalRModel = this.createAdEventModel(event, "SlotVisibilityChangedEvent", slotType);
+            this.sendMessage("MonitorEventLog", signalRModel);
         }
     }
 
@@ -454,9 +407,9 @@
             this.MAX_FALLBACKS = GPTLoader.fallbackPaths.length; // Maximum number of fallbacks based on the number of defined paths
             this.slotsFallbackCount = {}; // Stores the fallback count for each slot
 
-            this.adVisibilityTimers = {}; // Track per-slot visibility timers
-            this.minExposedTime = 1000; // ms (1 second)
-            this.minExposedPercent = 5; // %
+            this.adState = {}; // Per-slot state tracker
+            this.minValidTime = 1000; // 1 second
+            this.minValidPercent = 10;
 
             // Update the slot refreshIndividually based on global variable.
             GPTLoader.contentSlots.forEach(slot => { slot["refreshIndividually"] = GPTLoader.enableIndividualSlotRefresh; });
@@ -646,23 +599,22 @@
 
                     if (window.googletag && window.googletag.apiReady) {
                         googletag.pubads().addEventListener('slotRenderEnded', event => {
-                            window.mythSignalR.slotRenderEndedEvent(event);
+                            window.mythSignalR.slotRenderEndedEvent(event, this.getSlotDetails());
                             this.handleSlotRenderEnded(event);
                         });
                         googletag.pubads().addEventListener('slotOnload', event => {
-                            window.mythSignalR.slotOnloadEvent(event);
+                            window.mythSignalR.slotOnloadEvent(event, this.getSlotDetails());
                             this.handleSlotLoadEnded(event);
                         });
                         googletag.pubads().addEventListener('slotVisibilityChanged', event => {
-                            let eventModel = this.createVisibilityChangeModel(event);
-                            window.mythSignalR.slotVisibilityChangedEvent(eventModel);
+                            this.sendSlotVisibilityChangeBySignalR(event, this.getSlotDetails());
                             this.handleSlotVisibilityChanged(event);
                         });
                         googletag.pubads().addEventListener('slotRequested', event => {
-                            window.mythSignalR.slotRequestedEvent(event);
+                            window.mythSignalR.slotRequestedEvent(event, this.getSlotDetails());
                         });
                         googletag.pubads().addEventListener('slotResponseReceived', event => {
-                            window.mythSignalR.slotResponseReceivedEvent(event);
+                            window.mythSignalR.slotResponseReceivedEvent(event, this.getSlotDetails());
                         });
                     } else {
                         console.error('GPT API is not ready when trying to set up event listeners.');
@@ -1867,56 +1819,46 @@
             return false;
         }
 
-        // function create visibility change model.
-        createVisibilityChangeModel(event) {
+        sendSlotVisibilityChangeBySignalR(event) {
             const slotId = event.slot.getAdUnitPath();
-            const visiblePercentage = event.inViewPercentage;
             const now = performance.now();
+            const inView = event.inViewPercentage;
 
-            const tracker = this.adVisibilityTimers[slotId];
-            if (!tracker) return;
-
-            if (visiblePercentage >= this.minExposedPercent) {
-                if (!tracker.lastVisibleStart) {
-                    tracker.lastVisibleStart = now;
-                }
-            } else {
-                if (tracker.lastVisibleStart) {
-                    const duration = now - tracker.lastVisibleStart;
-                    tracker.totalVisibleDuration += duration;
-
-                    // Mark as exposed if above threshold
-                    if (duration >= this.minExposedTime) {
-                        tracker.isAdExposed = true;
-                    }
-
-                    // Optional: 50% for 1s = valid impression
-                    if (event.inViewPercentage >= 50 && duration >= 1000) {
-                        tracker.isValidImpression = true;
-                    }
-
-                    tracker.lastVisibleStart = null;
-                }
+            if (!this.adState[slotId]) {
+                this.adState[slotId] = {
+                    visibleSince: null,
+                    hasLoggedValid: false
+                };
             }
 
-            // You can send an update or final log after visibility ends completely
-            if (visiblePercentage === 0 && tracker.totalVisibleDuration > 0) {
-                const adEvent = {
-                    sessionId: tracker.sessionId,
-                    eventId: crypto.randomUUID(),
-                    eventType: "SlotVisibilityChangedEvent",
-                    eventTime: new Date().toISOString(),
-                    adSlotId: slotId,
-                    adSlotType: this.getSlotDetails(),
-                    adVisibleDuration: Math.round(tracker.totalVisibleDuration),
-                    isAdExposed: tracker.isAdExposed,
-                    isValidImpression: tracker.isValidImpression,
-                    domainName: window.location.host,
-                    pathName: window.location.pathname,
-                    deviceType: this.getDeviceType()
-                };
+            const state = this.adState[slotId];
 
-                return adEvent;
+            // Start timing if visibility is above threshold
+            if (inView >= this.minValidPercent) {
+                if (!state.visibleSince) {
+                    state.visibleSince = now;
+                } else {
+                    const elapsed = now - state.visibleSince;
+                    if (elapsed >= this.minValidTime && !state.hasLoggedValid) {
+                        state.hasLoggedValid = true;
+
+                        window.mythSignalR.adSlotVisibleEvent(event, this.getSlotDetails());
+                        console.log(`visible: slotId ${slotId}`);
+                    }
+                }
+            } else {
+                
+                state.visibleSince = null;
+            }
+
+            // Fully hidden = always log
+            if (inView === 0) {
+                window.mythSignalR.adSlotHiddenEvent(event, this.getSlotDetails());
+                console.log(`hidden: slotId ${slotId}`);
+
+                // Reset both states to allow re-logging later
+                state.visibleSince = null;
+                state.hasLoggedValid = false;
             }
         }
 
