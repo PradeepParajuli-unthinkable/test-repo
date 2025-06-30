@@ -1835,26 +1835,29 @@
 
             // Start timing if visibility is above threshold
             if (inView >= this.minValidPercent) {
-                if (!state.visibleSince) {
-                    state.visibleSince = now;
-                } else {
+                //if (!state.visibleSince) {
+                //    state.visibleSince = now;
+                //} else {
                     const elapsed = now - state.visibleSince;
                     if (elapsed >= this.minValidTime && !state.hasLoggedValid) {
                         state.hasLoggedValid = true;
 
-                        window.mythSignalR.adSlotVisibleEvent(event, this.getSlotDetails());
                         console.log(`visible: slotId ${slotId}`);
+                        window.mythSignalR.adSlotVisibleEvent(event, this.getSlotDetails());
+                        
                     }
-                }
-            } else {
+                //}
+                //}
+            //} else {
                 
-                state.visibleSince = null;
+            //    state.visibleSince = null;
             }
 
             // Fully hidden = always log
             if (inView === 0) {
-                window.mythSignalR.adSlotHiddenEvent(event, this.getSlotDetails());
+
                 console.log(`hidden: slotId ${slotId}`);
+                window.mythSignalR.adSlotHiddenEvent(event, this.getSlotDetails());                
 
                 // Reset both states to allow re-logging later
                 state.visibleSince = null;
