@@ -274,20 +274,27 @@
             //this.sendMessage("SendEventLog", adEvent);
         }
 
-        slotVisibilityChangedEvent(event) {
-            const adEvent = {
-                eventId: crypto.randomUUID(),
-                timestamp: new Date().toISOString(),
-                eventType: "SlotVisibilityChangedEvent",
-                userId: crypto.randomUUID(),
-                pageUrl: window.location.href,
-                adSlotId: event?.slot?.getAdUnitPath(),
-                viewportVisible: true,
-                clicked: false,
-                eventTime: new Date(Date.now() - 5 * 60 * 1000).toISOString(), // 5 min ago
-                deviceType: this.getDeviceType()
-            };
-            //this.sendMessage("SendEventLog", adEvent);
+        slotVisibilityChangedEvent(eventModel) {
+
+            //let viewportVisible = (event && !event.isEmpty) ? true : false;
+            //let adSlotId = event?.slot?.getAdUnitPath();
+            //let adType = (adSlotId) => adSlotId.includes('/') ? adSlotId.split('/').pop() : '';
+
+            //const adEvent = {
+            //    sessionId: crypto.randomUUID(),
+            //    eventId: crypto.randomUUID(),
+            //    eventType: "SlotVisibilityChangedEvent",
+            //    eventTime: new Date().toISOString(),
+            //    adType: adType,
+            //    adSlotId: adSlotId,
+            //    adSlotType:slotType,
+            //    domainName: window.location.host,
+            //    pathName: window.location.pathname,
+            //    viewportVisible: viewportVisible,
+            //    clicks: 0,
+            //    deviceType: this.getDeviceType()
+            //};
+            this.sendMessage("MonitorEventLog", eventModel);
         }
     }
 
@@ -445,6 +452,10 @@
             this.fallbackAttemptedSlots = new Set(); // Keeps track of throttled slots
             this.MAX_FALLBACKS = GPTLoader.fallbackPaths.length; // Maximum number of fallbacks based on the number of defined paths
             this.slotsFallbackCount = {}; // Stores the fallback count for each slot
+
+            this.adVisibilityTimers = {}; // Track per-slot visibility timers
+            this.minExposedTime = 1000; // ms (1 second)
+            this.minExposedPercent = 5; // %
 
             // Update the slot refreshIndividually based on global variable.
             GPTLoader.contentSlots.forEach(slot => { slot["refreshIndividually"] = GPTLoader.enableIndividualSlotRefresh; });
@@ -642,7 +653,8 @@
                             this.handleSlotLoadEnded(event);
                         });
                         googletag.pubads().addEventListener('slotVisibilityChanged', event => {
-                            window.mythSignalR.slotVisibilityChangedEvent(event);
+                            let eventModel = this.slotVisibilityChanged(event);
+                            window.mythSignalR.slotVisibilityChangedEvent(eventModel);
                             this.handleSlotVisibilityChanged(event);
                         });
                         googletag.pubads().addEventListener('slotRequested', event => {
@@ -1852,6 +1864,59 @@
                 element = element.parentNode;
             }
             return false;
+        }
+
+        // function create visibility change model.
+        createVisibilityChangeModel(event) {
+            const slotId = event.slot.getAdUnitPath();
+            const visiblePercentage = event.inViewPercentage;
+            const now = performance.now();
+
+            const tracker = this.adVisibilityTimers[slotId];
+            if (!tracker) return;
+
+            if (visiblePercentage >= this.minExposedPercent) {
+                if (!tracker.lastVisibleStart) {
+                    tracker.lastVisibleStart = now;
+                }
+            } else {
+                if (tracker.lastVisibleStart) {
+                    const duration = now - tracker.lastVisibleStart;
+                    tracker.totalVisibleDuration += duration;
+
+                    // Mark as exposed if above threshold
+                    if (duration >= this.minExposedTime) {
+                        tracker.isAdExposed = true;
+                    }
+
+                    // Optional: 50% for 1s = valid impression
+                    if (event.inViewPercentage >= 50 && duration >= 1000) {
+                        tracker.isValidImpression = true;
+                    }
+
+                    tracker.lastVisibleStart = null;
+                }
+            }
+
+            // You can send an update or final log after visibility ends completely
+            if (visiblePercentage === 0 && tracker.totalVisibleDuration > 0) {
+                const adEvent = {
+                    sessionId: tracker.sessionId,
+                    eventId: crypto.randomUUID(),
+                    eventType: "slotVisibilityChanged",
+                    eventTime: new Date().toISOString(),
+                    adSlotId: slotId,
+                    adSlotType: this.getSlotDetails(),
+                    adVisibleDuration: Math.round(tracker.totalVisibleDuration),
+                    isAdExposed: tracker.isAdExposed,
+                    isValidImpression: tracker.isValidImpression,
+                    domainName: window.location.host,
+                    pathName: window.location.pathname,
+                    deviceType: this.getDeviceType()
+                };
+
+                return adEvent;
+            }
         }
 
         // Add custom styling for the ads wrapper in the header.
