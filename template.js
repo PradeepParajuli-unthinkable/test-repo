@@ -607,7 +607,7 @@
                             this.handleSlotLoadEnded(event);
                         });
                         googletag.pubads().addEventListener('slotVisibilityChanged', event => {
-                            this.sendSlotVisibilityChangeBySignalR(event, this.getSlotDetails());
+                            this.sendSlotVisibilityChangeBySignalR(event);
                             this.handleSlotVisibilityChanged(event);
                         });
                         googletag.pubads().addEventListener('slotRequested', event => {
