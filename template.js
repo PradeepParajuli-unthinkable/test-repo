@@ -653,7 +653,7 @@
                             this.handleSlotLoadEnded(event);
                         });
                         googletag.pubads().addEventListener('slotVisibilityChanged', event => {
-                            let eventModel = this.slotVisibilityChanged(event);
+                            let eventModel = this.createVisibilityChangeModel(event);
                             window.mythSignalR.slotVisibilityChangedEvent(eventModel);
                             this.handleSlotVisibilityChanged(event);
                         });
@@ -1903,7 +1903,7 @@
                 const adEvent = {
                     sessionId: tracker.sessionId,
                     eventId: crypto.randomUUID(),
-                    eventType: "slotVisibilityChanged",
+                    eventType: "SlotVisibilityChangedEvent",
                     eventTime: new Date().toISOString(),
                     adSlotId: slotId,
                     adSlotType: this.getSlotDetails(),
