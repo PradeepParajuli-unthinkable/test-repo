@@ -294,6 +294,7 @@
             //    clicks: 0,
             //    deviceType: this.getDeviceType()
             //};
+            if (eventModel != null)
             this.sendMessage("MonitorEventLog", eventModel);
         }
     }
