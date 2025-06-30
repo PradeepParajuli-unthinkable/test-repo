@@ -152,11 +152,11 @@
         }
 
         adSlotVisibleEvent(event, slotType) {
-
+            this.slotVisibilityChangedEvent(event, "AdSlotVisibleEvent", slotType);
         }
 
         adSlotHiddenEvent(event, slotType) {
-
+            this.slotVisibilityChangedEvent(event, "AdSlotHiddenEvent", slotType);
         }
 
         setSessionDetails() {
@@ -204,7 +204,7 @@
                 sessionId: crypto.randomUUID(),
                 eventId: crypto.randomUUID(),
                 //deviceType: this.getDeviceType(),
-                eventTime: new Date.UTC(),
+                eventTime: new Date().toISOString(),
 
                 //domainName: window.location.host,
                 //pathName: window.location.pathname,
@@ -246,8 +246,8 @@
             //this.sendMessage("MonitorEventLog", signalRModel);
         }
 
-        slotVisibilityChangedEvent(event, slotType) {
-            let signalRModel = this.createAdEventModel(event, "SlotVisibilityChangedEvent", slotType);
+        slotVisibilityChangedEvent(event, eventType, slotType) {
+            let signalRModel = this.createAdEventModel(event, eventType, slotType);
             this.sendMessage("MonitorEventLog", signalRModel);
         }
     }
