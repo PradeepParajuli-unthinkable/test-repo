@@ -642,7 +642,7 @@
 
                     // Auto-refresh ad slots
                     googletag.pubads().addEventListener('impressionViewable', (event) => {
-                        window.mythSignalR.impressionViewableEvent(event);
+                        window.mythSignalR.impressionViewableEvent(event, this.getSlotDetails());
 
                         let slot = event.slot;
                         if (window.location.search.indexOf('mythdebug') !== -1) console.log(slot.getSlotElementId() + " is viewable");
@@ -1835,9 +1835,9 @@
 
             // Start timing if visibility is above threshold
             if (inView >= this.minValidPercent) {
-                //if (!state.visibleSince) {
-                //    state.visibleSince = now;
-                //} else {
+                if (!state.visibleSince) {
+                    state.visibleSince = now;
+                } else {
                     const elapsed = now - state.visibleSince;
                     if (elapsed >= this.minValidTime && !state.hasLoggedValid) {
                         state.hasLoggedValid = true;
@@ -1846,11 +1846,10 @@
                         window.mythSignalR.adSlotVisibleEvent(event, this.getSlotDetails());
                         
                     }
-                //}
-                //}
-            //} else {
+                }                
+            } else {
                 
-            //    state.visibleSince = null;
+                state.visibleSince = null;
             }
 
             // Fully hidden = always log
