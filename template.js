@@ -150,15 +150,7 @@
 
             return 'desktop';
         }
-
-        adSlotVisibleEvent(event, slotType) {
-            this.slotVisibilityChangedEvent(event, "AdSlotVisibleEvent", slotType);
-        }
-
-        adSlotHiddenEvent(event, slotType) {
-            this.slotVisibilityChangedEvent(event, "AdSlotHiddenEvent", slotType);
-        }
-
+        
         setSessionDetails() {
             const sessionDetails = {
                 sessionId: crypto.randomUUID(),
@@ -218,6 +210,14 @@
             };
 
             return adEvent;
+        }
+
+        adSlotVisibleEvent(event, slotType) {
+            this.slotVisibilityChangedEvent(event, "AdSlotVisibleEvent", slotType);
+        }
+
+        adSlotHiddenEvent(event, slotType) {
+            this.slotVisibilityChangedEvent(event, "AdSlotHiddenEvent", slotType);
         }
 
         impressionViewableEvent(event, slotType) {
@@ -642,7 +642,7 @@
 
                     // Auto-refresh ad slots
                     googletag.pubads().addEventListener('impressionViewable', (event) => {
-                        window.mythSignalR.impressionViewableEvent(event, this.getSlotDetails());
+                        window.mythSignalR.impressionViewableEvent(event, this.getSlotType(event));
 
                         let slot = event.slot;
                         if (window.location.search.indexOf('mythdebug') !== -1) console.log(slot.getSlotElementId() + " is viewable");
@@ -767,6 +767,13 @@
             let customSlot = GPTLoader.customSlots.find(e => e.target === slot.getSlotElementId());
             let slotType = contentSlot ? contentSlot.slot : stickSlot ? 'stick' : interstitialSlot ? 'interstitial' : imageSlot ? `image-${imageSlot.name}` : customSlot ? `custom-${customSlot.type}-${customSlot.originalTarget}` : null;
             return slotType;
+        }
+
+        getSlotType(event) {
+            if (event && !event.isEmpty) {
+                return this.getSlotDetails(event.slot);
+            }
+            return '';
         }
 
         getSlotMythValue(slot) {
@@ -1843,7 +1850,7 @@
                         state.hasLoggedValid = true;
 
                         console.log(`visible: slotId ${slotId}`);
-                        window.mythSignalR.adSlotVisibleEvent(event, this.getSlotDetails());
+                        window.mythSignalR.adSlotVisibleEvent(event, this.getSlotType(event));
                         
                     }
                 }                
