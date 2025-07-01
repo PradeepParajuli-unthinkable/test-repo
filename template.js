@@ -599,11 +599,11 @@
 
                     if (window.googletag && window.googletag.apiReady) {
                         googletag.pubads().addEventListener('slotRenderEnded', event => {
-                            window.mythSignalR.slotRenderEndedEvent(event, this.getSlotDetails());
+                            window.mythSignalR.slotRenderEndedEvent(event, this.getSlotType(event));
                             this.handleSlotRenderEnded(event);
                         });
                         googletag.pubads().addEventListener('slotOnload', event => {
-                            window.mythSignalR.slotOnloadEvent(event, this.getSlotDetails());
+                            window.mythSignalR.slotOnloadEvent(event, this.getSlotType(event));
                             this.handleSlotLoadEnded(event);
                         });
                         googletag.pubads().addEventListener('slotVisibilityChanged', event => {
@@ -611,10 +611,10 @@
                             this.handleSlotVisibilityChanged(event);
                         });
                         googletag.pubads().addEventListener('slotRequested', event => {
-                            window.mythSignalR.slotRequestedEvent(event, this.getSlotDetails());
+                            window.mythSignalR.slotRequestedEvent(event, this.getSlotType(event));
                         });
                         googletag.pubads().addEventListener('slotResponseReceived', event => {
-                            window.mythSignalR.slotResponseReceivedEvent(event, this.getSlotDetails());
+                            window.mythSignalR.slotResponseReceivedEvent(event, this.getSlotType(event));
                         });
                     } else {
                         console.error('GPT API is not ready when trying to set up event listeners.');
