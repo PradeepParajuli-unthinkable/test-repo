@@ -1863,7 +1863,7 @@
             if (inView === 0) {
 
                 console.log(`hidden: slotId ${slotId}`);
-                window.mythSignalR.adSlotHiddenEvent(event, this.getSlotDetails());                
+                window.mythSignalR.adSlotHiddenEvent(event, this.getSlotType(event));                
 
                 // Reset both states to allow re-logging later
                 state.visibleSince = null;
