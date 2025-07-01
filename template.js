@@ -189,7 +189,7 @@
 
         createAdEventModel(event, slotType) {            
             let adSlotId = event?.slot?.getAdUnitPath();
-            let adType = (adSlotId) => adSlotId.includes('/') ? adSlotId.split('/').pop() : '';
+            let adType = adSlotId.includes('/') ? adSlotId.split('/').pop() : '';
 
             const adEvent = {
                 sessionId: crypto.randomUUID(),
