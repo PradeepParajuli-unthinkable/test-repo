@@ -187,69 +187,78 @@
             SignalRMythDev.connection.on(event, callback);
         }
 
-        createAdEventModel(event, eventType, slotType) {
-            let slotAvailable = (event && !event.isEmpty) ? true : false;
+        createAdEventModel(event, slotType) {            
             let adSlotId = event?.slot?.getAdUnitPath();
             let adType = (adSlotId) => adSlotId.includes('/') ? adSlotId.split('/').pop() : '';
 
             const adEvent = {
                 sessionId: crypto.randomUUID(),
                 eventId: crypto.randomUUID(),
-                //deviceType: this.getDeviceType(),
                 eventTime: new Date().toISOString(),
-
-                //domainName: window.location.host,
-                //pathName: window.location.pathname,
                 eventType: eventType,
                 adType: adType,
                 adSlotId: adSlotId,
                 adSlotType: slotType,
-                slotAvailable : slotAvailable,
-                adVisible: (eventType === "ImpressionViewableEvent") ? true : false,
                 clicks: 0,
             };
 
             return adEvent;
         }
-
-        adSlotVisibleEvent(event, slotType) {
-            this.slotVisibilityChangedEvent(event, "AdSlotVisibleEvent", slotType);
-        }
-
-        adSlotHiddenEvent(event, slotType, elapsedDuration) {
-            this.slotVisibilityChangedEvent(event, "AdSlotHiddenEvent", slotType, elapsedDuration);
-        }
-
+        
         impressionViewableEvent(event, slotType) {
-            let signalRModel = this.createAdEventModel(event, "ImpressionViewableEvent", slotType);
-            this.sendMessage("MonitorEventLog", signalRModel);
-        }
+            let signalRModel = this.createAdEventModel(event, slotType);
+            signalRModel.eventType = "ImpressionViewableEvent";
+            signalRModel.validImpression = (event && !event.isEmpty) ? true : false;
 
-        slotOnloadEvent(event, slotType) {
-            let signalRModel = this.createAdEventModel(event, "SlotOnloadEvent", slotType);
-            //this.sendMessage("MonitorEventLog", signalRModel);
+            this.sendMessage("MonitorEventLog", signalRModel);
         }
 
         slotRenderEndedEvent(event, slotType)
         {
-            let signalRModel = this.createAdEventModel(event, "SlotRenderEndedEvent", slotType);   
+            let signalRModel = this.createAdEventModel(event, slotType);  
+            signalRModel.eventType = "SlotRenderEndedEvent";
+            signalRModel.lostImpression = (event && !event.isEmpty) ? false : true;;
+
             this.sendMessage("MonitorEventLog", signalRModel);
-        }        
+        } 
+
+        adSlotVisibleEvent(event, slotType) {
+            let signalRModel = this.createAdEventModel(event, slotType);
+            signalRModel.eventType = "SlotVisibilityChangedEvent";
+            signalRModel.adExposed = true;
+
+            this.sendMessage("MonitorEventLog", signalRModel);
+        }
+
+        adSlotHiddenEvent(event, slotType, elapsedDuration) {
+
+            let signalRModel = this.createAdEventModel(event, slotType);
+            signalRModel.eventType = "SlotVisibilityChangedEvent";
+            signalRModel.adHidden = true;
+            signalRModel.adExposedDuration = elapsedDuration;
+
+            this.sendMessage("MonitorEventLog", signalRModel);
+        }
+
+        slotOnloadEvent(event, slotType) {
+            let signalRModel = this.createAdEventModel(event, slotType);
+            signalRModel.eventType = "SlotOnloadEvent";
+
+            //this.sendMessage("MonitorEventLog", signalRModel);
+        }
 
         slotRequestedEvent(event, slotType) {
-            let signalRModel = this.createAdEventModel(event, "SlotRequestedEvent", slotType);
+            let signalRModel = this.createAdEventModel(event, slotType);
+            signalRModel.eventType = "SlotRequestedEvent";
+
             //this.sendMessage("MonitorEventLog", signalRModel);
         }
 
         slotResponseReceivedEvent(event, slotType) {
-            let signalRModel = this.createAdEventModel(event, "SlotResponseReceivedEvent", slotType);
-            //this.sendMessage("MonitorEventLog", signalRModel);
-        }
+            let signalRModel = this.createAdEventModel(event, slotType);
+            signalRModel.eventType = "SlotResponseReceivedEvent";
 
-        slotVisibilityChangedEvent(event, eventType, slotType, elapsedDuration) {
-            let signalRModel = this.createAdEventModel(event, eventType, slotType, elapsedDuration);
-            signalRModel.adExposedDuration = elapsedDuration;
-            this.sendMessage("MonitorEventLog", signalRModel);
+            //this.sendMessage("MonitorEventLog", signalRModel);
         }
     }
 
