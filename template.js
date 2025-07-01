@@ -248,7 +248,7 @@
 
         slotVisibilityChangedEvent(event, eventType, slotType, elapsedDuration) {
             let signalRModel = this.createAdEventModel(event, eventType, slotType, elapsedDuration);
-            signalRModel.exposedDuration = elapsedDuration;
+            signalRModel.adExposedDuration = elapsedDuration;
             this.sendMessage("MonitorEventLog", signalRModel);
         }
     }
