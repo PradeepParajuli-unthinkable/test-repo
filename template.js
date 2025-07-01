@@ -216,8 +216,8 @@
             this.slotVisibilityChangedEvent(event, "AdSlotVisibleEvent", slotType);
         }
 
-        adSlotHiddenEvent(event, slotType) {
-            this.slotVisibilityChangedEvent(event, "AdSlotHiddenEvent", slotType);
+        adSlotHiddenEvent(event, slotType, elapsedDuration) {
+            this.slotVisibilityChangedEvent(event, "AdSlotHiddenEvent", slotType, elapsedDuration);
         }
 
         impressionViewableEvent(event, slotType) {
@@ -246,8 +246,9 @@
             //this.sendMessage("MonitorEventLog", signalRModel);
         }
 
-        slotVisibilityChangedEvent(event, eventType, slotType) {
-            let signalRModel = this.createAdEventModel(event, eventType, slotType);
+        slotVisibilityChangedEvent(event, eventType, slotType, elapsedDuration) {
+            let signalRModel = this.createAdEventModel(event, eventType, slotType, elapsedDuration);
+            signalRModel.exposedDuration = elapsedDuration;
             this.sendMessage("MonitorEventLog", signalRModel);
         }
     }
@@ -1861,9 +1862,9 @@
 
             // Fully hidden = always log
             if (inView === 0) {
-
+                const elapsedDuration = (state.visibleSince) ? (now - state.visibleSince)/1000 : 0;
                 console.log(`hidden: slotId ${slotId}`);
-                window.mythSignalR.adSlotHiddenEvent(event, this.getSlotType(event));                
+                window.mythSignalR.adSlotHiddenEvent(event, this.getSlotType(event), elapsedDuration);                
 
                 // Reset both states to allow re-logging later
                 state.visibleSince = null;
