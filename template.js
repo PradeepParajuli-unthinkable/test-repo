@@ -10,8 +10,8 @@
     // Signal R
     class SignalRMythDev {
         static isSignalREnabled = true;
-        //static signalRUrl = "http://localhost:5099/adhub";
-        static signalRUrl = "https://ingest.myth.ad/adhub";
+        static signalRUrl = "http://localhost:5099/adhub";
+        //static signalRUrl = "https://ingest.myth.ad/adhub";
         static signalRAutoReconnect = [0, 2000, 5000, 10000];
         static connection = null;
         static messageQueue = [];
