@@ -193,13 +193,11 @@
 
             const adEvent = {
                 sessionId: crypto.randomUUID(),
-                eventId: crypto.randomUUID(),
                 eventTime: new Date().toISOString(),
-                eventType: eventType,
                 adType: adType,
                 adSlotId: adSlotId,
                 adSlotType: slotType,
-                clicks: 0,
+                click: false,
             };
 
             return adEvent;
