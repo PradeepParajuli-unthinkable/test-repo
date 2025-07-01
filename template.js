@@ -1869,7 +1869,7 @@
 
             if (inView === 0) {
                 if (state.lastVisibleStart) {
-                    const elapsedDuration = (state.visibleSince) ? (now - state.visibleSince) / 1000 : 0;
+                    const elapsedDuration = (state.lastVisibleStart) ? (now - state.lastVisibleStart) / 1000 : 0;
                     console.log(`hidden: slotId ${slotId}`);
                     window.mythSignalR.adSlotHiddenEvent(event, this.getSlotType(event), Math.round(elapsedDuration));                
                 }
