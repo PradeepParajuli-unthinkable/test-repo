@@ -652,8 +652,7 @@
 
                     // Auto-refresh ad slots
                     googletag.pubads().addEventListener('impressionViewable', (event) => {
-                        this.isExposedImpression(event);
-                        //window.mythSignalR.impressionViewableEvent(event, this.getSlotType(event));
+                        window.mythSignalR.impressionViewableEvent(event, this.getSlotType(event));
 
                         let slot = event.slot;
                         if (window.location.search.indexOf('mythdebug') !== -1) console.log(slot.getSlotElementId() + " is viewable");
@@ -1835,14 +1834,6 @@
                 element = element.parentNode;
             }
             return false;
-        }
-
-        isExposedImpression(event) {
-            const inView = event.inViewPercentage;
-
-            if (inView >= this.minValidPercent) {
-                window.mythSignalR.impressionViewableEvent(event, this.getSlotType(event));
-            }            
         }
 
         sendSlotVisibilityChangeBySignalR(event) {
