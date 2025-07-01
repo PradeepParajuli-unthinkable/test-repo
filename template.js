@@ -206,7 +206,8 @@
         impressionViewableEvent(event, slotType) {
             let signalRModel = this.createAdEventModel(event, slotType);
             signalRModel.eventType = "ImpressionViewableEvent";
-            signalRModel.validImpression = (event && !event.isEmpty) ? true : false;
+            signalRModel.adExposed = true;
+            //signalRModel.validImpression = (event && !event.isEmpty) ? true : false;
 
             this.sendMessage("MonitorEventLog", signalRModel);
         }
@@ -216,6 +217,7 @@
             let signalRModel = this.createAdEventModel(event, slotType);  
             signalRModel.eventType = "SlotRenderEndedEvent";
             signalRModel.lostImpression = (event && !event.isEmpty) ? false : true;;
+            signalRModel.validImpression = (event && !event.isEmpty) ? true : false;
 
             this.sendMessage("MonitorEventLog", signalRModel);
         } 
@@ -225,7 +227,7 @@
             signalRModel.eventType = "SlotVisibilityChangedEvent";
             signalRModel.adExposed = true;
 
-            this.sendMessage("MonitorEventLog", signalRModel);
+            //this.sendMessage("MonitorEventLog", signalRModel);
         }
 
         adSlotHiddenEvent(event, slotType, elapsedDuration) {
@@ -235,7 +237,7 @@
             signalRModel.adHidden = true;
             signalRModel.adExposedDuration = elapsedDuration;
 
-            this.sendMessage("MonitorEventLog", signalRModel);
+            //this.sendMessage("MonitorEventLog", signalRModel);
         }
 
         slotOnloadEvent(event, slotType) {
@@ -650,7 +652,8 @@
 
                     // Auto-refresh ad slots
                     googletag.pubads().addEventListener('impressionViewable', (event) => {
-                        window.mythSignalR.impressionViewableEvent(event, this.getSlotType(event));
+                        this.isExposedImpression(event);
+                        //window.mythSignalR.impressionViewableEvent(event, this.getSlotType(event));
 
                         let slot = event.slot;
                         if (window.location.search.indexOf('mythdebug') !== -1) console.log(slot.getSlotElementId() + " is viewable");
@@ -1832,6 +1835,14 @@
                 element = element.parentNode;
             }
             return false;
+        }
+
+        isExposedImpression(event) {
+            const inView = event.inViewPercentage;
+
+            if (inView >= this.minValidPercent) {
+                window.mythSignalR.impressionViewableEvent(event, this.getSlotType(event));
+            }            
         }
 
         sendSlotVisibilityChangeBySignalR(event) {
