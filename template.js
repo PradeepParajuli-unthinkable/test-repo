@@ -1829,13 +1829,14 @@
 
         sendSlotVisibilityChangeBySignalR(event) {
             const slotId = event.slot.getAdUnitPath();
-            const now = performance.now();
             const inView = event.inViewPercentage;
+            const now = performance.now();
 
             if (!this.adState[slotId]) {
                 this.adState[slotId] = {
                     visibleSince: null,
-                    hasLoggedValid: false
+                    hasLoggedValid: false,
+                    lastVisibleStart: null
                 };
             }
 
@@ -1852,22 +1853,30 @@
 
                         console.log(`visible: slotId ${slotId}`);
                         window.mythSignalR.adSlotVisibleEvent(event, this.getSlotType(event));
-                        
+
                     }
-                }                
+                }
+
+                // Track continuous visibility duration
+                if (!state.lastVisibleStart) {
+                    state.lastVisibleStart = now;
+                }
+
             } else {
-                
+                // Start is broken due to drop below threshold
                 state.visibleSince = null;
             }
 
-            // Fully hidden = always log
             if (inView === 0) {
-                const elapsedDuration = (state.visibleSince) ? (now - state.visibleSince)/1000 : 0;
-                console.log(`hidden: slotId ${slotId}`);
-                window.mythSignalR.adSlotHiddenEvent(event, this.getSlotType(event), elapsedDuration);                
+                if (state.lastVisibleStart) {
+                    const elapsedDuration = (state.visibleSince) ? (now - state.visibleSince) / 1000 : 0;
+                    console.log(`hidden: slotId ${slotId}`);
+                    window.mythSignalR.adSlotHiddenEvent(event, this.getSlotType(event), Math.round(elapsedDuration));                
+                }
 
-                // Reset both states to allow re-logging later
+                // Reset for next cycle
                 state.visibleSince = null;
+                state.lastVisibleStart = null;
                 state.hasLoggedValid = false;
             }
         }
