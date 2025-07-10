@@ -461,7 +461,7 @@
 
             this.adState = {}; // Per-slot state tracker
             this.minValidTime = 1000; // 1 second
-            this.minValidPercent = 10;
+            this.minValidPercent = 80;
 
             // Update the slot refreshIndividually based on global variable.
             GPTLoader.contentSlots.forEach(slot => { slot["refreshIndividually"] = GPTLoader.enableIndividualSlotRefresh; });
@@ -1900,10 +1900,10 @@
                 } else {
                     const elapsed = now - state.visibleSince;
                     if (elapsed >= this.minValidTime && !state.hasLoggedValid) {
-                        state.hasLoggedValid = true;
+                        //state.hasLoggedValid = true;
 
                         console.log(`visible: slotId ${slotId}`);
-                        window.mythSignalR.adSlotVisibleEvent(event, this.getSlotType(event));
+                        //window.mythSignalR.adSlotVisibleEvent(event, this.getSlotType(event));
 
                     }
                 }
