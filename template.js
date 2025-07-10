@@ -78,6 +78,14 @@
             }
         }
 
+        getSlotSize(slot) {
+            const sizes = slot?.getSizes();
+            if (sizes && sizes.length > 0) {
+                return sizes[0].width + 'x' + sizes[0].height;
+            }
+            return 'Unknown';
+        }
+
         getDeviceType() {
             const ua = navigator.userAgent;
             const screenWidth = window.innerWidth;
@@ -190,6 +198,7 @@
         createAdEventModel(event, slotType) {            
             let adSlotId = event?.slot?.getAdUnitPath();
             let adType = adSlotId.includes('/') ? adSlotId.split('/').pop() : '';
+            let slot = event?.slot;
 
             const adEvent = {
                 sessionId: crypto.randomUUID(),
@@ -198,6 +207,22 @@
                 adSlotId: adSlotId,
                 adSlotType: slotType,
                 click: false,
+
+                // Slot info
+                slotId: slot?.getSlotElementId(),
+                slotName: slot?.getAdUnitPath().split('/').pop(),
+                adUnitPath: slot?.getAdUnitPath(),
+                slotSize: this.getSlotSize(slot),
+
+                // Default values
+                isEmpty: 0,
+                visibilityPercentage: 0,
+                creativeId: '',
+                lineItemId: '',
+
+                // Metrics
+                impressionCount: 0,
+                viewableImpressionCount: 0,
             };
 
             return adEvent;
@@ -206,7 +231,8 @@
         impressionViewableEvent(event, slotType) {
             let signalRModel = this.createAdEventModel(event, slotType);
             signalRModel.eventType = "ImpressionViewableEvent";
-            signalRModel.adExposed = true;
+            signalR.viewableImpressionCount = 1;
+            signalRModel.adExposed = true; // have to remove after update.
             //signalRModel.validImpression = (event && !event.isEmpty) ? true : false;
 
             this.sendMessage("MonitorEventLog", signalRModel);
@@ -216,8 +242,15 @@
         {
             let signalRModel = this.createAdEventModel(event, slotType);  
             signalRModel.eventType = "SlotRenderEndedEvent";
-            signalRModel.lostImpression = (event && !event.isEmpty) ? false : true;;
-            signalRModel.validImpression = (event && !event.isEmpty) ? true : false;
+            signalR.isEmpty = event.isEmpty ? 1 : 0;
+
+            if (!event.isEmpty) {
+                signalR.creativeId = event.creativeId || '';
+                signalR.lineItemId = event.lineItemId || '';
+            }
+
+            signalRModel.lostImpression = (event && !event.isEmpty) ? false : true; // have to remove after update.
+            signalRModel.validImpression = (event && !event.isEmpty) ? true : false; // have to remove after update.
 
             this.sendMessage("MonitorEventLog", signalRModel);
         } 
@@ -225,7 +258,8 @@
         adSlotVisibleEvent(event, slotType) {
             let signalRModel = this.createAdEventModel(event, slotType);
             signalRModel.eventType = "SlotVisibilityChangedEvent";
-            signalRModel.adExposed = true;
+            signalRModel.visibilityPercentage = event.visibilityPercentage || 0;
+            signalRModel.adExposed = true; // have to remove after update.
 
             this.sendMessage("MonitorEventLog", signalRModel);
         }
@@ -234,6 +268,7 @@
 
             let signalRModel = this.createAdEventModel(event, slotType);
             signalRModel.eventType = "SlotVisibilityChangedEvent";
+            signalRModel.visibilityPercentage = event.visibilityPercentage || 0;
             signalRModel.adHidden = true;
             signalRModel.adExposedDuration = elapsedDuration;
 
@@ -249,6 +284,7 @@
 
         slotRequestedEvent(event, slotType) {
             let signalRModel = this.createAdEventModel(event, slotType);
+            signalRModel.impressionCount = 1;
             signalRModel.eventType = "SlotRequestedEvent";
 
             this.sendMessage("MonitorEventLog", signalRModel);
@@ -256,6 +292,12 @@
 
         slotResponseReceivedEvent(event, slotType) {
             let signalRModel = this.createAdEventModel(event, slotType);
+            signalR.isEmpty = event.isEmpty ? 1 : 0;
+
+            if (!event.isEmpty) {
+                signalR.creativeId = event.creativeId || '';
+                signalR.lineItemId = event.lineItemId || '';
+            }
             signalRModel.eventType = "SlotResponseReceivedEvent";
 
             this.sendMessage("MonitorEventLog", signalRModel);
