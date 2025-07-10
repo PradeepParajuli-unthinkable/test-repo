@@ -10,8 +10,8 @@
     // Signal R
     class SignalRMythDev {
         static isSignalREnabled = true;
-        //static signalRUrl = "http://localhost:5099/adhub";
-        static signalRUrl = "https://ingest.myth.ad/adhub";
+        static signalRUrl = "http://localhost:5099/adhub";
+        //static signalRUrl = "https://ingest.myth.ad/adhub";
         static signalRAutoReconnect = [0, 2000, 5000, 10000];
         static connection = null;
         static messageQueue = [];
@@ -227,7 +227,7 @@
             signalRModel.eventType = "SlotVisibilityChangedEvent";
             signalRModel.adExposed = true;
 
-            //this.sendMessage("MonitorEventLog", signalRModel);
+            this.sendMessage("MonitorEventLog", signalRModel);
         }
 
         adSlotHiddenEvent(event, slotType, elapsedDuration) {
@@ -237,28 +237,28 @@
             signalRModel.adHidden = true;
             signalRModel.adExposedDuration = elapsedDuration;
 
-            //this.sendMessage("MonitorEventLog", signalRModel);
+            this.sendMessage("MonitorEventLog", signalRModel);
         }
 
         slotOnloadEvent(event, slotType) {
-            let signalRModel = this.createAdEventModel(event, slotType);
+            let sigslotOnloadEventnalRModel = this.createAdEventModel(event, slotType);
             signalRModel.eventType = "SlotOnloadEvent";
 
-            //this.sendMessage("MonitorEventLog", signalRModel);
+            this.sendMessage("MonitorEventLog", signalRModel);
         }
 
         slotRequestedEvent(event, slotType) {
             let signalRModel = this.createAdEventModel(event, slotType);
             signalRModel.eventType = "SlotRequestedEvent";
 
-            //this.sendMessage("MonitorEventLog", signalRModel);
+            this.sendMessage("MonitorEventLog", signalRModel);
         }
 
         slotResponseReceivedEvent(event, slotType) {
             let signalRModel = this.createAdEventModel(event, slotType);
             signalRModel.eventType = "SlotResponseReceivedEvent";
 
-            //this.sendMessage("MonitorEventLog", signalRModel);
+            this.sendMessage("MonitorEventLog", signalRModel);
         }
     }
 
