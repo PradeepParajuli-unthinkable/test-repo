@@ -241,7 +241,7 @@
         }
 
         slotOnloadEvent(event, slotType) {
-            let sigslotOnloadEventnalRModel = this.createAdEventModel(event, slotType);
+            let signalRModel = this.createAdEventModel(event, slotType);
             signalRModel.eventType = "SlotOnloadEvent";
 
             this.sendMessage("MonitorEventLog", signalRModel);
