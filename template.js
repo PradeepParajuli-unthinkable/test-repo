@@ -242,7 +242,7 @@
         {
             let signalRModel = this.createAdEventModel(event, slotType);  
             signalRModel.eventType = "SlotRenderEndedEvent";
-            signalR.isEmpty = event.isEmpty;
+            signalR.isEmpty = event.isEmpty ? 1 : 0;
 
             if (!event.isEmpty) {
                 signalR.creativeId = event.creativeId || '';
@@ -292,7 +292,7 @@
 
         slotResponseReceivedEvent(event, slotType) {
             let signalRModel = this.createAdEventModel(event, slotType);
-            signalR.isEmpty = event.isEmpty;
+            signalR.isEmpty = event.isEmpty ? 1 : 0;
 
             if (!event.isEmpty) {
                 signalR.creativeId = event.creativeId || '';
