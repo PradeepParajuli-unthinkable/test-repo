@@ -1903,7 +1903,7 @@
                         //state.hasLoggedValid = true;
 
                         console.log(`visible: slotId ${slotId}`);
-                        //window.mythSignalR.adSlotVisibleEvent(event, this.getSlotType(event));
+                        window.mythSignalR.adSlotVisibleEvent(event, this.getSlotType(event));
 
                     }
                 }
