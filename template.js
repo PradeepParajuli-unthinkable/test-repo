@@ -10,8 +10,8 @@
     // Signal R
     class SignalRMythDev {
         static isSignalREnabled = true;
-        static signalRUrl = "http://localhost:5099/adhub";
-        //static signalRUrl = "https://ingest.myth.ad/adhub";
+        //static signalRUrl = "http://localhost:5099/adhub";
+        static signalRUrl = "https://ingest.myth.ad/adhub";
         static signalRAutoReconnect = [0, 2000, 5000, 10000];
         static connection = null;
         static messageQueue = [];
@@ -242,7 +242,7 @@
         {
             let signalRModel = this.createAdEventModel(event, slotType);  
             signalRModel.eventType = "SlotRenderEndedEvent";
-            signalR.isEmpty = event.isEmpty ? 1 : 0;
+            signalRModel.isEmpty = event.isEmpty ? 1 : 0;
 
             if (!event.isEmpty) {
                 signalR.creativeId = event.creativeId || '';
@@ -292,7 +292,7 @@
 
         slotResponseReceivedEvent(event, slotType) {
             let signalRModel = this.createAdEventModel(event, slotType);
-            signalR.isEmpty = event.isEmpty ? 1 : 0;
+            signalRModel.isEmpty = event.isEmpty ? 1 : 0;
 
             if (!event.isEmpty) {
                 signalR.creativeId = event.creativeId || '';
