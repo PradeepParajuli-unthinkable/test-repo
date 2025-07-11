@@ -231,7 +231,7 @@
         impressionViewableEvent(event, slotType) {
             let signalRModel = this.createAdEventModel(event, slotType);
             signalRModel.eventType = "ImpressionViewableEvent";
-            signalR.viewableImpressionCount = 1;
+            signalRModel.viewableImpressionCount = 1;
             signalRModel.adExposed = true; // have to remove after update.
             //signalRModel.validImpression = (event && !event.isEmpty) ? true : false;
 
@@ -245,8 +245,8 @@
             signalRModel.isEmpty = event.isEmpty ? 1 : 0;
 
             if (!event.isEmpty) {
-                signalR.creativeId = event.creativeId || '';
-                signalR.lineItemId = event.lineItemId || '';
+                signalRModel.creativeId = event.creativeId || '';
+                signalRModel.lineItemId = event.lineItemId || '';
             }
 
             signalRModel.lostImpression = (event && !event.isEmpty) ? false : true; // have to remove after update.
@@ -295,8 +295,8 @@
             signalRModel.isEmpty = event.isEmpty ? 1 : 0;
 
             if (!event.isEmpty) {
-                signalR.creativeId = event.creativeId || '';
-                signalR.lineItemId = event.lineItemId || '';
+                signalRModel.creativeId = event.creativeId || '';
+                signalRModel.lineItemId = event.lineItemId || '';
             }
             signalRModel.eventType = "SlotResponseReceivedEvent";
 
