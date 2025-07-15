@@ -199,7 +199,7 @@
             const sessionDetails = {
                 connectionId: SignalRMythDev.connectionId,
                 sessionId: this.getSignalRSessionInfo(),
-                connectionOn: new Date(),
+                connectionOn: new Date().toISOString(),
                 deviceType: this.getDeviceType(),
                 loadTimestamp: new Date().toISOString(),
                 domainName: location.host,
@@ -2076,7 +2076,10 @@
             window.addEventListener('beforeunload', () => {
                 if (SignalRMythDev.messageQueue.length > 0) {
                     try {
-                        const payload = SignalRMythDev.messageQueue.map(m => m.data);
+                        const payload = SignalRMythDev.messageQueue.map(m => {
+                            m.connectionOff = new Date().toISOString();
+                            return m.data;
+                        });
                         let url = SignalRMythDev.serverURL + '/signalr/finalize';
                         navigator.sendBeacon(url, JSON.stringify(payload));
                         console.log("[Beacon] Sent", payload.length, "events to /signalr/finalize");
