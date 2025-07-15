@@ -34,7 +34,7 @@
             SignalRMythDev.connection.start().then(() => {
                 SignalRMythDev.isConnected = true;
                 this.setSessionDetails();
-                this.flushQueue();
+                //this.flushQueue();
                 console.warn("Success");
             }).catch((err) => {
                 console.error("SignalR Error Log: ", err.toString());
@@ -43,6 +43,7 @@
             // Set session and connection Ids.
             this.receiveMessage("ReceiveIdentifiers", (identifiers) => {
                 this.setSignalRSessionInfo(identifiers.sessionId, identifiers.connectionId);
+                this.flushQueue();
             });
 
             // DisconnectReason
@@ -84,7 +85,7 @@
 
             if (!data || !data.createdAt || now - data.createdAt > maxAge) {
                 const now = Date.now();
-                localStorage.setItem("myth_session_info", JSON.stringify({
+                localStorage.setItem("myth_signalr_session_id", JSON.stringify({
                     sessionId,
                     createdAt: now
                 }));
@@ -99,6 +100,10 @@
         flushQueue() {
             while (SignalRMythDev.messageQueue.length > 0) {
                 const { event, data } = SignalRMythDev.messageQueue.shift();
+
+                data.connectionId = SignalRMythDev.connectionId;
+                data.sessionId = this.getSignalRSessionInfo();
+
                 SignalRMythDev.connection
                     .invoke(event, data)
                     .catch(err => {
