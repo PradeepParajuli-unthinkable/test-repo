@@ -16,6 +16,7 @@
         static connection = null;
         static messageQueue = [];
         static isConnected = false;
+        static connectionId = null;
 
         init() {
             if (!SignalRMythDev.isSignalREnabled) return;
@@ -37,6 +38,11 @@
                 console.warn("Success");
             }).catch((err) => {
                 console.error("SignalR Error Log: ", err.toString());
+            });
+
+            // Set session and connection Ids.
+            this.receiveMessage("ReceiveIdentifiers", (identifiers) => {
+                this.setSignalRSessionInfo(identifiers.sessionId, identifiers.connectionId);
             });
 
             // DisconnectReason
@@ -67,14 +73,38 @@
             });
         }
 
+        setSignalRSessionInfo(sessionId, connectionId) {
+            // set connectionID
+            SignalRMythDev.connectionId = connectionId || crypto.randomUUID();
+
+            // set sessionId
+            const now = Date.now();
+            const maxAge = 24 * 60 * 60 * 1000; // 1 day in ms
+            const data = JSON.parse(localStorage.getItem("myth_signalr_session_id") || "{}");
+
+            if (!data || !data.createdAt || now - data.createdAt > maxAge) {
+                const now = Date.now();
+                localStorage.setItem("myth_session_info", JSON.stringify({
+                    sessionId,
+                    createdAt: now
+                }));
+            }
+        }
+
+        getSignalRSessionInfo() {
+            const data = JSON.parse(localStorage.getItem("myth_signalr_session_id") || "{}");
+            return (data) ? data.sessionId || crypto.randomUUID() : crypto.randomUUID();
+        }
+
         flushQueue() {
             while (SignalRMythDev.messageQueue.length > 0) {
                 const { event, data } = SignalRMythDev.messageQueue.shift();
-                connection.invoke(event, data).catch(err => {
-                    console.error("Send failed, re-queuing:", err);
-                    SignalRMythDev.messageQueue.unshift({ event, data });
-
-                });
+                SignalRMythDev.connection
+                    .invoke(event, data)
+                    .catch(err => {
+                        console.error("Retry failed:", err);
+                        SignalRMythDev.messageQueue.unshift({ event, data });
+                    });
             }
         }
 
@@ -161,7 +191,8 @@
         
         setSessionDetails() {
             const sessionDetails = {
-                sessionId: crypto.randomUUID(),
+                connectionId: SignalRMythDev.connectionId,
+                sessionId: this.getSignalRSessionInfo(),
                 connectionOn: new Date(),
                 deviceType: this.getDeviceType(),
                 loadTimestamp: new Date().toISOString(),
@@ -201,7 +232,8 @@
             let slot = event?.slot;
 
             const adEvent = {
-                sessionId: crypto.randomUUID(),
+                connectionId: SignalRMythDev.connectionId,
+                sessionId: this.getSignalRSessionInfo(),
                 eventTime: new Date().toISOString(),
                 adType: adType,
                 adSlotId: adSlotId,
@@ -240,6 +272,11 @@
 
         slotRenderEndedEvent(event, slotType)
         {
+            if (!event || !event.slot) {
+                debugLog("slotRenderEndedEvent skipped—no slot");
+                return;
+            }
+
             let signalRModel = this.createAdEventModel(event, slotType);  
             signalRModel.eventType = "SlotRenderEndedEvent";
             signalRModel.isEmpty = event.isEmpty ? 1 : 0;
@@ -2030,6 +2067,17 @@
         window.gptLoader.placeInImageAds();
         setTimeout(function () {
             window.mythSignalR.init();
+            window.addEventListener('beforeunload', () => {
+                if (SignalRMythDev.messageQueue.length > 0) {
+                    try {
+                        const payload = SignalRMythDev.messageQueue.map(m => m.data);
+                        navigator.sendBeacon('/signalr/finalize', JSON.stringify(payload));
+                        console.log("[Beacon] Sent", payload.length, "events to /signalr/finalize");
+                    } catch (err) {
+                        console.warn("[Beacon] Failed to send logs on unload:", err);
+                    }
+                }
+            });
             window.gptLoader.start();
         }, GPTLoader.startTimeout); // Wait for 1 second before calling the start() function
     });
