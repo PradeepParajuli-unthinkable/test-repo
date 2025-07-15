@@ -10,8 +10,8 @@
     // Signal R
     class SignalRMythDev {
         static isSignalREnabled = true;
-        static signalRUrl = "http://localhost:5099/adhub";
-        //static signalRUrl = "https://ingest.myth.ad/adhub";
+        static serverURL = "http://localhost:5099";
+        //static serverURL = "https://ingest.myth.ad";
         static signalRAutoReconnect = [0, 2000, 5000, 10000];
         static connection = null;
         static messageQueue = [];
@@ -23,9 +23,10 @@
 
             window.signalRtag = window.signalRtag || { cmd: [] };
 
+            let signalRUrl = SignalRMythDev.serverURL + "/adhub";
             // Connection
             SignalRMythDev.connection = new signalR.HubConnectionBuilder()
-                .withUrl(SignalRMythDev.signalRUrl)
+                .withUrl(signalRUrl)
                 .configureLogging(signalR.LogLevel.Information)
                 .withAutomaticReconnect(SignalRMythDev.signalRAutoReconnect)
                 .build();
@@ -2076,7 +2077,8 @@
                 if (SignalRMythDev.messageQueue.length > 0) {
                     try {
                         const payload = SignalRMythDev.messageQueue.map(m => m.data);
-                        navigator.sendBeacon('/signalr/finalize', JSON.stringify(payload));
+                        let url = SignalRMythDev.serverURL + '/signalr/finalize';
+                        navigator.sendBeacon(url, JSON.stringify(payload));
                         console.log("[Beacon] Sent", payload.length, "events to /signalr/finalize");
                     } catch (err) {
                         console.warn("[Beacon] Failed to send logs on unload:", err);
