@@ -2079,7 +2079,9 @@
                 if (SignalRMythDev.messageQueue.length > 0) {
                     try {
                         const payload = SignalRMythDev.messageQueue.map(m => {
-                            m.connectionOff = new Date().toISOString();
+                            if (m.data) {
+                                m.data.connectionOff = new Date().toISOString();
+                            }                            
                             return m.data;
                         });
                         let url = SignalRMythDev.serverURL + '/signalr/finalize';
