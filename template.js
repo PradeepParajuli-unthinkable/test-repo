@@ -31,10 +31,12 @@
                 .withAutomaticReconnect(SignalRMythDev.signalRAutoReconnect)
                 .build();
 
+            // Send ConnectionLogs
+            this.setSessionDetails();
+
             // Start Connection
             SignalRMythDev.connection.start().then(() => {
-                SignalRMythDev.isConnected = true;
-                this.setSessionDetails();
+                SignalRMythDev.isConnected = true;                
                 //this.flushQueue();
                 console.warn("Success");
             }).catch((err) => {
