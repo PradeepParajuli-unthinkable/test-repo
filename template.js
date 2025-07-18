@@ -303,7 +303,7 @@
         adSlotVisibleEvent(event, slotType) {
             let signalRModel = this.createAdEventModel(event, slotType);
             signalRModel.eventType = "SlotVisibilityChangedEvent";
-            signalRModel.visibilityPercentage = event.visibilityPercentage || 0;
+            signalRModel.visibilityPercentage = event.inViewPercentage || 0;
             signalRModel.adExposed = true; // have to remove after update.
 
             this.sendMessage("MonitorEventLog", signalRModel);
@@ -313,7 +313,7 @@
 
             let signalRModel = this.createAdEventModel(event, slotType);
             signalRModel.eventType = "SlotVisibilityChangedEvent";
-            signalRModel.visibilityPercentage = event.visibilityPercentage || 0;
+            signalRModel.visibilityPercentage = event.inViewPercentage || 0;
             signalRModel.adHidden = true;
             signalRModel.adExposedDuration = elapsedDuration;
 
@@ -506,7 +506,7 @@
 
             this.adState = {}; // Per-slot state tracker
             this.minValidTime = 1000; // 1 second
-            this.minValidPercent = 80;
+            this.minValidPercent = 50;
 
             // Update the slot refreshIndividually based on global variable.
             GPTLoader.contentSlots.forEach(slot => { slot["refreshIndividually"] = GPTLoader.enableIndividualSlotRefresh; });
