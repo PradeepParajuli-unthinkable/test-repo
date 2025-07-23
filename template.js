@@ -17,6 +17,7 @@
         static messageQueue = [];
         static isConnected = false;
         static connectionId = null;
+        static geoLocation = null;
 
         init() {
             if (!SignalRMythDev.isSignalREnabled) return;
@@ -45,7 +46,7 @@
 
             // Set session and connection Ids.
             this.receiveMessage("ReceiveIdentifiers", (identifiers) => {
-                this.setSignalRSessionInfo(identifiers.sessionId, identifiers.connectionId);
+                this.setSignalRSessionInfo(identifiers.sessionId, identifiers.connectionId, identifiers.geoLocation);
                 this.flushQueue();
             });
 
@@ -77,9 +78,10 @@
             });
         }
 
-        setSignalRSessionInfo(sessionId, connectionId) {
+        setSignalRSessionInfo(sessionId, connectionId, geoLocation) {
             // set connectionID
             SignalRMythDev.connectionId = connectionId || crypto.randomUUID();
+            SignalRMythDev.geoLocation = geoLocation || "";
 
             // set sessionId
             const now = Date.now();
@@ -105,6 +107,7 @@
                 const { event, data } = SignalRMythDev.messageQueue.shift();
 
                 data.connectionId = SignalRMythDev.connectionId;
+                data.geoLocation = SignalRMythDev.geoLocation;
                 data.sessionId = this.getSignalRSessionInfo();
 
                 SignalRMythDev.connection
@@ -207,6 +210,7 @@
                 domainName: location.host,
                 pagePath: location.pathname,
                 navigatedFrom: document.referrer,
+                geoLocation: SignalRMythDev.geoLocation
             };
             console.log("SignalR connected - session stored:", sessionDetails);
             sessionStorage.setItem('jornaldiaSessionDetails', JSON.stringify(sessionDetails));
@@ -253,12 +257,12 @@
                 slotName: slot?.getAdUnitPath().split('/').pop(),
                 adUnitPath: slot?.getAdUnitPath(),
                 slotSize: this.getSlotSize(slot),
+                isEmpty: (event && !event.isEmpty) ? 0 : 1,
 
                 // Default values
-                isEmpty: 0,
                 visibilityPercentage: 0,
-                creativeId: '',
-                lineItemId: '',
+                creativeId: "",
+                lineItemId: "",
 
                 // Metrics
                 impressionCount: 0,
@@ -290,8 +294,8 @@
             signalRModel.isEmpty = event.isEmpty ? 1 : 0;
 
             if (!event.isEmpty) {
-                signalRModel.creativeId = event.creativeId || '';
-                signalRModel.lineItemId = event.lineItemId || '';
+                signalRModel.creativeId = event.creativeId || "";
+                signalRModel.lineItemId = event.lineItemId || "";
             }
 
             signalRModel.lostImpression = (event && !event.isEmpty) ? false : true; // have to remove after update.
@@ -340,8 +344,8 @@
             signalRModel.isEmpty = event.isEmpty ? 1 : 0;
 
             if (!event.isEmpty) {
-                signalRModel.creativeId = event.creativeId || '';
-                signalRModel.lineItemId = event.lineItemId || '';
+                signalRModel.creativeId = event.creativeId || "";
+                signalRModel.lineItemId = event.lineItemId || "";
             }
             signalRModel.eventType = "SlotResponseReceivedEvent";
 
