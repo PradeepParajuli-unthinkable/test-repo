@@ -144,7 +144,7 @@
             return "";
         }
 
-        getDurationToRenderAdSlot(eventName, event) {
+        getDurationToRenderAdSlot(event, eventName = "") {
             const slotId = event.slot.getSlotElementId();
             const current = this.getCurrentRequest(slotId);
             let durationToRendlerSlot = 0; // milliseconds.
@@ -158,9 +158,8 @@
                 if (!SignalRMythDev.adSlotRequests[slotId]) SignalRMythDev.adSlotRequests[slotId] = [];
                 SignalRMythDev.adSlotRequests[slotId].push(requestData);
             }
-
-            if (eventName === 'SlotRenderEndedEvent') {
-                durationToRendlerSlot = (performance.now() - current.startTime);
+            else {
+                durationToRendlerSlot = (current) ? (performance.now() - current.startTime) : 0;
             }
 
             return durationToRendlerSlot;
@@ -298,10 +297,9 @@
                 slotSize: this.getSlotSize(slot),
                 isEmpty: (event && !event.isEmpty) ? 0 : 1,
                 eventId: this.getAdLifeCycleId(event), // Id used to track lifecyle of ad.
-
+                timeToLoadAdSlot : this.getDurationToRenderAdSlot(event),
                 // Default values
                 visibilityPercentage: 0,
-                timeToLoadAdSlot: 0,
                 creativeId: "",
                 lineItemId: "",
 
@@ -332,7 +330,6 @@
 
             let signalRModel = this.createAdEventModel(event, slotType);  
             signalRModel.eventType = "SlotRenderEndedEvent";
-            signalRModel.timeToLoadAdSlot = this.getDurationToRenderAdSlot(signalRModel.eventType, event); // time to load ad slot.
             signalRModel.isEmpty = event.isEmpty ? 1 : 0;
 
             if (!event.isEmpty) {
@@ -377,7 +374,7 @@
             let signalRModel = this.createAdEventModel(event, slotType);
             signalRModel.impressionCount = 1;
             signalRModel.eventType = "SlotRequestedEvent";
-            signalRModel.timeToLoadAdSlot = this.getDurationToRenderAdSlot(signalRModel.eventType, event); // time to load ad slot.
+            signalRModel.timeToLoadAdSlot = this.getDurationToRenderAdSlot(event, signalRModel.eventType); // time to load ad slot.
             signalRModel.eventId = this.getAdLifeCycleId(event); // Id used to track lifecyle of ad.
 
             this.sendMessage("MonitorEventLog", signalRModel);
