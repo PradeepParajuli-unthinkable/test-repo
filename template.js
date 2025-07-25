@@ -147,17 +147,6 @@
             const current = this.getCurrentRequest(slotId);
             let durationToRendlerSlot = 0; // milliseconds.
 
-            if (!current) {
-                console.warn(`[${eventName}] No active request found for slot ${slotId}`);
-                return;
-            }
-
-            current.events[eventName] = {
-                time: performance.now(),
-                isEmpty: event.isEmpty ?? null,
-                adUnitPath: event.slot.getAdUnitPath()
-            };
-
             if (eventName === 'SlotRequestedEvent') {
                 const requestId = crypto.randomUUID();
                 const requestData = {
