@@ -10,8 +10,8 @@
     // Signal R
     class SignalRMythDev {
         static isSignalREnabled = true;
-        //static serverURL = "http://localhost:5099";
-        static serverURL = "https://ingest.myth.ad";
+        static serverURL = "http://localhost:5099";
+        //static serverURL = "https://ingest.myth.ad";
         static signalRAutoReconnect = [0, 2000, 5000, 10000];
         static connection = null;
         static messageQueue = [];
