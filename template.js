@@ -15,6 +15,7 @@
         static signalRAutoReconnect = [0, 2000, 5000, 10000];
         static connection = null;
         static messageQueue = [];
+        static adSlotRequests = {};
         static isConnected = false;
         static connectionId = null;
         static geoLocation = null;
@@ -125,6 +126,53 @@
                 return sizes[0].width + 'x' + sizes[0].height;
             }
             return 'Unknown';
+        }
+
+        getCurrentRequest(slotId) {
+            const stack = SignalRMythDev.adSlotRequests[slotId];
+            return stack?.[stack.length - 1];
+        }
+
+        getAdLifeCycleId(event) {
+            let slotId = (event.slot && event.slot) ? event.slot.getSlotElementId() : null;
+            if (slotId && SignalRMythDev.adSlotRequests && SignalRMythDev.adSlotRequests[slotId]) {
+                let id = SignalRMythDev.adSlotRequests[slotId].requestId || "";
+                return id;
+            }
+            return "";
+        }
+
+        getDurationToRenderAdSlot(eventName, event) {
+            const slotId = event.slot.getSlotElementId();
+            const current = this.getCurrentRequest(slotId);
+            let durationToRendlerSlot = 0; // milliseconds.
+
+            if (!current) {
+                console.warn(`[${eventName}] No active request found for slot ${slotId}`);
+                return;
+            }
+
+            current.events[eventName] = {
+                time: performance.now(),
+                isEmpty: event.isEmpty ?? null,
+                adUnitPath: event.slot.getAdUnitPath()
+            };
+
+            if (eventName === 'SlotRequestedEvent') {
+                const requestId = crypto.randomUUID();
+                const requestData = {
+                    requestId,
+                    startTime: performance.now()
+                };
+                if (!SignalRMythDev.adSlotRequests[slotId]) SignalRMythDev.adSlotRequests[slotId] = [];
+                SignalRMythDev.adSlotRequests[slotId].push(requestData);
+            }
+
+            if (eventName === 'SlotRenderEndedEvent') {
+                durationToRendlerSlot = (current.events.slotRenderEnded.time - current.startTime);
+            }
+
+            return durationToRendlerSlot;
         }
 
         getDeviceType() {
@@ -258,9 +306,11 @@
                 adUnitPath: slot?.getAdUnitPath(),
                 slotSize: this.getSlotSize(slot),
                 isEmpty: (event && !event.isEmpty) ? 0 : 1,
+                eventId: this.getAdLifeCycleId(event), // Id used to track lifecyle of ad.
 
                 // Default values
                 visibilityPercentage: 0,
+                timeToLoadAdSlot: 0,
                 creativeId: "",
                 lineItemId: "",
 
@@ -291,6 +341,7 @@
 
             let signalRModel = this.createAdEventModel(event, slotType);  
             signalRModel.eventType = "SlotRenderEndedEvent";
+            signalRModel.timeToLoadAdSlot = this.getDurationToRenderAdSlot(signalRModel.eventType, event); // time to load ad slot.
             signalRModel.isEmpty = event.isEmpty ? 1 : 0;
 
             if (!event.isEmpty) {
@@ -335,6 +386,8 @@
             let signalRModel = this.createAdEventModel(event, slotType);
             signalRModel.impressionCount = 1;
             signalRModel.eventType = "SlotRequestedEvent";
+            signalRModel.timeToLoadAdSlot = this.getDurationToRenderAdSlot(signalRModel.eventType, event); // time to load ad slot.
+            signalRModel.eventId = this.getAdLifeCycleId(event); // Id used to track lifecyle of ad.
 
             this.sendMessage("MonitorEventLog", signalRModel);
         }
