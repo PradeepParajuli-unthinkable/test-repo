@@ -134,9 +134,11 @@
         }
 
         getAdLifeCycleId(event) {
-            let slotId = (event.slot && event.slot) ? event.slot.getSlotElementId() : null;
-            if (slotId && SignalRMythDev.adSlotRequests && SignalRMythDev.adSlotRequests[slotId]) {
-                let id = SignalRMythDev.adSlotRequests[slotId].requestId || "";
+            const slotId = event.slot.getSlotElementId();
+            const current = this.getCurrentRequest(slotId);
+
+            if (current) {
+                let id = current.requestId || "";
                 return id;
             }
             return "";
@@ -158,7 +160,7 @@
             }
 
             if (eventName === 'SlotRenderEndedEvent') {
-                durationToRendlerSlot = (current.events.slotRenderEnded.time - current.startTime);
+                durationToRendlerSlot = (performance.now() - current.startTime);
             }
 
             return durationToRendlerSlot;
