@@ -333,8 +333,8 @@
             signalRModel.isEmpty = event.isEmpty ? 1 : 0;
 
             if (!event.isEmpty) {
-                signalRModel.creativeId = event.creativeId || "";
-                signalRModel.lineItemId = event.lineItemId || "";
+                signalRModel.creativeId = (event.creativeId) ? String(event.creativeId) : "";
+                signalRModel.lineItemId = (event.lineItemId) ? String(event.lineItemId) : "";
             }
 
             signalRModel.lostImpression = (event && !event.isEmpty) ? false : true; // have to remove after update.
@@ -385,8 +385,8 @@
             signalRModel.isEmpty = event.isEmpty ? 1 : 0;
 
             if (!event.isEmpty) {
-                signalRModel.creativeId = event.creativeId || "";
-                signalRModel.lineItemId = event.lineItemId || "";
+                signalRModel.creativeId = (event.creativeId) ? String(event.creativeId) : "";
+                signalRModel.lineItemId = (event.lineItemId) ? String(event.lineItemId) : "";
             }
             signalRModel.eventType = "SlotResponseReceivedEvent";
 
