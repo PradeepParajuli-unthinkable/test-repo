@@ -374,7 +374,7 @@
             let signalRModel = this.createAdEventModel(event, slotType);
             signalRModel.impressionCount = 1;
             signalRModel.eventType = "SlotRequestedEvent";
-            signalRModel.timeToLoadAdSlot = Math.round(this.getDurationToRenderAdSlot(event, signalRModel.eventType); // time to load ad slot.
+            signalRModel.timeToLoadAdSlot = Math.round(this.getDurationToRenderAdSlot(event, signalRModel.eventType)); // time to load ad slot.
             signalRModel.eventId = this.getAdLifeCycleId(event); // Id used to track lifecyle of ad.
 
             this.sendMessage("MonitorEventLog", signalRModel);
