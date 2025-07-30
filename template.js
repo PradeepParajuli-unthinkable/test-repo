@@ -461,8 +461,8 @@
         }
 
         initErrorLogging() {
-            window.addEventListener('error', this.handleGlobalError);
-            window.addEventListener('unhandledrejection', this.handleUnhandledRejection);
+            window.addEventListener('error', (event) => this.handleGlobalError(event));
+            window.addEventListener('unhandledrejection', (event) => this.handleUnhandledRejection(event));
         }
 
         initBeforeUnload() {
