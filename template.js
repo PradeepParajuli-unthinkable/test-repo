@@ -2200,16 +2200,16 @@
             }
         }
     }
+    
+    window.gptLoader = new GPTLoader();
 
     window.mythSignalR = new SignalRMythDev();
     window.mythSignalR.initErrorLogging();
-    window.gptLoader = new GPTLoader();
-
-    
-    window.mythSignalR.loadSignalRScript();
 
     // Load custom styling.
     window.gptLoader.addCustomStyling();
+
+    window.mythSignalR.loadSignalRScript();
     // Initialize GPT library
     window.gptLoader.loadGPTScript();
 
