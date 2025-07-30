@@ -2201,6 +2201,7 @@
         }
     }
 
+    window.mythSignalR.initErrorLogging();
     window.gptLoader = new GPTLoader();
 
     window.mythSignalR = new SignalRMythDev();
@@ -2208,7 +2209,6 @@
 
     // Load custom styling.
     window.gptLoader.addCustomStyling();
-    window.mythSignalR.initErrorLogging();
     // Initialize GPT library
     window.gptLoader.loadGPTScript();
 
