@@ -2201,10 +2201,11 @@
         }
     }
 
+    window.mythSignalR = new SignalRMythDev();
     window.mythSignalR.initErrorLogging();
     window.gptLoader = new GPTLoader();
 
-    window.mythSignalR = new SignalRMythDev();
+    
     window.mythSignalR.loadSignalRScript();
 
     // Load custom styling.
