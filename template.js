@@ -2208,7 +2208,7 @@
 
     // Load custom styling.
     window.gptLoader.addCustomStyling();
-
+    window.mythSignalR.initErrorLogging();
     // Initialize GPT library
     window.gptLoader.loadGPTScript();
 
@@ -2221,7 +2221,6 @@
         setTimeout(function () {
             window.mythSignalR.init();
             window.mythSignalR.initBeforeUnload();
-            window.mythSignalR.initErrorLogging();
             window.gptLoader.start();
         }, GPTLoader.startTimeout); // Wait for 1 second before calling the start() function
     });
