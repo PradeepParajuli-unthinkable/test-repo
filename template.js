@@ -395,12 +395,20 @@
 
         // Errors
         isAdRelatedError(event) {
-            const errorText = (event.message || event.reason || '').toString().toLocaleLowerCase();
-            return errorText.includes('googletag') ||
-                errorText.includes('gpt') ||
-                errorText.includes('doubleclick') ||
-                (event.filename && event.filename.includes('googletagservices'));
+            const itemsToCheck = [ event.message, event.reason?.message, event.reason?.stack ];
+
+            itemsToCheck.forEach(item => {
+                const errorText = item ? item.toString().toLowerCase() : "";
+
+                if (errorText.includes('googletag') || errorText.includes('gpt') || errorText.includes('doubleclick') || (event.filename && event.filename.includes('googletagservices')))
+                {
+                    return true;
+                }
+            });
+
+            return false;
         }
+
 
         handleUnhandledRejection(event) {
             if (this.isAdRelatedError(event)) {
