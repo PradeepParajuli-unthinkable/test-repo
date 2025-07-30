@@ -403,8 +403,8 @@
         }
 
         handleUnhandledRejection(event) {
-            if (isAdRelatedError(event)) {
-                reportAdError({
+            if (this.isAdRelatedError(event)) {
+                this.reportAdError({
                     type: 'promise_rejection',
                     message: event.message,
                     reason: event.reason.toString(),
@@ -414,8 +414,8 @@
         }
 
         handleGlobalError(event) {
-            if (isAdRelatedError(event)) {
-                reportAdError({
+            if (this.isAdRelatedError(event)) {
+                this.reportAdError({
                     type: 'javascript_error',
                     message: event.message,
                     description: `fileName: ${event.filename}, lineNumber: ${event.lineno}`,
@@ -441,7 +441,7 @@
                 geoLocation: SignalRMythDev.geoLocation
             };
 
-            sendErrorReport(fullErrorData);
+            this.sendErrorReport(fullErrorData);
         }
 
         sendErrorReport(errorData) {
@@ -461,8 +461,8 @@
         }
 
         initErrorLogging() {
-            window.addEventListener('error', handleGlobalError);
-            window.addEventListener('unhandledrejection', handleUnhandledRejection);
+            window.addEventListener('error', this.handleGlobalError);
+            window.addEventListener('unhandledrejection', this.handleUnhandledRejection);
         }
 
         initBeforeUnload() {
