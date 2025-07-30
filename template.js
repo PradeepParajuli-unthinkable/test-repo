@@ -392,6 +392,98 @@
 
             this.sendMessage("MonitorEventLog", signalRModel);
         }
+
+        // Errors
+        isAdRelatedError(event) {
+            const errorText = (event.message || event.reason || '').toLowerCase();
+            return errorText.includes('googletag') ||
+                errorText.includes('gpt') ||
+                errorText.includes('doubleclick') ||
+                (event.filename && event.filename.includes('googletagservices'));
+        }
+
+        handleUnhandledRejection(event) {
+            if (isAdRelatedError(event)) {
+                reportAdError({
+                    type: 'promise_rejection',
+                    message: event.message,
+                    reason: event.reason.toString(),
+                    description: `fileName: ${event.filename}, lineNumber: ${event.lineno}`
+                });
+            }
+        }
+
+        handleGlobalError(event) {
+            if (isAdRelatedError(event)) {
+                reportAdError({
+                    type: 'javascript_error',
+                    message: event.message,
+                    description: `fileName: ${event.filename}, lineNumber: ${event.lineno}`,
+                });
+            }
+        }
+
+        reportAdError(errorData) {
+
+            const fullErrorData = {
+                errorType: errorData.type,
+                errorMessage: errorData.message,
+                errorDescription: errorData.desctiption,
+
+                connectionId: SignalRMythDev.connectionId,
+                sessionId: this.getSignalRSessionInfo(),
+                EventTime: new Date().toISOString(),
+                deviceType: this.getDeviceType(),
+                loadTimestamp: new Date().toISOString(),
+                domainName: location.host,
+                pagePath: location.pathname,
+                navigatedFrom: document.referrer,
+                geoLocation: SignalRMythDev.geoLocation
+            };
+
+            sendErrorReport(fullErrorData);
+        }
+
+        sendErrorReport(errorData) {
+            // Example: Send to your analytics or error reporting service
+            let url = SignalRMythDev.serverURL + '/signalr/error-logging';
+            if (typeof fetch !== 'undefined') {
+                fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(errorData)
+                }).catch(function (err) {
+                    console.error('Failed to report ad error:', err);
+                });
+            }
+        }
+
+        initErrorLogging() {
+            window.addEventListener('error', handleGlobalError);
+            window.addEventListener('unhandledrejection', handleUnhandledRejection);
+        }
+
+        initBeforeUnload() {
+            window.addEventListener('beforeunload', () => {
+                if (SignalRMythDev.messageQueue.length > 0) {
+                    try {
+                        const payload = SignalRMythDev.messageQueue.map(m => {
+                            if (m.data) {
+                                m.data.connectionOff = new Date().toISOString();
+                            }
+                            return m.data;
+                        });
+                        let url = SignalRMythDev.serverURL + '/signalr/finalize';
+                        navigator.sendBeacon(url, JSON.stringify(payload));
+                        console.log("[Beacon] Sent", payload.length, "events to /signalr/finalize");
+                    } catch (err) {
+                        console.warn("[Beacon] Failed to send logs on unload:", err);
+                    }
+                }
+            });
+        }
     }
 
     // GPT
@@ -2120,23 +2212,8 @@
         window.gptLoader.placeInImageAds();
         setTimeout(function () {
             window.mythSignalR.init();
-            window.addEventListener('beforeunload', () => {
-                if (SignalRMythDev.messageQueue.length > 0) {
-                    try {
-                        const payload = SignalRMythDev.messageQueue.map(m => {
-                            if (m.data) {
-                                m.data.connectionOff = new Date().toISOString();
-                            }                            
-                            return m.data;
-                        });
-                        let url = SignalRMythDev.serverURL + '/signalr/finalize';
-                        navigator.sendBeacon(url, JSON.stringify(payload));
-                        console.log("[Beacon] Sent", payload.length, "events to /signalr/finalize");
-                    } catch (err) {
-                        console.warn("[Beacon] Failed to send logs on unload:", err);
-                    }
-                }
-            });
+            window.mythSignalR.initBeforeUnload();
+            window.mythSignalR.initErrorLogging();
             window.gptLoader.start();
         }, GPTLoader.startTimeout); // Wait for 1 second before calling the start() function
     });
