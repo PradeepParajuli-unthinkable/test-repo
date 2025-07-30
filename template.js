@@ -395,7 +395,7 @@
 
         // Errors
         isAdRelatedError(event) {
-            const errorText = event.message || event.reason || '';
+            const errorText = (event.message || event.reason || '').toString().toLocaleLowerCase();
             return errorText.includes('googletag') ||
                 errorText.includes('gpt') ||
                 errorText.includes('doubleclick') ||
