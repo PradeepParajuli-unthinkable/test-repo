@@ -411,15 +411,20 @@
 
         isAdBlocked() {
             const bait = document.createElement('div');
-            bait.className = 'adsbox';
-            bait.style.position = 'absolute';
-            bait.style.height = '1px';
-            bait.style.width = '1px';
-            bait.style.top = '-9999px';
-            bait.style.left = '-9999px';
+            bait.className = 'ad ads ad-banner ad-slot adsbox ad-placement';
+            bait.style.cssText = `
+                position: absolute !important;
+                width: 1px !important;
+                height: 1px !important;
+                top: -9999px !important;
+                left: -9999px !important;
+                visibility: hidden !important;
+            `;
             document.body.appendChild(bait);
 
-            const blocked = window.getComputedStyle(bait).display === 'none' || bait.offsetHeight === 0;
+            const computed = window.getComputedStyle(bait);
+            const blocked = computed.display === 'none' || bait.offsetHeight === 0;
+
             document.body.removeChild(bait);
             return blocked;
         }
@@ -2177,6 +2182,7 @@
 
     // Initialize GPT library
     window.gptLoader.loadGPTScript();
+    window.mythSignalR.initErrorLogging();
 
     // Load signalR script
     window.mythSignalR.loadSignalRScript();  
@@ -2195,5 +2201,3 @@
         }, GPTLoader.startTimeout); // Wait for 1 second before calling the start() function
     });
 })();
-
-
