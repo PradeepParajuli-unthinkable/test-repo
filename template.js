@@ -78,7 +78,7 @@
                 signalRScript.src = 'https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/7.0.5/signalr.min.js';
                 signalRScript.addEventListener('load', resolve);
                 signalRScript.addEventListener('error', () => {
-                    window.mythSignalR.failedToLoadSignalRScript();
+                    SignalRMythDev.isFailedToLoadSignalRScript = true;
                     reject(new Error('SignalR script failed to load'));
                 });
                 document.head.appendChild(signalRScript);
@@ -456,12 +456,8 @@
             });
         }
 
-        failedToLoadAdSlot() {
-            SignalRMythDev.isFailedToLoadGPTScript = true;
-        }
-
         failedToLoadSignalRScript() {
-            SignalRMythDev.isFailedToLoadSignalRScript = true
+            SignalRMythDev.isFailedToLoadSignalRScript = true;
         }
 
         initBeforeUnload() {
