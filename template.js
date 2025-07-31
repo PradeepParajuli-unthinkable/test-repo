@@ -19,6 +19,9 @@
         static isConnected = false;
         static connectionId = null;
         static geoLocation = null;
+        static isFailedToLoadGPTScript = false;
+        static isFailedToLoadSignalRScript = false;
+        static isFailedToInsertAdSlot = false;
 
         init() {
             if (!SignalRMythDev.isSignalREnabled) return;
@@ -74,7 +77,10 @@
                 let signalRScript = document.createElement('script');
                 signalRScript.src = 'https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/7.0.5/signalr.min.js';
                 signalRScript.addEventListener('load', resolve);
-                signalRScript.addEventListener('error', reject);
+                signalRScript.addEventListener('error', () => {
+                    window.mythSignalR.failedToLoadSignalRScript();
+                    reject(new Error('SignalR script failed to load'));
+                });
                 document.head.appendChild(signalRScript);
             });
         }
@@ -242,6 +248,9 @@
             const sessionDetails = {
                 connectionId: SignalRMythDev.connectionId,
                 sessionId: this.getSignalRSessionInfo(),
+                isFailedGptScriptLoad: SignalRMythDev.isFailedToLoadGPTScript,
+                isFailedSignalRScriptLoad: SignalRMythDev.isFailedToLoadSignalRScript,
+                isFailedInsertAdSlot: SignalRMythDev.isFailedToInsertAdSlot,
                 connectionOn: new Date().toISOString(),
                 deviceType: this.getDeviceType(),
                 loadTimestamp: new Date().toISOString(),
@@ -392,69 +401,34 @@
 
             this.sendMessage("MonitorEventLog", signalRModel);
         }
-
-        // Errors
-        isAdRelatedError(event) {
-            const itemsToCheck = [ event.message, event.reason?.message, event.reason?.stack ];
-
-            itemsToCheck.forEach(item => {
-                const errorText = item ? item.toString().toLowerCase() : "";
-
-                if (errorText.includes('googletag') || errorText.includes('gpt') || errorText.includes('doubleclick') || (event.filename && event.filename.includes('googletagservices')))
-                {
-                    return true;
-                }
-            });
-
-            return false;
-        }
-
-
-        handleUnhandledRejection(event) {
-            if (this.isAdRelatedError(event)) {
-                this.reportAdError({
-                    type: 'promise_rejection',
-                    message: event.message,
-                    reason: event.reason.toString(),
-                    description: `fileName: ${event.filename}, lineNumber: ${event.lineno}`
-                });
-            }
-        }
-
-        handleGlobalError(event) {
-            if (this.isAdRelatedError(event)) {
-                this.reportAdError({
-                    type: 'javascript_error',
-                    message: event.message,
-                    description: `fileName: ${event.filename}, lineNumber: ${event.lineno}`,
-                });
-            }
-        }
-
-        reportAdError(errorData) {
-
-            const fullErrorData = {
-                errorType: errorData.type,
-                errorMessage: errorData.message,
-                errorDescription: errorData.desctiption,
-
-                connectionId: SignalRMythDev.connectionId,
-                sessionId: this.getSignalRSessionInfo(),
-                EventTime: new Date().toISOString(),
-                deviceType: this.getDeviceType(),
-                loadTimestamp: new Date().toISOString(),
-                domainName: location.host,
-                pagePath: location.pathname,
-                navigatedFrom: document.referrer,
-                geoLocation: SignalRMythDev.geoLocation
-            };
-
-            this.sendMessage("ClientErrorLogs", fullErrorData);
-        }        
+             
 
         initErrorLogging() {
-            window.addEventListener('error', (event) => this.handleGlobalError(event));
-            window.addEventListener('unhandledrejection', (event) => this.handleUnhandledRejection(event));
+            if (this.isAdBlocked()) {
+                SignalRMythDev.isFailedToInsertAdSlot = true;
+            }
+        }
+
+        isAdBlocked() {
+            const bait = document.createElement('div');
+            bait.className = 'adsbox';
+            bait.style.position = 'absolute';
+            bait.style.height = '1px';
+            bait.style.width = '1px';
+            bait.style.top = '-1000px';
+            document.body.appendChild(bait);
+
+            const blocked = getComputedStyle(bait).display === 'none' || bait.offsetHeight === 0;
+            document.body.removeChild(bait);
+            return blocked;
+        }
+
+        failedToLoadAdSlot() {
+            SignalRMythDev.isFailedToLoadGPTScript = true;
+        }
+
+        failedToLoadSignalRScript() {
+            SignalRMythDev.isFailedToLoadSignalRScript = true
         }
 
         initBeforeUnload() {
@@ -464,8 +438,6 @@
                         const payload = SignalRMythDev.messageQueue.map(m => {
                             if (m.data) {
                                 m.data.connectionOff = new Date().toISOString();
-                                m.data.connectionId = SignalRMythDev.connectionId;
-                                m.data.sessionId = this.getSignalRSessionInfo();
                             }
                             return m.data;
                         });
@@ -1039,10 +1011,17 @@
             return new Promise((resolve, reject) => {
                 let gptScript = document.createElement('script');
                 gptScript.src = 'https://securepubads.g.doubleclick.net/tag/js/gpt.js';
+
                 gptScript.addEventListener('load', resolve);
-                gptScript.addEventListener('error', reject);
+
+                gptScript.addEventListener('error', () => {
+                    window.mythSignalR.failedToLoadAdSlot();
+                    reject(new Error('GPT script failed to load'));
+                });
+
                 document.head.appendChild(gptScript);
             });
+
         }
 
         createAdSlot(elName, type = 'div', position = 'beforeBegin') {
