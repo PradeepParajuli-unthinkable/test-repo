@@ -401,32 +401,59 @@
 
             this.sendMessage("MonitorEventLog", signalRModel);
         }
-             
+
+        isAdRelatedError(event) {
+            const itemsToCheck = [event.message, event.reason?.message, event.reason?.stack];
+
+            itemsToCheck.forEach(item => {
+                const errorText = item ? item.toString().toLowerCase() : "";
+
+                if (errorText.includes('googletag') || errorText.includes('gpt') || errorText.includes('doubleclick') || (event.filename && event.filename.includes('googletagservices'))) {
+                    return true;
+                }
+            });
+
+            return false;
+        }
 
         initErrorLogging() {
-            if (this.isAdBlocked()) {
-                SignalRMythDev.isFailedToInsertAdSlot = true;
+            window.addEventListener('error', (event) => this.handleGlobalError(event));
+            window.addEventListener('unhandledrejection', (event) => this.handleUnhandledRejection(event));
+        }
+
+        handleUnhandledRejection(event) {
+            if (this.isAdRelatedError(event)) {
+                SignalRMythDev.isFailedToLoadGPTScript = true;
             }
         }
 
-        isAdBlocked() {
-            const bait = document.createElement('div');
-            bait.className = 'ad ads ad-banner ad-slot adsbox ad-placement adsbox-banner ad-unit ad-container';
-            bait.style.cssText = `
-                position: absolute !important;
-                width: 1px !important;
-                height: 1px !important;
-                top: -9999px !important;
-                left: -9999px !important;
-                visibility: hidden !important;
-            `;
-            document.body.appendChild(bait);
+        handleGlobalError(event) {
+            if (this.isAdRelatedError(event)) {
+                SignalRMythDev.isFailedToLoadGPTScript = true;
+            }
+        }
 
-            const computed = window.getComputedStyle(bait);
-            const blocked = computed.display === 'none' || bait.offsetHeight === 0;
+        isAdBlocked(timeout = 100) {
+            return new Promise((resolve) => {
+                const bait = document.createElement('div');
+                bait.className = 'adsbox';
+                // styling so it's invisible but detectable
+                bait.style.width = '1px';
+                bait.style.height = '1px';
+                bait.style.position = 'absolute';
+                bait.style.left = '-9999px';
+                document.body.appendChild(bait);
 
-            document.body.removeChild(bait);
-            return blocked;
+                setTimeout(() => {
+                    const style = getComputedStyle(bait);
+                    const blocked = style.display === 'none' || bait.offsetParent === null || bait.offsetHeight === 0;
+                    if (blocked) {
+                        SignalRMythDev.isFailedToInsertAdSlot = true;
+                    }
+                    document.body.removeChild(bait);
+                    resolve(blocked);
+                }, timeout);
+            });
         }
 
         failedToLoadAdSlot() {
@@ -1022,7 +1049,7 @@
                 gptScript.addEventListener('load', resolve);
 
                 gptScript.addEventListener('error', () => {
-                    window.mythSignalR.failedToLoadAdSlot();
+                    window.mythSignalR.isFailedToLoadGPTScript = true;
                     reject(new Error('GPT script failed to load'));
                 });
 
@@ -2176,6 +2203,7 @@
     window.gptLoader = new GPTLoader();
 
     window.mythSignalR = new SignalRMythDev();
+    window.mythSignalR.initErrorLogging();
 
     // Load custom styling.
     window.gptLoader.addCustomStyling(); 
@@ -2188,8 +2216,8 @@
 
     // Start the GPTLoader after the DOM has fully loaded
     document.addEventListener("DOMContentLoaded", function async() {
+        window.mythSignalR.isAdBlocked();
 
-        window.mythSignalR.initErrorLogging();
         window.gptLoader.autoDiv();
         window.gptLoader.loadLatestNewsDiv();
         window.gptLoader.placeInImageAds();
