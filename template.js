@@ -438,6 +438,7 @@
                         const payload = SignalRMythDev.messageQueue.map(m => {
                             if (m.data) {
                                 m.data.connectionOff = new Date().toISOString();
+                                m.data.isFailedSignalRScriptLoad = SignalRMythDev.isFailedToLoadSignalRScript;
                             }
                             return m.data;
                         });
