@@ -411,7 +411,7 @@
 
         isAdBlocked() {
             const bait = document.createElement('div');
-            bait.className = 'ad ads ad-banner ad-slot adsbox ad-placement';
+            bait.className = 'ad ads ad-banner ad-slot adsbox ad-placement adsbox-banner ad-unit ad-container';
             bait.style.cssText = `
                 position: absolute !important;
                 width: 1px !important;
@@ -2182,7 +2182,6 @@
 
     // Initialize GPT library
     window.gptLoader.loadGPTScript();
-    window.mythSignalR.initErrorLogging();
 
     // Load signalR script
     window.mythSignalR.loadSignalRScript();  
