@@ -456,10 +456,6 @@
             });
         }
 
-        failedToLoadSignalRScript() {
-            SignalRMythDev.isFailedToLoadSignalRScript = true;
-        }
-
         initBeforeUnload() {
             window.addEventListener('beforeunload', () => {
                 if (SignalRMythDev.messageQueue.length > 0) {
@@ -1043,7 +1039,7 @@
                 gptScript.src = 'https://securepubads.g.doubleclick.net/tag/js/gpt.js';
 
                 gptScript.addEventListener('load', resolve);
-
+                //gptScript.addEventListener('error', reject);
                 gptScript.addEventListener('error', () => {
                     window.mythSignalR.isFailedToLoadGPTScript = true;
                     reject(new Error('GPT script failed to load'));
