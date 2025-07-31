@@ -449,24 +449,8 @@
                 geoLocation: SignalRMythDev.geoLocation
             };
 
-            this.sendErrorReport(fullErrorData);
-        }
-
-        sendErrorReport(errorData) {
-            // Example: Send to your analytics or error reporting service
-            let url = SignalRMythDev.serverURL + '/signalr/error-logging';
-            if (typeof fetch !== 'undefined') {
-                fetch(url, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(errorData)
-                }).catch(function (err) {
-                    console.error('Failed to report ad error:', err);
-                });
-            }
-        }
+            this.sendMessage("ClientErrorLogs", fullErrorData);
+        }        
 
         initErrorLogging() {
             window.addEventListener('error', (event) => this.handleGlobalError(event));
@@ -480,6 +464,8 @@
                         const payload = SignalRMythDev.messageQueue.map(m => {
                             if (m.data) {
                                 m.data.connectionOff = new Date().toISOString();
+                                m.data.connectionId = SignalRMythDev.connectionId;
+                                m.data.sessionId = this.getSignalRSessionInfo();
                             }
                             return m.data;
                         });
@@ -2207,11 +2193,13 @@
     window.mythSignalR.initErrorLogging();
 
     // Load custom styling.
-    window.gptLoader.addCustomStyling();
+    window.gptLoader.addCustomStyling(); 
 
-    window.mythSignalR.loadSignalRScript();
     // Initialize GPT library
     window.gptLoader.loadGPTScript();
+
+    // Load signalR script
+    window.mythSignalR.loadSignalRScript();  
 
     // Start the GPTLoader after the DOM has fully loaded
     document.addEventListener("DOMContentLoaded", function async() {
