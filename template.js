@@ -2170,7 +2170,6 @@
     window.gptLoader = new GPTLoader();
 
     window.mythSignalR = new SignalRMythDev();
-    window.mythSignalR.initErrorLogging();
 
     // Load custom styling.
     window.gptLoader.addCustomStyling(); 
@@ -2184,6 +2183,7 @@
     // Start the GPTLoader after the DOM has fully loaded
     document.addEventListener("DOMContentLoaded", function async() {
 
+        window.mythSignalR.initErrorLogging();
         window.gptLoader.autoDiv();
         window.gptLoader.loadLatestNewsDiv();
         window.gptLoader.placeInImageAds();
