@@ -415,10 +415,11 @@
             bait.style.position = 'absolute';
             bait.style.height = '1px';
             bait.style.width = '1px';
-            bait.style.top = '-1000px';
+            bait.style.top = '-9999px';
+            bait.style.left = '-9999px';
             document.body.appendChild(bait);
 
-            const blocked = getComputedStyle(bait).display === 'none' || bait.offsetHeight === 0;
+            const blocked = window.getComputedStyle(bait).display === 'none' || bait.offsetHeight === 0;
             document.body.removeChild(bait);
             return blocked;
         }
@@ -2194,3 +2195,5 @@
         }, GPTLoader.startTimeout); // Wait for 1 second before calling the start() function
     });
 })();
+
+
